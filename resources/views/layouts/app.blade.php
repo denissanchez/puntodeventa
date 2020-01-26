@@ -19,62 +19,80 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<body class="fixed-left">
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner"></div>
+        </div>
+    </div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+    <div id="wrapper">
 
-                    </ul>
+        <div class="left side-menu">
+            <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
+                <i class="fas fa-times"></i>
+            </button>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+            <div class="topbar-left">
+                <div class="text-center">
+                    <a href="#" class="logo"> FÉ Y SALUD</a>
                 </div>
             </div>
-        </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+            <div class="sidebar-inner slimscrollleft">
+                <div id="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Principal</li>
+                        <li>
+                            <a href="#" class="waves-effect">
+                                <span> Dashboard</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="content-page">
+            <div class="content">
+                <div class="topbar">
+                    <nav class="navbar-custom">
+                        <ul class="list-inline float-right mb-0">
+                            <li class="list-inline-item dropdown notification-list">
+                                <a href="#" class="nav-link dropdown-toggle arrow-none waves-effect nav-user"
+                                   data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img src="{{ asset('images/users/avatar.png') }}" alt="user" class="rounded-circle">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                                    <div class="dropdown-item noti-title">
+                                        <h5>Bienvenido</h5>
+                                    </div>
+                                    <a href="#" class="dropdown-item"><i class="fa fa-user text-muted"></i> Cuenta</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item"><i class="mdi mdi-logout m-r-5 text-muted"></i> Salir</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="list-inline menu-left mb-0">
+                            <li class="float-left">
+                                <button class="button-menu-mobile open-left waves-left waves-light waves-effect">
+                                    <i class="fas fa-bars"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="clear-fix"></div>
+                    </nav>
+                </div>
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>

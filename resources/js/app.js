@@ -1,6 +1,5 @@
 require('./bootstrap');
 
-require('./js/modernizr.min');
 require('./js/detect');
 require('./js/fastclick');
 require('./js/jquery.slimscroll');

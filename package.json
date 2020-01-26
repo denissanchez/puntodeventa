@@ -23,6 +23,9 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "hammerjs": "^2.0.8"
+        "@fortawesome/fontawesome-free": "^5.12.0",
+        "hammerjs": "^2.0.8",
+        "material-design-icons": "^3.0.1",
+        "modernizr": "^3.8.0"
     }
 }
