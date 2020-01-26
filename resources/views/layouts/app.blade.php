@@ -44,9 +44,18 @@
                     <ul>
                         <li class="menu-title">Principal</li>
                         <li>
-                            <a href="#" class="waves-effect">
+                            <a href="{{ route('home') }}" class="waves-effect">
                                 <span> Dashboard</span>
                             </a>
+                        </li>
+                        <li class="menu-title">Gestión</li>
+                        <li class="has_sub nav-active">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                 <span> Productos</span>
+                            </a>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Ver todos</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
