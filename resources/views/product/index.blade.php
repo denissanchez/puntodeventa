@@ -41,7 +41,7 @@
                 </table>
             </div>
             <div class="card-footer">
-                {{ $branches->links() }}
+                {{ $products->links() }}
             </div>
         </div>
     </div>

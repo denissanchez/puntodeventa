@@ -50,7 +50,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $product = Product::currentBranch()->where('id', '=', $id)->first();
+            $product = Product::where('id', '=', $id)->first();
             if (!$product)
                 throw new ModelNotFoundException();
             $product->update([
