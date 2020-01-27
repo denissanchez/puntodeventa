@@ -25,20 +25,16 @@
             <div class="spinner"></div>
         </div>
     </div>
-
     <div id="wrapper">
-
         <div class="left side-menu">
             <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
                 <i class="fas fa-times"></i>
             </button>
-
             <div class="topbar-left">
                 <div class="text-center">
                     <a href="#" class="logo"> FÉ Y SALUD</a>
                 </div>
             </div>
-
             <div class="sidebar-inner slimscrollleft">
                 <div id="sidebar-menu">
                     <ul>
@@ -62,16 +58,22 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-
         <div class="content-page">
             <div class="content">
                 <div class="topbar">
                     <nav class="navbar-custom">
                         <ul class="list-inline float-right mb-0">
+                            <li class="list-inline-item dropdown notification-list hide-phone">
+                                <span class="nav-link dropdown-toggle arrow-none waves-effect text-white"
+                                   data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
+                                   <i class="fas fa-cubes" style="margin-right: 10px"></i> {{ Auth::user()->branch->name }}
+                                </span>
+                            </li>
                             <li class="list-inline-item dropdown notification-list">
                                 <a href="#" class="nav-link dropdown-toggle arrow-none waves-effect nav-user"
                                    data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
-                                    <img src="{{ asset('images/users/avatar.png') }}" alt="user" class="rounded-circle">
+                                    <img src="{{ asset('images/users/avatar.png') }}" alt="user"  style="margin-right: 10px" class="rounded-circle">
+                                    <span class="text-white">{{ Auth::user()->name }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                                     <div class="dropdown-item noti-title">
@@ -93,7 +95,6 @@
                         <div class="clear-fix"></div>
                     </nav>
                 </div>
-
                 <div class="page-content-wrapper">
                     <div class="container-fluid">
                         @yield('content')
@@ -102,6 +103,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BranchStoreRequest;
 use App\Http\Requests\BranchUpdateRequest;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
