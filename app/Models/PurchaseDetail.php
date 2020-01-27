@@ -16,7 +16,7 @@ class PurchaseDetail extends Model
         'unit_price'
     ];
 
-    public function purchase()
+    public function document()
     {
         return $this->belongsTo(Purchase::class);
     }
