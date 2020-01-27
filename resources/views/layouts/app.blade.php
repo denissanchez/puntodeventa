@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -45,12 +45,21 @@
                             </a>
                         </li>
                         <li class="menu-title">Gestión</li>
-                        <li class="has_sub nav-active">
+                        <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect">
                                  <span> Productos</span>
                             </a>
                             <ul class="list-unstyled">
                                 <li><a href="{{ route('productos.index') }}">Ver todos</a></li>
+                            </ul>
+                        </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <span> Compras</span>
+                            </a>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ route('compras.create') }}">Registrar</a></li>
+                                <li><a href="{{ route('compras.index') }}">Ver todos</a></li>
                             </ul>
                         </li>
                     </ul>
