@@ -32,12 +32,12 @@
                     @csrf
                     <div class="form-group row">
                         <div class="col-12">
-                            <input class="form-control" type="text" required placeholder="Usuario">
+                            <input type="text" name="email" class="form-control"  required placeholder="Usuario">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-12">
-                            <input type="text" class="form-control" required placeholder="Contraseña">
+                            <input type="password" name="password" class="form-control" required placeholder="Contraseña">
                         </div>
                     </div>
                     <div class="form-group row">
