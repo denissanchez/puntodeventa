@@ -8,3 +8,5 @@ require('./js/waves');
 require('./js/jquery.nicescroll');
 require('./js/jquery.scrollTo.min');
 require('./js/app');
+
+require('./select2.min');
