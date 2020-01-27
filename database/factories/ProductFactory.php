@@ -11,7 +11,7 @@ $factory->define(Product::class, function (Faker $faker) {
     $number_two = $faker->numberBetween(100, 999);
     return [
         'branch_id' => Branch::all()->random()->id,
-        'code' => 'CODE-FAKE0'.$number_one,
+        // 'code' => 'CODE-FAKE0'.$number_one,
         'category' => 'CATEG-FAKE0'.$number_one,
         'brand' => 'BRAND-FAKE0'.$number_one,
         'laboratory' => 'LAB-FAKE0'.$number_one,

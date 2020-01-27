@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::resource('sucursales', 'BranchController');
 Route::resource('productos', 'ProductController');
+Route::resource('compras', 'PurchaseController');

@@ -10,3 +10,4 @@ require('./js/jquery.scrollTo.min');
 require('./js/app');
 
 require('./select2.min');
+require('./jquery.validate.min');

@@ -10,6 +10,9 @@ class ProductObserver
     public function created(Product $product)
     {
         VerifyProductData::dispatch($product);
+        $product->update([
+            'code' => substr($product->measure_unit, 0, 1).substr($product->name, 0, 4).$product->id
+        ]);
     }
 
     public function updated(Product $product)

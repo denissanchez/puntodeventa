@@ -2,6 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Laboratory;
+use App\Models\MeasureUnit;
 use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BranchStoreRequest;
 use App\Http\Requests\BranchUpdateRequest;
 use App\Models\Branch;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
