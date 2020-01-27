@@ -13,6 +13,6 @@ class CurrentBranchScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('branch', Auth::user()->id);
+        $builder->where('branch_id', Auth::user()->id);
     }
 }

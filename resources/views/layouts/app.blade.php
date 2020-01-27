@@ -50,7 +50,7 @@
                                  <span> Productos</span>
                             </a>
                             <ul class="list-unstyled">
-                                <li><a href="#">Ver todos</a></li>
+                                <li><a href="{{ route('productos.index') }}">Ver todos</a></li>
                             </ul>
                         </li>
                     </ul>
