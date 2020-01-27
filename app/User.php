@@ -24,6 +24,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class);
