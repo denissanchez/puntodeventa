@@ -89,6 +89,11 @@ class Product extends Model
         return $this->attributes['purchased_units'] - $this->attributes['sold_units'];
     }
 
+    public function getDisplayNameAttribute()
+    {
+        return $this->attributes['code'].' | '.$this->attributes['name'].' - '.$this->attributes['brand'];
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class);

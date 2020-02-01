@@ -8,6 +8,7 @@ use App\Models\Laboratory;
 use App\Models\MeasureUnit;
 use App\Models\OwnerDocument;
 use App\Models\Product;
+use App\Models\Purchase;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

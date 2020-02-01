@@ -44,23 +44,16 @@
                                 <span> Dashboard</span>
                             </a>
                         </li>
-                        <li class="menu-title">Gestión</li>
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect">
-                                 <span> Productos</span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li><a href="{{ route('productos.index') }}">Ver todos</a></li>
-                            </ul>
+                        <li class="menu-title">Productos</li>
+                        <li>
+                            <a href="{{ route('productos.index') }}" class="waves-effect">Productos</a>
                         </li>
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect">
-                                <span> Compras</span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li><a href="{{ route('compras.create') }}">Registrar</a></li>
-                                <li><a href="{{ route('compras.index') }}">Ver todos</a></li>
-                            </ul>
+                        <li class="menu-title">Compras</li>
+                        <li>
+                            <a href="{{ route('compras.create') }}" class="waves-effect">Registrar</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('compras.index') }}" class="waves-effect">Ver todas</a>
                         </li>
                     </ul>
                 </div>
