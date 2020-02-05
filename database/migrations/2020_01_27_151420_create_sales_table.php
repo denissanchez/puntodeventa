@@ -15,6 +15,14 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('seller_id');
+            $table->string('code');
+            $table->text('owner_document');
+            $table->string('state');
+            $table->string('type');
+            $table->string('currency')->default('PEN');
+            $table->string('commentary');e
             $table->timestamps();
         });
     }

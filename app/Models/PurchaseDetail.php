@@ -16,6 +16,8 @@ class PurchaseDetail extends Model
         'unit_price'
     ];
 
+    protected $with = ['product'];
+
     public function document()
     {
         return $this->belongsTo(Purchase::class);
@@ -24,11 +26,5 @@ class PurchaseDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function getProductNameAttribute()
-    {
-        $product = Product::where('id', $this->product->id)->first();
-        return $product->code.' | '.$product->name.' - '.$product->brand;
     }
 }

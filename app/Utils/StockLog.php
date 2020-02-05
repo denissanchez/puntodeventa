@@ -4,8 +4,14 @@
 namespace App\Utils;
 
 
+use App\Models\Branch;
 use App\Models\ControlStock;
+use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\PurchaseDetail;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class StockLog
 {
@@ -20,14 +26,17 @@ class StockLog
 
     public function store()
     {
+        $product = Product::where('id', $this->detail['product_id'])->first();
+
         $control_stock = ControlStock::create([
             'branch_id' = Auth::user()->branch_id,
-            'product_id' = $this->detail->product->id,
-            'product_code' = $this->detail->product->code,
-            'product_name' = $this->detail->product->name,
-            'document_name' = $this->detail->document->code,
-            'type' = $this->type,
-            'quantity' = $this->detail->quantity
+            'user_name' => Auth::user()->name,
+            'product_id' => $this->detail['product_id'],
+            'product_code' => $product->code,
+            'product_name' => $product->name,
+            'document_code' => $this->detail['purchase_code'],
+            'type' => $this->type,
+            'quantity' => $this->detail['init_quantity']
         ]);
     }
 }

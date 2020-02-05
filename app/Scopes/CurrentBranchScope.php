@@ -4,6 +4,7 @@
 namespace App\Scopes;
 
 
+use App\Models\Branch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -13,6 +14,6 @@ class CurrentBranchScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('branch_id', Auth::user()->id);
+         $builder->where('branch_id', Auth::user()->id);
     }
 }

@@ -9,12 +9,12 @@ class PurchaseDetailObserver
 {
     public function created(PurchaseDetail $purchaseDetail)
     {
-        UpdateStockOnPurchase::dispatchNow($purchaseDetail);
+        UpdateStockOnPurchase::dispatch($purchaseDetail);
     }
 
     public function updated(PurchaseDetail $purchaseDetail)
     {
-        UpdateStockOnPurchase::dispatchNow($purchaseDetail);
+        UpdateStockOnPurchase::dispatch($purchaseDetail);
     }
 
     public function deleted(PurchaseDetail $purchaseDetail)
