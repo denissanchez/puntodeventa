@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Models\SaleDetail;
+use App\Utils\MovementInfo;
+use App\Utils\StockLog;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,9 +17,9 @@ class UpdateStockOnSale implements ShouldQueue
 
     private $sale_detail;
 
-    public function __construct()
+    public function __construct(SaleDetail $sale_detail)
     {
-        //
+        $this->sale_detail = $sale_detail;
     }
 
     /**
@@ -26,6 +29,7 @@ class UpdateStockOnSale implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $stock_log = new StockLog($this->sale_detail, MovementInfo::SALE_MOVEMENT);
+        $stock_log->store();
     }
 }

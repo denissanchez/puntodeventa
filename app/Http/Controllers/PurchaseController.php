@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Builders\PurchaseBuilder;
+use App\Builders\ResponseDataBuilder;
+use App\Http\Requests\PurchaseStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Laboratory;
@@ -9,6 +12,7 @@ use App\Models\MeasureUnit;
 use App\Models\OwnerDocument;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,123 +30,48 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        $products = Product::get();
-        $categories = Category::all();
-        $brands = Brand::all();
-        $laboratories = Laboratory::all();
-        $measure_units = MeasureUnit::all();
-        $providers = OwnerDocument::whereRaw('LENGTH(identity_document) = 11')->get();
-        return view('purchase.create', [
-            'products' => $products,
-            'providers' => $providers,
-            'categories' => $categories,
-            'brands' => $brands,
-            'laboratories' => $laboratories,
-            'measure_units' => $measure_units,
-        ]);
+        $data = new ResponseDataBuilder();
+        $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
+        return view('purchase.create', $data);
     }
 
-    public function store(Request $request)
+    public function store(PurchaseStoreRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $purchase_builder = new PurchaseBuilder();
-            $purchase = $purchase_builder
-                ->currentBranch()
-                ->seller()
-                ->provider([
-                    'identity_document' => $request->post('provider_identity_document'),
-                    'name' => $request->post('provider_name'),
-                    'address' => $request->post('provider_address')
-                ])
-                ->code($request->post('code'))
-                ->date($request->post('date'))
-                ->defaultType()
-                ->defaultCurrency()
-                ->completedState()
-                ->build();
-            $this->setDetailsToPurchase($purchase, $request->post('products'));
-            DB::commit();
-            return redirect()->route('compras.show', ['compra' => $purchase]);
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return view('errors.500');
-        }
-    }
-
-    private function setDetailsToPurchase(Purchase $purchase, $details)
-    {
-        foreach ($details as $key=>$detail) {
-            $purchase_detail = PurchaseDetail::create([
-                'purchase_id' => $purchase->id,
-                'product_id' => $this->getProduct($detail)->id,
+        $data = $request->validated();
+        $purchase = Purchase::create(
+            array_merge($data,
+                [
+                    'branch_id' => Auth::user()->branch_id,
+                    'seller_id' => Auth::user()->id
+                ]
+            ));
+        $products = $request->post('products');
+        foreach ($products as $key=>$product) {
+            $purchase_detail = new PurchaseDetail([
+                'product_id' => $product['product_id'],
                 'item' => $key + 1,
-                'init_quantity' => $detail['quantity'],
-                'current_quantity' => $detail['quantity'],
-                'unit_price' => $detail['unit_price']
+                'purchase_code' => $purchase->code,
+                'init_quantity' => $product['quantity'],
+                'current_quantity' => $product['quantity'],
+                'unit_price' => $product['unit_price']
             ]);
+            $purchase->details()->create($purchase_detail);
         }
+        return redirect()->route('purchase.show', ['purchase' => $purchase]);
     }
 
-    public function getProduct($product)
+    public function show(Purchase $purchase)
     {
-        $product_id = $product['id'];
-        if ($product_id) {
-            return Product::where('id', $product_id)->first();
-        }
-        return Product::create([
-            'branch_id' => Auth::user()->branch_id,
-            'code' => $product['code'],
-            'category' => $product['category'],
-            'brand' => $product['brand'],
-            'name' => $product['name'],
-            'laboratory' => $product['laboratory'],
-            'measure_unit' => $product['measure_unit'],
-            'composition' => $product['composition'],
-            'description' => $product['description']
+        return view('purchase.show', [
+            'purchase' => $purchase
         ]);
     }
 
-    public function show($id)
+    public function edit(Purchase $purchase)
     {
-        try {
-            $purchase = Purchase::where('id', '=', $id)->first();
-            if (!$purchase) {
-                throw new ModelNotFoundException();
-            }
-            return view('purchase.show', [
-                'purchase' => $purchase
-            ]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
-    }
-
-    public function edit($id)
-    {
-        try {
-            $purchase = Purchase::currentBranch()->where('id', $id)->first();
-            if (!$purchase)
-                throw new ModelNotFoundException();
-            $products = Product::currentBranch()->get();
-            $categories = Category::all();
-            $brands = Brand::all();
-            $laboratories = Laboratory::all();
-            $measure_units = MeasureUnit::all();
-            $products = Product::currentBranch()->get();
-            $providers = OwnerDocument::whereRaw('LENGTH(identity_document) = 11')->get();
-            return view('purchase.edit', [
-                'products' => $products,
-                'providers' => $providers,
-                'categories' => $categories,
-                'brands' => $brands,
-                'laboratories' => $laboratories,
-                'measure_units' => $measure_units,
-                'purchase' => $purchase,
-            ]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $data = new ResponseDataBuilder();
+        $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
+        return view('purchase.edit', array_merge($data, ['purchase' => $purchase]));
     }
 
     public function update(Request $request, $id)
