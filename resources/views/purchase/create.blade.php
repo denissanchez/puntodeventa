@@ -22,34 +22,68 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>RUC</label>
-                                <input type="number" class="form-control" name="provider_identity_document" id="provider_identity_document">
+                                <input type="text"
+                                       class="form-control @error('provider.identity_document') is-invalid @enderror"
+                                       name="provider[identity_document]"
+                                       id="provider_identity_document"
+                                       value="{{ old('provider.identity_document') }}">
+                                @error('provider.identity_document')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Razón social</label>
-                                <input type="text" class="form-control to-upper" name="provider_name" id="provider_name" disabled>
+                                <input type="text"
+                                       class="form-control to-upper @error('provider.name') is-invalid @enderror"
+                                       name="provider[name]"
+                                       id="provider_name"
+                                       value="{{ old('provider.name') }}">
+                                @error('provider.name')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Dirección</label>
-                                <input type="text" class="form-control to-upper" name="provider_address" id="provider_address" disabled>
+                                <input type="text"
+                                       class="form-control to-upper @error('provider.address') is-invalid @enderror"
+                                       name="provider[address]"
+                                       id="provider_address"
+                                       value="{{ old('provider.address') }}">
+                                @error('provider.address')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Código</label>
-                                <input type="text" class="form-control to-upper" name="code">
+                                <input type="text"
+                                       class="form-control to-upper @error('code') is-invalid @enderror"
+                                       value="{{ old('code') }}"
+                                       name="code">
+                                @error('code')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Fecha</label>
                                 <input name="date" type="date" class="form-control"
-                                       value="{{ date('Y-m-d') }}"
+                                       @if(old('date') !== null)
+                                        value="{{ old('date') }}"
+                                       @else
+                                        value="{{ date('Y-m-d') }}"
+                                       @endif
                                        min="{{ date('Y-m-d', strtotime($now."- 5 days")) }}"
                                        max="{{ date('Y-m-d') }}">
+                                @error('date')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -65,17 +99,23 @@
                             </select>
                         </div>
                         <div class="col-md-1">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewProduct">Nuevo</button>
+                            <button type="button"
+                                    class="btn btn-primary btn-sm"
+                                    data-toggle="modal"
+                                    data-target="#modalNewProduct">
+                                Nuevo
+                            </button>
                         </div>
                     </div>
                     <table id="table-detail" class="table">
                         <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th width="55%">Producto</th>
+                            <th width="45%">Producto</th>
                             <th width="15%">UOM</th>
                             <th width="10%">Cantidad</th>
                             <th width="10%">P. Unit</th>
+                            <th width="10%">Total</th>
                             <th width="5%"></th>
                         </tr>
                         </thead>
@@ -183,9 +223,43 @@
 </div>
 
 <script type="text/javascript">
-    let products = [@foreach($products as $key => $product){ id: {{ $product->id }}, text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}", uom: "{{ $product->measure_unit }}" } @if(count($products) - 1 !== $key), @endif @endforeach];
-    let providers = [@foreach($providers as $key => $provider){ id: {{ $provider->id }}, name: "{{ $provider->name }}", identity_document: "{{ $provider->identity_document }}", address: "{{ $provider->address }}" } @if(count($providers) - 1 !== $key), @endif @endforeach];
-    let selectedProducts = [];
+
+    let products = [
+        @foreach($products as $key => $product)
+            {
+                id: {{ $product->id }},
+                text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
+                uom: "{{ $product->measure_unit }}"
+            } @if(count($products) - 1 !== $key), @endif
+        @endforeach
+    ];
+
+    let providers = [
+        @foreach($providers as $key => $provider)
+            {
+                id: '{{ $provider->id }}',
+                name: "{{ $provider->name }}",
+                identity_document: "{{ $provider->identity_document }}",
+                address: "{{ $provider->address }}"
+            }
+            @if(count($providers) - 1 !== $key), @endif
+        @endforeach
+    ];
+
+    let selectedProducts = [
+        @if(old('products') !== null)
+            @foreach(old('products') as $key=>$product)
+                {
+                    id: '{{ $product['id'] }}',
+                    text: '{{ $product['text'] }}',
+                    uom: '{{ $product['uom'] }}',
+                    quantity: '{{ $product['quantity'] }}',
+                    unit_price: '{{ $product['unit_price'] }}'
+                }
+                @if(count(old('products')) - 1 !== $key), @endif
+            @endforeach
+        @endif
+    ];
 
     $(
         function() {
@@ -208,12 +282,11 @@
                 },
                 errorClass: 'is-invalid',
                 submitHandler: function () {
-                    selectedProducts.push(getProductFromModal());
-                    reloadTableContent();
-                    closeModal();
+                    saveProduct();
                 }
-            })
-        })
+            });
+            reloadTableContent();
+        });
 
     $('#select2-product').on('select2:select', function(e){
         let data = e.params.data;
@@ -231,21 +304,16 @@
             function (product, index) {
                 table.append(
                     '<tr id="item-' + index + '">' +
-                    '<td>'+ (index + 1) +'' +
-                    '<input type="hidden" name="products[' + index + '][id]" value="' + product.id + '">' +
-                    '<input type="hidden" name="products[' + index + '][code]" value="' + product.code + '">' +
-                    '<input type="hidden" name="products[' + index + '][category]" value="' + product.category + '">' +
-                    '<input type="hidden" name="products[' + index + '][brand]" value="' + product.brand + '">' +
-                    '<input type="hidden" name="products[' + index + '][laboratory]" value="' + product.laboratory + '">' +
-                    '<input type="hidden" name="products[' + index + '][name]" value="' + product.name + '">' +
-                    '<input type="hidden" name="products[' + index + '][measure_unit]" value="' + product.measure_unit + '">' +
-                    '<input type="hidden" name="products[' + index + '][description]" value="' + product.description + '">' +
-                    '<input type="hidden" name="products[' + index + '][composition]" value="' + product.composition + '">' +
+                    '<td>' + (index + 1) +
+                        '<input type="hidden" name="products[' + index + '][id]" value="' + product.id + '">' +
+                        '<input type="hidden" name="products[' + index + '][text]" value="' + product.text + '">' +
+                        '<input type="hidden" name="products[' + index + '][uom]" value="' + product.uom + '">' +
                     '</td>' +
                     '<td>'+ product.text +'</td>' +
                     '<td>'+ product.uom +'</td>' +
-                    '<td><input type="number" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" step="any" required></td>' +
-                    '<td><input type="number" name="products[' + index + '][unit_price]" id="product-'+ index +'-unit_price" onchange="onChangeUnitPrice('+ index +')" value="'+ product.unit_price +'" class="form-control form-control-sm" step="any" required></td>' +
+                    '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
+                    '<td><input type="text" name="products[' + index + '][unit_price]" id="product-'+ index +'-unit_price" onchange="onChangeUnitPrice('+ index +')" value="'+ product.unit_price +'" class="form-control form-control-sm" required></td>' +
+                    '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>' +
                     '<td>' +
                     '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +
                     '           <i class="fa fa-trash"></i>' +
@@ -268,15 +336,13 @@
                 if (provider) {
                     setProviderName(provider.name);
                     setProviderAddress(provider.address);
-                    disableProviderFields();
                     toastr.success('Proveedor encontrado')
                 } else {
-                    enableProviderFields();
                     toastr.error('No se encontró ningún registro con el número de RUC', 'Proveedor no encontrado')
                 }
             } else {
-                toastr.error('Por favor ingrese un RUC válido', 'Error')
-                $('#provider_identity_document').addClass('is-invalid')
+                toastr.error('Por favor ingrese un RUC válido', 'Error');
+                $('#provider_identity_document').addClass('is-invalid');
                 setProviderAddress('');
                 setProviderName('');
             }
@@ -289,18 +355,6 @@
 
     function setProviderAddress(value){
         $('#provider_address').val(value);
-    }
-
-    function disableProviderFields(){
-        $('#provider_name').prop('disabled', true);
-        $('#provider_address').prop('disabled', true);
-    }
-
-    function enableProviderFields(){
-        setProviderName('');
-        setProviderAddress('');
-        $('#provider_name').prop('disabled', false);
-        $('#provider_address').prop('disabled', false);
     }
 
     function deleteItem(index, text) {
@@ -320,6 +374,33 @@
         $('#form-new_product').trigger('reset');
     }
 
+    function saveProduct() {
+        let product = {
+            code: $.trim(getInputFromModalByName('code').val()),
+            category : $.trim(getSelect2FromModalByName('category')),
+            brand : $.trim(getSelect2FromModalByName('brand')),
+            laboratory : $.trim(getSelect2FromModalByName('laboratory')),
+            name : $.trim(getInputFromModalByName('name').val()),
+            measure_unit : $.trim(getSelect2FromModalByName('measure_unit')),
+            description : $.trim(getTextAreaFromModalByName('description').val()),
+            composition : $.trim(getTextAreaFromModalByName('composition').val()),
+        };
+
+        $.ajax({
+            url: '/api/productos',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(product),
+            success: function(response) {
+               console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
     function getProductFromModal() {
         let product = {
             id : 0,
@@ -334,9 +415,13 @@
             quantity : 0,
             unit_price : 0
         };
-        product.text = (product.code + ' | ' + product.name + ' - ' + product.brand).toUpperCase();
+        product.text = getTextAttribute(product).toUpperCase();
         product.uom = product.measure_unit;
         return product;
+    }
+
+    function getTextAttribute(product) {
+        return product.code + ' | ' + product.name + ' - ' + product.brand;
     }
 
     function getInputFromModalByName(name) {
@@ -357,10 +442,17 @@
 
     function onChangeQuantity(index) {
         selectedProducts[index].quantity = $('#product-'+ index +'-quantity').val();
+        calculateSubtotal(index);
     }
 
     function onChangeUnitPrice(index) {
         selectedProducts[index].unit_price = $('#product-'+ index +'-unit_price').val();
+        calculateSubtotal(index);
+    }
+
+    function calculateSubtotal(index) {
+        let subtotal = +selectedProducts[index].quantity * +selectedProducts[index].unit_price;
+        $('#product-'+ index +'-subtotal').val(subtotal.toFixed(2));
     }
 </script>
 @endsection

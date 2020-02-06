@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $purchases = Purchase::orderBy('id', 'desc')->get();
@@ -46,17 +51,7 @@ class PurchaseController extends Controller
                 ]
             ));
         $products = $request->post('products');
-        foreach ($products as $key=>$product) {
-            $purchase_detail = new PurchaseDetail([
-                'product_id' => $product['product_id'],
-                'item' => $key + 1,
-                'purchase_code' => $purchase->code,
-                'init_quantity' => $product['quantity'],
-                'current_quantity' => $product['quantity'],
-                'unit_price' => $product['unit_price']
-            ]);
-            $purchase->details()->create($purchase_detail);
-        }
+        $purchase->addDetails($products);
         return redirect()->route('purchase.show', ['purchase' => $purchase]);
     }
 
