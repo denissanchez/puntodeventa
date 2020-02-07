@@ -5,18 +5,9 @@ namespace App\Http\Controllers;
 use App\Builders\PurchaseBuilder;
 use App\Builders\ResponseDataBuilder;
 use App\Http\Requests\PurchaseStoreRequest;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Laboratory;
-use App\Models\MeasureUnit;
-use App\Models\OwnerDocument;
-use App\Models\Product;
 use App\Models\Purchase;
-use App\Models\PurchaseDetail;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
