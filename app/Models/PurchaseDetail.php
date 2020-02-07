@@ -4,6 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class PurchaseDetail
+ * @package App\Models
+ * @property int purchase_id
+ * @property int product_id
+ * @property int item
+ * @property string purchase_code
+ * @property double init_quantity
+ * @property double current_quantity
+ * @property double unit_price
+ */
 class PurchaseDetail extends Model
 {
     protected $fillable = [

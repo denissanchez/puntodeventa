@@ -6,6 +6,19 @@ use App\Scopes\CurrentBranchScope;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Purchase
+ * @package App\Models
+ * @property int branch_id
+ * @property int seller_id
+ * @property array provider
+ * @property string seller_name
+ * @property string code
+ * @property string type
+ * @property string currency
+ * @property string commentary
+ * @property string state
+ */
 class Purchase extends Model
 {
     protected $fillable = [

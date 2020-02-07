@@ -7,6 +7,18 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class Sale
+ * @package App\Models
+ * @property int branch_id
+ * @property int seller_id
+ * @property string code
+ * @property string client
+ * @property string state
+ * @property string type
+ * @property string currency
+ * @property string commentary
+ */
 class Sale extends Model
 {
     protected $fillable = [
