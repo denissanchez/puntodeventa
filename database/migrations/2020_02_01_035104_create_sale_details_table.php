@@ -16,14 +16,16 @@ class CreateSaleDetailsTable extends Migration
         Schema::create('sale_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('sale_id');
-            $table->string('product_id');
-            $table->string('sale_code');
+            $table->unsignedBigInteger('product_id');
             $table->string('item');
             $table->string('purchase_code');
             $table->decimal('quantity', 8, 2);
             $table->decimal('unit_price', 8, 2);
             $table->decimal('discount', 8, 2);
             $table->timestamps();
+
+            $table->foreign('sale_id')->references('id')->on('sales');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

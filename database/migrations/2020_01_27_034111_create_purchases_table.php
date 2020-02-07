@@ -17,7 +17,7 @@ class CreatePurchasesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('seller_id');
-            $table->unsignedBigInteger('provider_id');
+            $table->text('provider');
             $table->string('code');
             $table->date('date');
             $table->string('type')->default('FACTURA');
@@ -28,7 +28,6 @@ class CreatePurchasesTable extends Migration
 
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->foreign('seller_id')->references('id')->on('users');
-            $table->foreign('provider_id')->references('id')->on('owner_documents');
         });
     }
 

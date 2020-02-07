@@ -17,13 +17,16 @@ class CreateSalesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('seller_id');
-            $table->string('code');
-            $table->text('owner_document');
+            $table->string('code')->nullable();
+            $table->text('client');
             $table->string('state');
             $table->string('type');
             $table->string('currency')->default('PEN');
-            $table->string('commentary');e
+            $table->string('commentary')->nullable();
             $table->timestamps();
+
+            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('seller_id')->references('id')->on('sellers');
         });
     }
 
