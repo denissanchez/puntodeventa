@@ -60,9 +60,13 @@ class Purchase extends Model
     }
 
     public function addDetails($details) {
+        /* El array del detalle sería los productos que se agregan en la tabla inferior
+         * por lo tanto el $detail[id] sería el ID del producto que ya se encuentra
+         * registrado en la base de datos
+         * */
         foreach ($details as $key=>$detail) {
             $this->addDetail([
-                'product_id' => $details['product_id'],
+                'product_id' => $details['id'],
                 'item' => $key + 1,
                 'purchase_code' => $this->attributes['code'],
                 'init_quantity' => $details['quantity'],
@@ -75,6 +79,14 @@ class Purchase extends Model
     public function addDetail($detail)
     {
         $this->details()->create($detail);
+    }
+
+    public static function purchaseDetailsOfProductWithAvailableStockByProductId($product_id)
+    {
+        return self::all()
+            ->details()
+            ->ofProduct($product_id)->withAvailableStock()
+            ->orderBy('id', 'asc')->get();
     }
 
     public function branch()

@@ -19,4 +19,8 @@ class OwnerDocument extends Model
     {
         $this->attributes['address'] = strtoupper($value);
     }
+
+    public function scopeOnlyCompanies($query) {
+        return $query->whereRaw('LENGTH(identity_document) = 11');
+    }
 }
