@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\ControlStock;
 use App\Models\Product;
 use App\Models\PurchaseDetail;
+use App\Models\SaleDetailControl;
 use App\Observers\ControlStockObserver;
 use App\Observers\ProductObserver;
 use App\Observers\PurchaseDetailObserver;
+use App\Observers\SaleDetailControlObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Product::observe(ProductObserver::class);
         PurchaseDetail::observe(PurchaseDetailObserver::class);
+        SaleDetailControl::observe(SaleDetailControlObserver::class);
     }
 }

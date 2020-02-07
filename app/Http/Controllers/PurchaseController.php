@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Builders\PurchaseBuilder;
 use App\Builders\ResponseDataBuilder;
 use App\Http\Requests\PurchaseStoreRequest;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -34,13 +32,7 @@ class PurchaseController extends Controller
     public function store(PurchaseStoreRequest $request)
     {
         $data = $request->validated();
-        $purchase = Purchase::create(
-            array_merge($data,
-                [
-                    'branch_id' => Auth::user()->branch_id,
-                    'seller_id' => Auth::user()->id
-                ]
-            ));
+        $purchase = Purchase::addRecord($data);
         $products = $request->post('products');
         $purchase->addDetails($products);
         return redirect()->route('purchase.show', ['purchase' => $purchase]);

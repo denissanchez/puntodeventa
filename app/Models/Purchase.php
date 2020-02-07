@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\CurrentBranchScope;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Purchase
@@ -67,16 +68,21 @@ class Purchase extends Model
         return date('d-m-Y', strtotime($this->attributes['date']));
     }
 
-    public function scopeCurrentBranch($query)
+    public static function addRecord($values)
     {
-        return $query->where('branch_id', '=', Auth::user()->branch_id);
+        return self::create(array_merge($values,
+            [
+                'branch_id' => Auth::user()->branch_id,
+                'seller_id' => Auth::user()->id
+            ]
+        ));
     }
 
+    /* El array del detalle sería los productos que se agregan en la tabla inferior
+     * por lo tanto el $detail[id] sería el ID del producto que ya se encuentra
+     * registrado en la base de datos
+     * */
     public function addDetails($details) {
-        /* El array del detalle sería los productos que se agregan en la tabla inferior
-         * por lo tanto el $detail[id] sería el ID del producto que ya se encuentra
-         * registrado en la base de datos
-         * */
         foreach ($details as $key=>$detail) {
             $this->addDetail([
                 'product_id' => $details['id'],
