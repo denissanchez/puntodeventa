@@ -14,10 +14,12 @@ class SaleDetailObserver
     public function created(SaleDetail $sale_detail)
     {
         $this->sale_detail = $sale_detail;
+        $required_quantity = $sale_detail->quantity;
         $purchase_details = Purchase::purchaseDetailsOfProductWithAvailableStockByProductId($sale_detail->product_id);
         foreach($purchase_details as $key=>$purchase_detail) {
             $current_quantity = $purchase_details->current_quantity;
-            if ($current_quantity < $sale_detail->quantity) {
+            if ($current_quantity < $required_quantity) {
+                $required_quantity -= $current_quantity;
                 $this->createControl($purchase_detail, $current_quantity);
             } else {
                 $this->createControl($purchase_detail, $sale_detail->quantity);
