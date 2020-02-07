@@ -25,8 +25,8 @@ class CreateSalesTable extends Migration
             $table->string('commentary')->nullable();
             $table->timestamps();
 
-            $table->foreign('branch_id')->references('id')->on('branches');
-            $table->foreign('seller_id')->references('id')->on('sellers');
+            $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

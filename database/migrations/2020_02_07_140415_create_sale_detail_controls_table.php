@@ -19,8 +19,8 @@ class CreateSaleDetailControlsTable extends Migration
             $table->unsignedBigInteger('sale_detail_id');
             $table->decimal('quantity', 8, 2);
 
-            $table->foreign('purchase_detail_id')->references('id')->on('purchase_details');
-            $table->foreign('sale_detail_id')->references('id')->on('sale_details');
+            $table->foreign('purchase_detail_id')->references('id')->on('purchase_details')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('sale_detail_id')->references('id')->on('sale_details')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

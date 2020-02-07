@@ -24,8 +24,8 @@ class CreatePurchaseDetailsTable extends Migration
             $table->decimal('unit_price', 8, 2);
             $table->timestamps();
 
-            $table->foreign('purchase_id')->references('id')->on('purchases');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
