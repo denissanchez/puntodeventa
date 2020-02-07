@@ -10,6 +10,7 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     window.toastr = require('toastr');
+    window.dt = require('datatables.net-bs4')(window, $);
     require('bootstrap');
 } catch (e) {}
 
