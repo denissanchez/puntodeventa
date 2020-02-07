@@ -55,6 +55,12 @@ class ResponseDataBuilder
         return $this;
     }
 
+    public function clients()
+    {
+        $this->add_collection('clients', OwnerDocument::all());
+        return $this;
+    }
+
     public function products()
     {
         $this->add_collection('products', Product::all());
