@@ -21,6 +21,5 @@ class AppServiceProvider extends ServiceProvider
     {
         Product::observe(ProductObserver::class);
         PurchaseDetail::observe(PurchaseDetailObserver::class);
-        ControlStock::observe(ControlStockObserver::class);
     }
 }
