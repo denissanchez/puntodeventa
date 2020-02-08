@@ -23,7 +23,7 @@ class CreatePurchasesTable extends Migration
             $table->string('type')->default('FACTURA');
             $table->string('currency')->default('PEN');
             $table->string('commentary')->default('-');
-            $table->string('state');
+            $table->string('state')->default('COMPLETADO');
             $table->timestamps();
 
             $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('cascade')->onDelete('cascade');

@@ -11,16 +11,20 @@ use App\Observers\ProductObserver;
 use App\Observers\PurchaseDetailObserver;
 use App\Observers\SaleDetailControlObserver;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        //
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 
     public function boot()
     {
+        Passport::routes();
         Product::observe(ProductObserver::class);
         PurchaseDetail::observe(PurchaseDetailObserver::class);
         SaleDetailControl::observe(SaleDetailControlObserver::class);
