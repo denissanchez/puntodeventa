@@ -223,7 +223,6 @@
 </div>
 
 <script type="text/javascript">
-
     let products = [
         @foreach($products as $key => $product)
             {
@@ -386,38 +385,19 @@
             composition : $.trim(getTextAreaFromModalByName('composition').val()),
         };
 
-        $.ajax({
-            url: '/api/productos',
-            type: 'post',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify(product),
-            success: function(response) {
-               console.log(response);
+        axios.post('/api/productos', product).then(
+            res => {
+                let data = res.data.data;
+                data.quantity = 0;
+                data.unit_price = 0;
+                selectedProducts.push(data);
+                reloadTableContent();
+                closeModal();
             },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
+            err => {
 
-    function getProductFromModal() {
-        let product = {
-            id : 0,
-            code : $.trim(getInputFromModalByName('code').val()),
-            category : $.trim(getSelect2FromModalByName('category')),
-            brand : $.trim(getSelect2FromModalByName('brand')),
-            laboratory : $.trim(getSelect2FromModalByName('laboratory')),
-            name : $.trim(getInputFromModalByName('name').val()),
-            measure_unit : $.trim(getSelect2FromModalByName('measure_unit')),
-            description : $.trim(getTextAreaFromModalByName('description').val()),
-            composition : $.trim(getTextAreaFromModalByName('composition').val() || '-'),
-            quantity : 0,
-            unit_price : 0
-        };
-        product.text = getTextAttribute(product).toUpperCase();
-        product.uom = product.measure_unit;
-        return product;
+            }
+        );
     }
 
     function getTextAttribute(product) {

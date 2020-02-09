@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Utils\StateInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
@@ -52,23 +53,37 @@ class PurchaseController extends Controller
     public function edit($id)
     {
         $purchase = Purchase::findOrFail($id);
-        $data = new ResponseDataBuilder();
-        $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
-        return view('purchase.edit', array_merge($data, ['purchase' => $purchase]));
+        if ($purchase->is_editable)
+        {
+            $data = new ResponseDataBuilder();
+            $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
+            return view('purchase.edit', array_merge($data, ['purchase' => $purchase]));
+        }
+        return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
     public function update(Request $request, $id)
     {
-        PurchaseDetail::where('purchase_id', $id)->delete();
         $purchase = Purchase::findOrfail($id);
-        $products = $request->post('products');
-        $purchase->addDetails($products);
+        if ($purchase->is_editable)
+        {
+            PurchaseDetail::where('purchase_id', $id)->delete();
+            $products = $request->post('products');
+            $purchase->addDetails($products);
+        }
         return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $purchase = Purchase::findOrFail($id);
-        $purchase->update(['state' => StateInfo::CANCELED_STATE]);
+        if ($purchase->is_deleteable)
+        {
+            $purchase->update([
+                'commentary' => $request->post('commentary'),
+                'state' => StateInfo::CANCELED_STATE
+            ]);
+        }
+        return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 }

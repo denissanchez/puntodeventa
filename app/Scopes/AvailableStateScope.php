@@ -13,6 +13,6 @@ class AvailableStateScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('state', StateInfo::CONFIRMED_STATE);
+        $builder->where('state', 'LIKE' ,StateInfo::CONFIRMED_STATE);
     }
 }

@@ -3,7 +3,6 @@
 
 namespace App\Utils;
 
-
 class MovementInfo
 {
     const PURCHASE_MOVEMENT = 'COMPRA';
@@ -12,6 +11,6 @@ class MovementInfo
 
 class StateInfo
 {
-    const CONFIRMED_STATE = 'CONFIRMADO';
+    const CONFIRMED_STATE = 'COMPLETADO';
     const CANCELED_STATE = 'ANULADO';
 }

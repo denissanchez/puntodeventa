@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\AvailableStateScope;
 use App\Scopes\CurrentBranchScope;
 use App\User;
+use App\Utils\StateInfo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -73,7 +74,14 @@ class Purchase extends Model
 
     private function quantitiesSoldAndPurchasedIsEquals()
     {
-        return $this->attributes['init_quantity'] === $this->attributes['current_quantity'];
+        foreach($this->details as $detail)
+        {
+            if ($detail->init_quantity !== $detail->current_quantity)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function isSameSellerOrIsAdmin()
@@ -81,17 +89,26 @@ class Purchase extends Model
         return $this->attributes['seller_id'] === Auth::user()->id;
     }
 
-    private function IsInRangeDateToEdit()
+    private function isInRangeDateToAction($days)
     {
-        $registered_at = date('YYYY-MM-DD', strtotime($this->attributes['date']));
-        $now = date('YYYY-MM-DD', strtotime(Carbon::now()));
-        $interval = date_diff($now, $registered_at);
-        return $interval->format('%a') < 2;
+        $registered_at = date('Y-m-d', strtotime($this->attributes['date']));
+        $now = date('Y-m-d', strtotime(Carbon::now()));
+        $interval = date_diff(new \DateTime($now), new \DateTime($registered_at));
+        return $interval->format('%a') < $days;
+    }
+
+    private function isValidState() {
+        return $this->attributes['state'] === StateInfo::CONFIRMED_STATE;
     }
 
     public function getIsEditableAttribute()
     {
-        return $this->quantitiesSoldAndPurchasedIsEquals() && $this->isSameSellerOrIsAdmin() && $this->IsInRangeDateToEdit();
+        return $this->isSameSellerOrIsAdmin() && $this->isValidState() && $this->isInRangeDateToAction(3) && $this->quantitiesSoldAndPurchasedIsEquals();
+    }
+
+    public function getIsDeleteableAttribute()
+    {
+        return $this->isSameSellerOrIsAdmin() && $this->isValidState() && $this->isInRangeDateToAction(5) && $this->quantitiesSoldAndPurchasedIsEquals();
     }
 
     public static function addRecord($values)

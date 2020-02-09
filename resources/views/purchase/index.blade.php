@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{ $purchase->date }}</td>
                                 <td>{{ $purchase->code }}</td>
-                                <td>{{ $purchase->provider->name }}</td>
+                                <td>{{ $purchase->provider['name'] }}</td>
                                 <td>
                                     <a href="{{ route('compras.show', [ 'compra' => $purchase ]) }}" class="btn btn-link">Ver</a>
                                 </td>
