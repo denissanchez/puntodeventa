@@ -19,9 +19,9 @@ class CreateSaleDetailsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->string('item');
             $table->string('purchase_code');
-            $table->decimal('quantity', 8, 2);
-            $table->decimal('unit_price', 8, 2);
-            $table->decimal('discount', 8, 2);
+            $table->decimal('quantity', 8, 2)->unsigned();
+            $table->decimal('unit_price', 8, 2)->unsigned();
+            $table->decimal('discount', 8, 2)->unsigned()->default(0);
             $table->timestamps();
 
             $table->foreign('sale_id')->references('id')->on('sales')->onUpdate('cascade')->onDelete('cascade');

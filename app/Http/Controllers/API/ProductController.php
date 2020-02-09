@@ -18,7 +18,8 @@ class ProductController extends Controller
 
     public function index()
     {
-
+        $products = Product::all();
+        return ProductResource::collection($products);
     }
 
     public function store(ProductStoreRequest $request)

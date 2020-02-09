@@ -21,6 +21,11 @@ class SaleDetail extends Model
         'sale_id', 'product_id', 'item', 'quantity', 'unit_price', 'discount'
     ];
 
+    public function getSubtotalAttribute()
+    {
+        return ($this->attributes['unit_price'] - $this->attributes['discount']) * $this->attributes['quantity'];
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);

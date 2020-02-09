@@ -32,7 +32,7 @@
             </button>
             <div class="topbar-left">
                 <div class="text-center">
-                    <a href="#" class="logo"> FÉ Y SALUD</a>
+                    <a href="{{ route('home') }}" class="logo"> FÉ Y SALUD</a>
                 </div>
             </div>
             <div class="sidebar-inner slimscrollleft">
@@ -54,6 +54,17 @@
                         </li>
                         <li>
                             <a href="{{ route('compras.index') }}" class="waves-effect">Ver todas</a>
+                        </li>
+                        <li class="menu-title">Ventas</li>
+                        <li>
+                            <a href="{{ route('ventas.create') }}" class="waves-effect">Registrar</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ventas.index') }}" class="waves-effect">Ver todas</a>
+                        </li>
+                        <li class="menu-title">Administración</li>
+                        <li>
+                            <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
                         </li>
                     </ul>
                 </div>
