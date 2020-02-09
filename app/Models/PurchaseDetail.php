@@ -27,6 +27,11 @@ class PurchaseDetail extends Model
         'unit_price'
     ];
 
+    public function getSubtotalAttribute()
+    {
+        return $this->attributes['init_quantity'] * $this->attributes['unit_price'];
+    }
+
     public function document()
     {
         return $this->belongsTo(Purchase::class);

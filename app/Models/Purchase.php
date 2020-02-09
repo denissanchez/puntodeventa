@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Scopes\AvailableStateScope;
 use App\Scopes\CurrentBranchScope;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,13 +26,14 @@ class Purchase extends Model
 {
     protected $fillable = [
         'branch_id', 'seller_id', 'provider', 'seller_name',
-        'code', 'type', 'currency', 'commentary', 'state'
+        'code', 'date', 'type', 'currency', 'commentary', 'state'
     ];
 
     protected static function boot()
     {
         parent::boot();
         self::addGlobalScope(new CurrentBranchScope());
+        self::addGlobalScope(new AvailableStateScope());
     }
 
     public function setProviderAttribute($value)
@@ -68,6 +71,29 @@ class Purchase extends Model
         return date('d-m-Y', strtotime($this->attributes['date']));
     }
 
+    private function quantitiesSoldAndPurchasedIsEquals()
+    {
+        return $this->attributes['init_quantity'] === $this->attributes['current_quantity'];
+    }
+
+    private function isSameSellerOrIsAdmin()
+    {
+        return $this->attributes['seller_id'] === Auth::user()->id;
+    }
+
+    private function IsInRangeDateToEdit()
+    {
+        $registered_at = date('YYYY-MM-DD', strtotime($this->attributes['date']));
+        $now = date('YYYY-MM-DD', strtotime(Carbon::now()));
+        $interval = date_diff($now, $registered_at);
+        return $interval->format('%a') < 2;
+    }
+
+    public function getIsEditableAttribute()
+    {
+        return $this->quantitiesSoldAndPurchasedIsEquals() && $this->isSameSellerOrIsAdmin() && $this->IsInRangeDateToEdit();
+    }
+
     public static function addRecord($values)
     {
         return self::create(array_merge($values,
@@ -85,12 +111,12 @@ class Purchase extends Model
     public function addDetails($details) {
         foreach ($details as $key=>$detail) {
             $this->addDetail([
-                'product_id' => $details['id'],
+                'product_id' => $detail['id'],
                 'item' => $key + 1,
                 'purchase_code' => $this->attributes['code'],
-                'init_quantity' => $details['quantity'],
-                'current_quantity' => $details['quantity'],
-                'unit_price' => $details['unit_price']
+                'init_quantity' => $detail['quantity'],
+                'current_quantity' => $detail['quantity'],
+                'unit_price' => $detail['unit_price']
             ]);
         }
     }

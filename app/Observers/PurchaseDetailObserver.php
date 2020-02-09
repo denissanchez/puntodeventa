@@ -12,7 +12,7 @@ class PurchaseDetailObserver
     public function created(PurchaseDetail $purchase_detail)
     {
         $product = Product::find($purchase_detail->product_id);
-        StockProduct::updatePurchasedUnits($product, $purchase_detail->init_quantity);
+        StockProduct::updatePurchasedUnits($product->id, $purchase_detail->init_quantity);
     }
 
     public function updated(PurchaseDetail $purchase_detail)
