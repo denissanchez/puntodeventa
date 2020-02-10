@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Scopes\AvailableStateScope;
 use App\Scopes\CurrentBranchScope;
 use App\User;
+use App\Utils\StateInfo;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Purchase
@@ -23,13 +27,14 @@ class Purchase extends Model
 {
     protected $fillable = [
         'branch_id', 'seller_id', 'provider', 'seller_name',
-        'code', 'type', 'currency', 'commentary', 'state'
+        'code', 'date', 'type', 'currency', 'commentary', 'state'
     ];
 
     protected static function boot()
     {
         parent::boot();
         self::addGlobalScope(new CurrentBranchScope());
+        self::addGlobalScope(new AvailableStateScope());
     }
 
     public function setProviderAttribute($value)
@@ -67,24 +72,68 @@ class Purchase extends Model
         return date('d-m-Y', strtotime($this->attributes['date']));
     }
 
-    public function scopeCurrentBranch($query)
+    private function quantitiesSoldAndPurchasedIsEquals()
     {
-        return $query->where('branch_id', '=', Auth::user()->branch_id);
+        foreach($this->details as $detail)
+        {
+            if ($detail->init_quantity !== $detail->current_quantity)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
+    private function isSameSellerOrIsAdmin()
+    {
+        return $this->attributes['seller_id'] === Auth::user()->id;
+    }
+
+    private function isInRangeDateToAction($days)
+    {
+        $registered_at = date('Y-m-d', strtotime($this->attributes['date']));
+        $now = date('Y-m-d', strtotime(Carbon::now()));
+        $interval = date_diff(new \DateTime($now), new \DateTime($registered_at));
+        return $interval->format('%a') < $days;
+    }
+
+    private function isValidState() {
+        return $this->attributes['state'] === StateInfo::CONFIRMED_STATE;
+    }
+
+    public function getIsEditableAttribute()
+    {
+        return $this->isSameSellerOrIsAdmin() && $this->isValidState() && $this->isInRangeDateToAction(3) && $this->quantitiesSoldAndPurchasedIsEquals();
+    }
+
+    public function getIsDeleteableAttribute()
+    {
+        return $this->isSameSellerOrIsAdmin() && $this->isValidState() && $this->isInRangeDateToAction(5) && $this->quantitiesSoldAndPurchasedIsEquals();
+    }
+
+    public static function addRecord($values)
+    {
+        return self::create(array_merge($values,
+            [
+                'branch_id' => Auth::user()->branch_id,
+                'seller_id' => Auth::user()->id
+            ]
+        ));
+    }
+
+    /* El array del detalle sería los productos que se agregan en la tabla inferior
+     * por lo tanto el $detail[id] sería el ID del producto que ya se encuentra
+     * registrado en la base de datos
+     * */
     public function addDetails($details) {
-        /* El array del detalle sería los productos que se agregan en la tabla inferior
-         * por lo tanto el $detail[id] sería el ID del producto que ya se encuentra
-         * registrado en la base de datos
-         * */
         foreach ($details as $key=>$detail) {
             $this->addDetail([
-                'product_id' => $details['id'],
+                'product_id' => $detail['id'],
                 'item' => $key + 1,
                 'purchase_code' => $this->attributes['code'],
-                'init_quantity' => $details['quantity'],
-                'current_quantity' => $details['quantity'],
-                'unit_price' => $details['unit_price']
+                'init_quantity' => $detail['quantity'],
+                'current_quantity' => $detail['quantity'],
+                'unit_price' => $detail['unit_price']
             ]);
         }
     }
@@ -96,10 +145,11 @@ class Purchase extends Model
 
     public static function purchaseDetailsOfProductWithAvailableStockByProductId($product_id)
     {
-        return self::all()
-            ->details()
-            ->ofProduct($product_id)->withAvailableStock()
+        $purchase_details = PurchaseDetail::ofProduct($product_id)
+            ->confirmedState()
+            ->withAvailableStock()
             ->orderBy('id', 'asc')->get();
+        return $purchase_details;
     }
 
     public function branch()

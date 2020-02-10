@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Utils\StateInfo;
 
 class CreatePurchasesTable extends Migration
 {
@@ -23,11 +24,11 @@ class CreatePurchasesTable extends Migration
             $table->string('type')->default('FACTURA');
             $table->string('currency')->default('PEN');
             $table->string('commentary')->default('-');
-            $table->string('state');
+            $table->string('state')->default(StateInfo::CONFIRMED_STATE);
             $table->timestamps();
 
-            $table->foreign('branch_id')->references('id')->on('branches');
-            $table->foreign('seller_id')->references('id')->on('users');
+            $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

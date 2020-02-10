@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Utils\StateInfo;
 
 class CreateSaleDetailsTable extends Migration
 {
@@ -17,15 +18,15 @@ class CreateSaleDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('sale_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('item');
-            $table->string('purchase_code');
-            $table->decimal('quantity', 8, 2);
-            $table->decimal('unit_price', 8, 2);
-            $table->decimal('discount', 8, 2);
+            $table->integer('item')->unsigned();
+            $table->decimal('quantity', 8, 2)->unsigned();
+            $table->decimal('unit_price', 8, 2)->unsigned();
+            $table->decimal('discount', 8, 2)->unsigned()->default(0);
+            $table->string('state')->default(StateInfo::CONFIRMED_STATE);
             $table->timestamps();
 
-            $table->foreign('sale_id')->references('id')->on('sales');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('sale_id')->references('id')->on('sales')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

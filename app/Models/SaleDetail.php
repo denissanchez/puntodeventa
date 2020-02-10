@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\StateInfo;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +21,16 @@ class SaleDetail extends Model
     protected $fillable = [
         'sale_id', 'product_id', 'item', 'quantity', 'unit_price', 'discount'
     ];
+
+    public function getSubtotalAttribute()
+    {
+        return ($this->attributes['unit_price'] - $this->attributes['discount']) * $this->attributes['quantity'];
+    }
+
+    public function scopeConfirmedState($query)
+    {
+        return $query->where('state', StateInfo::CONFIRMED_STATE);
+    }
 
     public function product()
     {

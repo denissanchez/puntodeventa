@@ -18,23 +18,22 @@
             <form action="{{ route('compras.update', [ 'compra' => $purchase ]) }}" method="POST">
                 @csrf
                 @method('PATCH')
-                <div class="card-header">Editar compra</div>
                 <div class="card-body">
                     <div class="form-row">
                         <div class="col-md-2">
                             <label>RUC</label>
-                            <input type="number" class="form-control" name="provider_identity_document" id="provider_identity_document" value="{{ $purchase->provider->identity_document }}">
+                            <input type="number" class="form-control" name="provider_identity_document" id="provider_identity_document" value="{{ $purchase->provider['identity_document'] }}">
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Razón social</label>
-                                <input type="text" class="form-control to-upper" name="provider_name" id="provider_name" value="{{ $purchase->provider->name }}" disabled>
+                                <input type="text" class="form-control to-upper" name="provider_name" id="provider_name" value="{{ $purchase->provider['name'] }}">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Dirección</label>
-                                <input type="text" class="form-control to-upper" name="provider_address" id="provider_address" value="{{ $purchase->provider->address }}" disabled>
+                                <input type="text" class="form-control to-upper" name="provider_address" id="provider_address" value="{{ $purchase->provider['address'] }}">
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -48,7 +47,7 @@
                                 <label>Fecha</label>
                                 <input name="date" type="date" class="form-control"
                                        value="{{ date('Y-m-d', strtotime($purchase->date)) }}"
-                                       min="{{ date('Y-m-d', strtotime($now."- 5 days")) }}"
+                                       min="{{ date('Y-m-d', strtotime($now."- 3 days")) }}"
                                        max="{{ date('Y-m-d') }}">
                             </div>
                         </div>
@@ -82,6 +81,7 @@
                         <tbody>
                         </tbody>
                     </table>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
         </div>
@@ -180,25 +180,57 @@
 </div>
 
 <script type="text/javascript">
-    let products = [@foreach($products as $key => $product){ id: {{ $product->id }}, text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}", uom: "{{ $product->measure_unit }}" } @if(count($products) - 1 !== $key), @endif @endforeach];
-    let providers = [@foreach($providers as $key => $provider){ id: {{ $provider->id }}, name: "{{ $provider->name }}", identity_document: "{{ $provider->identity_document }}", address: "{{ $provider->address }}" } @if(count($providers) - 1 !== $key), @endif @endforeach];
-    let selectedProducts = [
-            @foreach($purchase->details as $key=>$detail)
-        {
-            text : "{{ $detail->product_name }}",
-            id: "{{ $detail->product->id }}",
-            uom: "{{ $detail->product->measure_unit }}",
-            quantity: "{{ $detail->init_quantity }}",
-            unit_price: "{{ $detail->unit_price }}"
-        }
-        @if(count($providers) - 1 !== $key), @endif
+    let products = [
+        @foreach($products as $key => $product)
+            {
+                id: {{ $product->id }},
+                text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
+                uom: "{{ $product->measure_unit }}"
+            } @if(count($products) - 1 !== $key), @endif
         @endforeach
+    ];
+
+    let providers = [
+        @foreach($providers as $key => $provider)
+            {
+                id: '{{ $provider->id }}',
+                name: "{{ $provider->name }}",
+                identity_document: "{{ $provider->identity_document }}",
+                address: "{{ $provider->address }}"
+            }
+            @if(count($providers) - 1 !== $key), @endif
+        @endforeach
+    ];
+
+    let selectedProducts = [
+        @if(old('products') !== null)
+            @foreach(old('products') as $key=>$product)
+                {
+                    id: '{{ $product['id'] }}',
+                    text: '{{ $product['text'] }}',
+                    uom: '{{ $product['uom'] }}',
+                    quantity: '{{ $product['quantity'] }}',
+                    unit_price: '{{ $product['unit_price'] }}'
+                }
+                @if(count(old('products')) - 1 !== $key), @endif
+            @endforeach
+        @else
+            @foreach($purchase->details as $key=>$detail)
+                {
+                    id: '{{ $detail->product_id }}',
+                    text: '{{ $detail->product->display_name }}',
+                    uom: '{{ $detail->product->measure_unit }}',
+                    quantity: '{{ $detail->init_quantity }}',
+                    unit_price: '{{ $detail->unit_price }}',
+                    subtotal: '{{ $detail->subtotal }}',
+                }
+                @if(count($purchase->details) - 1 !== $key), @endif
+            @endforeach
+        @endif
     ];
 
     $(
         function() {
-            reloadTableContent();
-
             $('.select2').select2(
                 {
                     tags: true,
@@ -218,17 +250,17 @@
                 },
                 errorClass: 'is-invalid',
                 submitHandler: function () {
-                    selectedProducts.push(getProductFromModal());
-                    reloadTableContent();
-                    closeModal();
+                    saveProduct();
                 }
-            })
-        })
+            });
+            reloadTableContent();
+        });
 
     $('#select2-product').on('select2:select', function(e){
         let data = e.params.data;
-        data.quantity = 0;
-        data.unit_price = 0;
+        data.quantity = (0).toFixed(2);
+        data.unit_price = (0).toFixed(2);
+        data.subtotal = (0).toFixed(2);
         selectedProducts.push(data);
         $('#select2-product').val('');
         reloadTableContent();
@@ -241,21 +273,16 @@
             function (product, index) {
                 table.append(
                     '<tr id="item-' + index + '">' +
-                    '<td>'+ (index + 1) +'' +
+                    '<td>' + (index + 1) +
                     '<input type="hidden" name="products[' + index + '][id]" value="' + product.id + '">' +
-                    '<input type="hidden" name="products[' + index + '][code]" value="' + product.code + '">' +
-                    '<input type="hidden" name="products[' + index + '][category]" value="' + product.category + '">' +
-                    '<input type="hidden" name="products[' + index + '][brand]" value="' + product.brand + '">' +
-                    '<input type="hidden" name="products[' + index + '][laboratory]" value="' + product.laboratory + '">' +
-                    '<input type="hidden" name="products[' + index + '][name]" value="' + product.name + '">' +
-                    '<input type="hidden" name="products[' + index + '][measure_unit]" value="' + product.measure_unit + '">' +
-                    '<input type="hidden" name="products[' + index + '][description]" value="' + product.description + '">' +
-                    '<input type="hidden" name="products[' + index + '][composition]" value="' + product.composition + '">' +
+                    '<input type="hidden" name="products[' + index + '][text]" value="' + product.text + '">' +
+                    '<input type="hidden" name="products[' + index + '][uom]" value="' + product.uom + '">' +
                     '</td>' +
                     '<td>'+ product.text +'</td>' +
                     '<td>'+ product.uom +'</td>' +
-                    '<td><input type="number" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" step="any" required></td>' +
-                    '<td><input type="number" name="products[' + index + '][unit_price]" id="product-'+ index +'-unit_price" onchange="onChangeUnitPrice('+ index +')" value="'+ product.unit_price +'" class="form-control form-control-sm" step="any" required></td>' +
+                    '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
+                    '<td><input type="text" name="products[' + index + '][unit_price]" id="product-'+ index +'-unit_price" onchange="onChangeUnitPrice('+ index +')" value="'+ product.unit_price +'" class="form-control form-control-sm" required></td>' +
+                    '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="' + product.subtotal + '" readonly></td>' +
                     '<td>' +
                     '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +
                     '           <i class="fa fa-trash"></i>' +
@@ -278,15 +305,13 @@
                 if (provider) {
                     setProviderName(provider.name);
                     setProviderAddress(provider.address);
-                    disableProviderFields();
                     toastr.success('Proveedor encontrado')
                 } else {
-                    enableProviderFields();
                     toastr.error('No se encontró ningún registro con el número de RUC', 'Proveedor no encontrado')
                 }
             } else {
-                toastr.error('Por favor ingrese un RUC válido', 'Error')
-                $('#provider_identity_document').addClass('is-invalid')
+                toastr.error('Por favor ingrese un RUC válido', 'Error');
+                $('#provider_identity_document').addClass('is-invalid');
                 setProviderAddress('');
                 setProviderName('');
             }
@@ -299,18 +324,6 @@
 
     function setProviderAddress(value){
         $('#provider_address').val(value);
-    }
-
-    function disableProviderFields(){
-        $('#provider_name').prop('disabled', true);
-        $('#provider_address').prop('disabled', true);
-    }
-
-    function enableProviderFields(){
-        setProviderName('');
-        setProviderAddress('');
-        $('#provider_name').prop('disabled', false);
-        $('#provider_address').prop('disabled', false);
     }
 
     function deleteItem(index, text) {
@@ -330,23 +343,36 @@
         $('#form-new_product').trigger('reset');
     }
 
-    function getProductFromModal() {
+    function saveProduct() {
         let product = {
-            id : 0,
-            code : $.trim(getInputFromModalByName('code').val()),
+            code: $.trim(getInputFromModalByName('code').val()),
             category : $.trim(getSelect2FromModalByName('category')),
             brand : $.trim(getSelect2FromModalByName('brand')),
             laboratory : $.trim(getSelect2FromModalByName('laboratory')),
             name : $.trim(getInputFromModalByName('name').val()),
             measure_unit : $.trim(getSelect2FromModalByName('measure_unit')),
             description : $.trim(getTextAreaFromModalByName('description').val()),
-            composition : $.trim(getTextAreaFromModalByName('composition').val() || '-'),
-            quantity : 0,
-            unit_price : 0
+            composition : $.trim(getTextAreaFromModalByName('composition').val()),
         };
-        product.text = (product.code + ' | ' + product.name + ' - ' + product.brand).toUpperCase();
-        product.uom = product.measure_unit;
-        return product;
+
+        axios.post('/api/productos', product).then(
+            res => {
+                let data = res.data.data;
+                data.quantity = (0).toFixed(2);
+                data.unit_price = (0).toFixed(2);
+                data.subtotal = (0).toFixed(2);
+                selectedProducts.push(data);
+                reloadTableContent();
+                closeModal();
+            },
+            err => {
+
+            }
+        );
+    }
+
+    function getTextAttribute(product) {
+        return product.code + ' | ' + product.name + ' - ' + product.brand;
     }
 
     function getInputFromModalByName(name) {
@@ -367,10 +393,17 @@
 
     function onChangeQuantity(index) {
         selectedProducts[index].quantity = $('#product-'+ index +'-quantity').val();
+        calculateSubtotal(index);
     }
 
     function onChangeUnitPrice(index) {
         selectedProducts[index].unit_price = $('#product-'+ index +'-unit_price').val();
+        calculateSubtotal(index);
+    }
+
+    function calculateSubtotal(index) {
+        let subtotal = +selectedProducts[index].quantity * +selectedProducts[index].unit_price;
+        $('#product-'+ index +'-subtotal').val(subtotal.toFixed(2));
     }
 </script>
 @endsection

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Utils\StateInfo;
 
 class CreatePurchaseDetailsTable extends Migration
 {
@@ -22,10 +23,11 @@ class CreatePurchaseDetailsTable extends Migration
             $table->decimal('init_quantity', 8, 2);
             $table->decimal('current_quantity', 8, 2);
             $table->decimal('unit_price', 8, 2);
+            $table->string('state')->default(StateInfo::CONFIRMED_STATE);
             $table->timestamps();
 
-            $table->foreign('purchase_id')->references('id')->on('purchases');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

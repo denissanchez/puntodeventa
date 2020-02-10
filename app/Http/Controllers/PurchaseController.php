@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Builders\PurchaseBuilder;
 use App\Builders\ResponseDataBuilder;
 use App\Http\Requests\PurchaseStoreRequest;
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
+use App\Utils\StateInfo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
@@ -16,7 +18,7 @@ class PurchaseController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $purchases = Purchase::orderBy('id', 'desc')->get();
         return view('purchase.index', [
@@ -34,39 +36,66 @@ class PurchaseController extends Controller
     public function store(PurchaseStoreRequest $request)
     {
         $data = $request->validated();
-        $purchase = Purchase::create(
-            array_merge($data,
-                [
-                    'branch_id' => Auth::user()->branch_id,
-                    'seller_id' => Auth::user()->id
-                ]
-            ));
+        $purchase = Purchase::addRecord($data);
         $products = $request->post('products');
         $purchase->addDetails($products);
-        return redirect()->route('purchase.show', ['purchase' => $purchase]);
+        return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
-    public function show(Purchase $purchase)
+    public function show($id)
     {
+        $purchase = Purchase::findOrFail($id);
         return view('purchase.show', [
             'purchase' => $purchase
         ]);
     }
 
-    public function edit(Purchase $purchase)
+    public function edit($id)
     {
-        $data = new ResponseDataBuilder();
-        $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
-        return view('purchase.edit', array_merge($data, ['purchase' => $purchase]));
+        $purchase = Purchase::findOrFail($id);
+        if ($purchase->is_editable)
+        {
+            $data = new ResponseDataBuilder();
+            $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
+            return view('purchase.edit', array_merge($data, ['purchase' => $purchase]));
+        }
+        return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $purchase = Purchase::findOrfail($id);
+        if ($purchase->is_editable)
+        {
+            foreach ($purchase->details as $detail)
+            {
+                $detail->removeUnits();
+                $detail->delete();
+            }
+            $products = $request->post('products');
+            $purchase->addDetails($products);
+        }
+        return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $purchase = Purchase::findOrFail($id);
+        if ($purchase->is_deleteable)
+        {
+            $purchase->update([
+                'commentary' => $request->post('commentary'),
+                'state' => StateInfo::CANCELED_STATE
+            ]);
+
+            foreach ($purchase->details as $detail) {
+                $detail->removeUnits();
+            }
+
+            $purchase->details()->update([
+                'state' => StateInfo::CANCELED_STATE
+            ]);
+        }
+        return redirect()->route('compras.index');
     }
 }

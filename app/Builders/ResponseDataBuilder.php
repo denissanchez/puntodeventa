@@ -67,6 +67,16 @@ class ResponseDataBuilder
         return $this;
     }
 
+    public function onlyProductWithStock()
+    {
+        $products = Product::all();
+        $products = $products->filter(function ($product) {
+            return $product->current_quantity > 0;
+        });
+        $this->add_collection('products', $products);
+        return $this;
+    }
+
     public function build()
     {
         return $this->data;

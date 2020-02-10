@@ -17,7 +17,7 @@ class SaleDetailObserver
         $required_quantity = $sale_detail->quantity;
         $purchase_details = Purchase::purchaseDetailsOfProductWithAvailableStockByProductId($sale_detail->product_id);
         foreach($purchase_details as $key=>$purchase_detail) {
-            $current_quantity = $purchase_details->current_quantity;
+            $current_quantity = $purchase_detail->current_quantity;
             if ($current_quantity < $required_quantity) {
                 $required_quantity -= $current_quantity;
                 $this->createControl($purchase_detail, $current_quantity);

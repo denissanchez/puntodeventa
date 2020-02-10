@@ -47,13 +47,22 @@ class Sale extends Model
         return unserialize($this->attributes['owner_document']);
     }
 
+    public static function addRecord($values)
+    {
+        return self::create(array_merge($values,
+            [
+                'branch_id' => Auth::user()->branch_id,
+                'seller_id' => Auth::user()->id
+            ]
+        ));
+    }
+
     public function addDetails($details)
     {
         foreach ($details as $key=>$detail) {
             $this->addDetail([
                 'product_id' => $detail['id'],
                 'item' => $key + 1,
-                'purchase_code' => '-', // TODO: Implementar la busqueda de documentos de compra
                 'quantity' => $detail['quantity'],
                 'unit_price' => $detail['unit_price'],
                 'discount' => $detail['discount']

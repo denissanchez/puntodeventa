@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $products = Product::paginate();
@@ -48,26 +54,12 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductStoreRequest $request, $id)
     {
-        try {
-            $product = Product::where('id', '=', $id)->first();
-            if (!$product)
-                throw new ModelNotFoundException();
-            $product->update([
-                'code' => $request->post('code'),
-                'category' => $request->post('category'),
-                'brand' => $request->post('brand'),
-                'laboratory' => $request->post('laboratory'),
-                'measure_unit' => $request->post('measure_unit'),
-                'name' => $request->post('name'),
-                'composition' => $request->post('composition'),
-                'description' => $request->post('description'),
-            ]);
-            return redirect()->route('productos.show', ['producto' => $product]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $product = Product::findOrFail($id);
+        $data = $request->validated();
+        $product->update($data);
+        return redirect()->route('productos.show', ['producto' => $product]);
     }
 
     public function destroy($id)

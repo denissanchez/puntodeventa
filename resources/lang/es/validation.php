@@ -146,6 +146,23 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'provider.identity_document' => 'RUC del proveedor',
+        'client.identity_document' => 'documento del cliente',
+        'provider.name' => 'razón social',
+        'client.name' => 'razón social',
+        'provider.address' => 'dirección',
+        'client.address' => 'dirección',
+        'code' => 'código',
+        'date' => 'fecha',
+        'category' => 'categoría',
+        'brand' => 'marca',
+        'laboratory' => 'laboratorio',
+        'name' => 'nombre',
+        'measure_unit' => 'unidad de medida',
+        'description' => 'descripción',
+        'composition' => 'composición',
+        'unit_price' => 'precio unitario'
+    ],
 
 ];

@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             $table->decimal('sold_units', 6, 2)->default(0)->unsigned();
             $table->timestamps();
 
-            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

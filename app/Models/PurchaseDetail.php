@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\StateInfo;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -24,8 +25,14 @@ class PurchaseDetail extends Model
         'purchase_code',
         'init_quantity',
         'current_quantity',
-        'unit_price'
+        'unit_price',
+        'state'
     ];
+
+    public function getSubtotalAttribute()
+    {
+        return $this->attributes['init_quantity'] * $this->attributes['unit_price'];
+    }
 
     public function document()
     {
@@ -35,6 +42,18 @@ class PurchaseDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function removeUnits()
+    {
+        $product = $this->product;
+        $product->purchased_units -= $this->attributes['init_quantity'];
+        $product->save();
+    }
+
+    public function scopeConfirmedState($query)
+    {
+        return $query->where('state', StateInfo::CONFIRMED_STATE);
     }
 
     public function scopeOfProduct($query, $product_id) {
