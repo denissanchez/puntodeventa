@@ -90,6 +90,18 @@ class Sale extends Model
         }
     }
 
+    public function generateBillingCode($type)
+    {
+        $latest = BillingCode::where('type', $type)->lastest();
+
+        return BillingCode::create([
+            'branch_id' => Auth::user()->branch_id,
+            'prefix' => $latest->prefix,
+            'type' => $type,
+            'incrementable' => $latest->incrementable + 1
+        ]);
+    }
+
     public function addDetail($detail)
     {
         $this->details()->create($detail);
