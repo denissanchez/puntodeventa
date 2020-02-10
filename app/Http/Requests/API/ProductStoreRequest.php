@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,15 +21,6 @@ class ProductStoreRequest extends FormRequest
             'measure_unit' => ['required', 'string'],
             'description' => ['required', 'string'],
             'composition' => ['nullable', 'string'],
-            'unit_price' => ['required', 'numeric', 'min:0.01'],
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'unit_price.numeric' => 'Ingrese un precio unitario válido',
-            'unit_price.min' => 'Ingrese un precio unitario válido'
         ];
     }
 }

@@ -147,9 +147,12 @@ return [
     */
 
     'attributes' => [
-        'provider_identity_document' => 'RUC del proveedor',
-        'provider_name' => 'razón social',
-        'provider_address' => 'dirección',
+        'provider.identity_document' => 'RUC del proveedor',
+        'client.identity_document' => 'documento del cliente',
+        'provider.name' => 'razón social',
+        'client.name' => 'razón social',
+        'provider.address' => 'dirección',
+        'client.address' => 'dirección',
         'code' => 'código',
         'date' => 'fecha',
         'category' => 'categoría',
@@ -158,7 +161,8 @@ return [
         'name' => 'nombre',
         'measure_unit' => 'unidad de medida',
         'description' => 'descripción',
-        'composition' => 'composición'
+        'composition' => 'composición',
+        'unit_price' => 'precio unitario'
     ],
 
 ];
