@@ -17,7 +17,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'text' => $this->display_name,
-            'uom' => $this->measure_unit,
+            'uom' => $this->measure_unit
         ];
     }
 }

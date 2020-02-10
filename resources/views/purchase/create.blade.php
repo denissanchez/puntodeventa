@@ -12,6 +12,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -107,6 +108,11 @@
                             </button>
                         </div>
                     </div>
+                    @error('products')
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <table id="table-detail" class="table">
                         <thead>
                         <tr>
@@ -143,13 +149,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Código</label>
-                                <input type="text" name="code" class="form-control to-upper" required>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Categoría</label>
                                 <select name="category" class="form-control select2" data-data="" required>
@@ -160,9 +160,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-5">
+                        <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label>Marca</label>
                                 <select name="brand" class="form-control select2" data-data="" required>
@@ -173,7 +171,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-7">
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-12 col-md-7">
                             <div class="form-group">
                                 <label>Laboratorio</label>
                                 <select name="laboratory" id="" class="form-control select2" data-data="" required>
@@ -184,15 +184,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" name="name" class="form-control to-upper" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-sm-12 col-md-5">
                             <div class="form-group">
                                 <label>U. medida</label>
                                 <select name="measure_unit" class="form-control select2" data-data="" data-tags="true" required>
@@ -201,6 +193,14 @@
                                         <option value="{{ $measure_unit->id }}">{{ $measure_unit->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" name="name" class="form-control to-upper" required>
                             </div>
                         </div>
                     </div>
@@ -228,7 +228,9 @@
             {
                 id: {{ $product->id }},
                 text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
-                uom: "{{ $product->measure_unit }}"
+                uom: "{{ $product->measure_unit }}",
+                error_quantity: '',
+                error_unit_price: ''
             } @if(count($products) - 1 !== $key), @endif
         @endforeach
     ];
@@ -253,7 +255,9 @@
                     text: '{{ $product['text'] }}',
                     uom: '{{ $product['uom'] }}',
                     quantity: '{{ $product['quantity'] }}',
-                    unit_price: '{{ $product['unit_price'] }}'
+                    unit_price: '{{ $product['unit_price'] }}',
+                    @error('products.'.$key.'.quantity') error_quantity: 'is-invalid', @enderror
+                    @error('products.'.$key.'.unit_price') error_unit_price: 'is-invalid' @enderror
                 }
                 @if(count(old('products')) - 1 !== $key), @endif
             @endforeach
@@ -310,8 +314,8 @@
                     '</td>' +
                     '<td>'+ product.text +'</td>' +
                     '<td>'+ product.uom +'</td>' +
-                    '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
-                    '<td><input type="text" name="products[' + index + '][unit_price]" id="product-'+ index +'-unit_price" onchange="onChangeUnitPrice('+ index +')" value="'+ product.unit_price +'" class="form-control form-control-sm" required></td>' +
+                    '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_quantity +'" required></td>' +
+                    '<td><input type="text" name="products[' + index + '][unit_price]" id="product-'+ index +'-unit_price" onchange="onChangeUnitPrice('+ index +')" value="'+ product.unit_price +'" class="form-control form-control-sm '+ product.error_unit_price +'" required></td>' +
                     '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>' +
                     '<td>' +
                     '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +
@@ -337,7 +341,7 @@
                     setProviderAddress(provider.address);
                     toastr.success('Proveedor encontrado')
                 } else {
-                    toastr.error('No se encontró ningún registro con el número de RUC', 'Proveedor no encontrado')
+                    toastr.warning('No se encontró ningún registro con el número de RUC', 'Proveedor no encontrado')
                 }
             } else {
                 toastr.error('Por favor ingrese un RUC válido', 'Error');

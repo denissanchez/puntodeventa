@@ -20,10 +20,17 @@ class PurchaseStoreRequest extends FormRequest
             'provider.address' => ['required', 'string'],
             'code' => ['required'],
             'date' => ['required', 'date'],
-            'products' => ['array', 'min:1'],
+            'products' => ['required', 'array', 'min:1'],
             'products.*.id' => ['required', 'exists:products,id'],
-            'products.*.quantity' => ['required', 'numeric', 'min:0'],
-            'products.*.unit_price' => ['required', 'numeric', 'min:0'],
+            'products.*.quantity' => ['required', 'numeric', 'min:0.01'],
+            'products.*.unit_price' => ['required', 'numeric', 'min:0.01'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'products.required' => 'Seleecione por lo menos un producto',
         ];
     }
 }

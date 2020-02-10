@@ -83,6 +83,10 @@ class PurchaseController extends Controller
                 'commentary' => $request->post('commentary'),
                 'state' => StateInfo::CANCELED_STATE
             ]);
+
+            $purchase->details()->update([
+                'state' => StateInfo::CANCELED_STATE
+            ]);
         }
         return redirect()->route('compras.show', ['compra' => $purchase]);
     }

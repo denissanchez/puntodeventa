@@ -145,10 +145,11 @@ class Purchase extends Model
 
     public static function purchaseDetailsOfProductWithAvailableStockByProductId($product_id)
     {
-        return self::all()
-            ->details()
-            ->ofProduct($product_id)->withAvailableStock()
+        $purchase_details = PurchaseDetail::ofProduct($product_id)
+            ->confirmedState()
+            ->withAvailableStock()
             ->orderBy('id', 'asc')->get();
+        return $purchase_details;
     }
 
     public function branch()

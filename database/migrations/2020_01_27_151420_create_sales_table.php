@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Utils\StateInfo;
 
 class CreateSalesTable extends Migration
 {
@@ -19,8 +20,8 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('seller_id');
             $table->string('code')->nullable();
             $table->text('client');
-            $table->string('state');
-            $table->string('type');
+            $table->string('state')->default(StateInfo::CONFIRMED_STATE);
+            $table->string('type')->nullable();
             $table->string('currency')->default('PEN');
             $table->string('commentary')->nullable();
             $table->timestamps();

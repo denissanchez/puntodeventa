@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\StateInfo;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -24,7 +25,8 @@ class PurchaseDetail extends Model
         'purchase_code',
         'init_quantity',
         'current_quantity',
-        'unit_price'
+        'unit_price',
+        'state'
     ];
 
     public function getSubtotalAttribute()
@@ -40,6 +42,11 @@ class PurchaseDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function scopeConfirmedState($query)
+    {
+        return $query->where('state', StateInfo::CONFIRMED_STATE);
     }
 
     public function scopeOfProduct($query, $product_id) {
