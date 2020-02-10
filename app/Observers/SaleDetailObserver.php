@@ -15,7 +15,9 @@ class SaleDetailObserver
     {
         $this->sale_detail = $sale_detail;
         $required_quantity = $sale_detail->quantity;
-        $purchase_details = Purchase::purchaseDetailsOfProductWithAvailableStockByProductId($sale_detail->product_id);
+        $purchase_details = PurchaseDetail::ofProduct()->confirmedState()->withAvailableStock()
+                                ->orderBy('id', 'asc')->get();
+
         foreach($purchase_details as $key=>$purchase_detail) {
             $current_quantity = $purchase_detail->current_quantity;
             if ($current_quantity < $required_quantity) {

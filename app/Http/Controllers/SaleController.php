@@ -34,7 +34,6 @@ class SaleController extends Controller
         return view('sale.create', $data);
     }
 
-    // TODO: Refactorizar metodo
     public function store(SaleStoreRequest $request)
     {
         $data = $request->validated();

@@ -143,15 +143,6 @@ class Purchase extends Model
         $this->details()->create($detail);
     }
 
-    public static function purchaseDetailsOfProductWithAvailableStockByProductId($product_id)
-    {
-        $purchase_details = PurchaseDetail::ofProduct($product_id)
-            ->confirmedState()
-            ->withAvailableStock()
-            ->orderBy('id', 'asc')->get();
-        return $purchase_details;
-    }
-
     public function branch()
     {
         return $this->belongsTo(Branch::class);
