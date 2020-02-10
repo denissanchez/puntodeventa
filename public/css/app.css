@@ -11741,6 +11741,14 @@ a:focus {
   text-decoration: none;
 }
 
+.to-upper {
+  text-transform: uppercase;
+}
+
+.to-lower {
+  text-transform: lowercase;
+}
+
 code {
   color: #40a4f1;
 }

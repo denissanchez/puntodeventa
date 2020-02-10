@@ -69,6 +69,14 @@ a {
   }
 }
 
+.to-upper {
+    text-transform: uppercase;
+}
+
+.to-lower {
+    text-transform: lowercase;
+}
+
 code {
   color: $info;
 }
