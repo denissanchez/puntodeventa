@@ -14,3 +14,9 @@ class StateInfo
     const CONFIRMED_STATE = 'COMPLETADO';
     const CANCELED_STATE = 'ANULADO';
 }
+
+class DocumentInfo
+{
+    const FACTURA = 'FACTURA';
+    const BOLETA = 'BOLETA';
+}

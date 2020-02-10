@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Builders\ResponseDataBuilder;
+use App\Http\Requests\PurchaseDeleteRequest;
 use App\Http\Requests\PurchaseStoreRequest;
+use App\Http\Requests\PurchaseUpdateRequest;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
@@ -62,7 +64,7 @@ class PurchaseController extends Controller
         return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
-    public function update(Request $request, $id)
+    public function update(PurchaseUpdateRequest $request, $id)
     {
         $purchase = Purchase::findOrfail($id);
         if ($purchase->is_editable)
@@ -78,23 +80,12 @@ class PurchaseController extends Controller
         return redirect()->route('compras.show', ['compra' => $purchase]);
     }
 
-    public function destroy($id, Request $request)
+    public function destroy($id, PurchaseDeleteRequest $request)
     {
         $purchase = Purchase::findOrFail($id);
         if ($purchase->is_deleteable)
         {
-            $purchase->update([
-                'commentary' => $request->post('commentary'),
-                'state' => StateInfo::CANCELED_STATE
-            ]);
-
-            foreach ($purchase->details as $detail) {
-                $detail->removeUnits();
-            }
-
-            $purchase->details()->update([
-                'state' => StateInfo::CANCELED_STATE
-            ]);
+            $purchase->cancel($request->post('commentary'));
         }
         return redirect()->route('compras.index');
     }

@@ -6,21 +6,19 @@ use App\Jobs\UpdateStockOnPurchase;
 use App\Models\Product;
 use App\Models\PurchaseDetail;
 use App\Models\SaleDetail;
-use App\Services\StockProduct;
 
 class PurchaseDetailObserver
 {
     public function created(PurchaseDetail $purchase_detail)
     {
         $product = Product::find($purchase_detail->product_id);
-        StockProduct::updatePurchasedUnits($product->id, $purchase_detail->init_quantity);
+        $product->purchased_units += $purchase_detail->init_quantity;
+        $product->save();
     }
 
     public function updated(PurchaseDetail $purchase_detail)
     {
-        $sold_units = SaleDetail::where('product_id', $sale_detail->product_id)
-            ->confirmedState()->get()->sum('quantity');
-
+        $sold_units = SaleDetail::where('product_id', $sale_detail->product_id)->get()->sum('quantity');
         $product = Product::find($purchase_detail->product_id);
         $product->update([
             'purchased_units' => $product->purchased_units - $purchase_detail->init_quantity,
@@ -30,7 +28,7 @@ class PurchaseDetailObserver
 
     public function deleted(PurchaseDetail $purchase_detail)
     {
-
+        //
     }
 
     public function restored(PurchaseDetail $purchase_detail)

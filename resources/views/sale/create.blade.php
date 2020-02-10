@@ -110,7 +110,9 @@
                 text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
                 uom: "{{ $product->measure_unit }}",
                 unit_price: {{ $product->unit_price }},
-                stock: {{ $product->current_quantity }}
+                stock: {{ $product->current_quantity }},
+                error_quantity: '',
+                error_unit_price: ''
             }
             @if(count($products) - 1 !== $key), @endif
         @endforeach
@@ -138,6 +140,8 @@
                     quantity: '{{ $product['quantity'] }}',
                     unit_price: '{{ $product['unit_price'] }}',
                     discount: '{{ $product['discount'] }}',
+                    @error('products.'.$key.'.quantity') error_quantity: 'is-invalid', @enderror
+                    @error('products.'.$key.'.unit_price') error_unit_price: 'is-invalid' @enderror
                 }
                 @if(count(old('products')) - 1 !== $key), @endif
             @endforeach
@@ -177,8 +181,8 @@
                         '</td>' +
                         '<td>'+ product.unit_price + '</td>' +
                         '<td>'+ product.stock + '</td>' +
-                        '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
-                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
+                        '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_quantity +'" required></td>' +
+                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_unit_price +'" required></td>' +
                         '<td><input type="text" id="product-'+ index +'-unit_price" value="0.00" class="form-control form-control-sm" disabled></td>' +
                         '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>'+
                         '<td>' +

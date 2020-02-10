@@ -9,8 +9,7 @@ class PurchaseUpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        $purchase = Purchase::find('id', $this->id);
-        return $purchase->is_editable;
+        return true;
     }
 
     public function rules()

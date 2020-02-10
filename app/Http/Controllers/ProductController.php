@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::paginate();
+        $products = Product::all();
         return view('product.index', ['products' => $products]);
     }
 
@@ -32,26 +32,14 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        try {
-            $product = Product::where('id', '=', $id)->first();
-            if (!$product)
-                throw new ModelNotFoundException();
-            return view('product.show', ['product' => $product]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $product = Product::findOrFail($id);
+        return view('product.show', ['product' => $product]);
     }
 
     public function edit($id)
     {
-        try {
-            $product = Product::where('id', '=', $id)->first();
-            if (!$product)
-                throw new ModelNotFoundException();
-            return view('product.edit', ['product' => $product]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $product = Product::findOrFail($id);
+        return view('product.edit', ['product' => $product]);
     }
 
     public function update(ProductStoreRequest $request, $id)

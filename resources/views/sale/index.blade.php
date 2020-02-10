@@ -12,10 +12,11 @@
     <div class="col-md-12">
         <div class="card m-b-30">
             <div class="card-body">
-                <table class="table">
+                <table id="dataTable" class="table table-striped table-bordered" width="100%">
                     <thead>
                     <tr>
                         <th>Código</th>
+                        <th>Cliente</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -23,7 +24,10 @@
                     @foreach($sales as $key=>$sale)
                         <tr>
                             <td>{{ $sale->code }}</td>
-                            <td></td>
+                            <td>{{ $sale->client['name'] }}</td>
+                            <td>
+                                <a href="{{ route('ventas.show', ['venta' => $sale]) }}" class="btn btn-link">Ver</a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -32,4 +36,10 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#dataTable').DataTable();
+    });
+</script>
 @endsection

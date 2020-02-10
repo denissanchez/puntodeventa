@@ -138,18 +138,25 @@ class Purchase extends Model
         }
     }
 
+    public function cancel($commentary)
+    {
+        $this->update([
+            'commentary' => $commentary,
+            'state' => StateInfo::CANCELED_STATE
+        ]);
+
+        foreach ($purchase->details as $detail) {
+            $detail->removeUnits();
+        }
+
+        $purchase->details()->update([
+            'state' => StateInfo::CANCELED_STATE
+        ]);
+    }
+
     public function addDetail($detail)
     {
         $this->details()->create($detail);
-    }
-
-    public static function purchaseDetailsOfProductWithAvailableStockByProductId($product_id)
-    {
-        $purchase_details = PurchaseDetail::ofProduct($product_id)
-            ->confirmedState()
-            ->withAvailableStock()
-            ->orderBy('id', 'asc')->get();
-        return $purchase_details;
     }
 
     public function branch()

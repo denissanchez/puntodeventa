@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Builders\ResponseDataBuilder;
 use App\Builders\SaleBuilder;
+use App\Http\Requests\SaleDeleteRequest;
 use App\Http\Requests\SaleStoreRequest;
 use App\Models\OwnerDocument;
 use App\Models\Product;
@@ -34,7 +35,6 @@ class SaleController extends Controller
         return view('sale.create', $data);
     }
 
-    // TODO: Refactorizar metodo
     public function store(SaleStoreRequest $request)
     {
         $data = $request->validated();
@@ -54,16 +54,20 @@ class SaleController extends Controller
 
     public function edit($id)
     {
-        //
+        return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 
-    public function destroy($id)
+    public function destroy($id, SaleDeleteRequest $request)
     {
-        //
+        $sale = Sale::findOrFail($id);
+        if ($sale->is_deleteable) {
+            $sale->cancel($request->post('commentary'));
+        }
+        return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 }
