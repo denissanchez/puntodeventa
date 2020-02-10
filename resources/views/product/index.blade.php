@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <div class="card m-b-30">
             <div class="card-body">
-                <table class="table">
+                <table id="dataTable" class="table table-striped table-bordered" width="100%">
                     <thead>
                     <tr>
                         <th>Código</th>
@@ -40,11 +40,14 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer">
-                {{ $products->links() }}
-            </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#dataTable').DataTable();
+    });
+</script>
 
 @endsection

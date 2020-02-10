@@ -11,3 +11,6 @@ require('./js/app');
 
 require('./select2.min');
 require('./jquery.validate.min');
+
+require('../plugins/datatables/jquery.dataTables.min');
+require('../plugins/datatables/dataTables.bootstrap4.min');
