@@ -28,60 +28,27 @@ class BranchController extends Controller
 
     public function store(BranchStoreRequest $request)
     {
-        $branch = Branch::create([
-            'ruc' => $request->post('ruc'),
-            'name' => $request->post('name'),
-            'address' => $request->post('address'),
-            'phone' => $request->post('phone'),
-            'email' => $request->post('email'),
-            'website' => $request->post('website'),
-        ]);
-
+        $branch = Branch::create($request->validated());
         return redirect()->route('sucursales.show', ['id' => $branch->id]);
     }
 
     public function show($id)
     {
-        try {
-            $branch = Branch::where('id', $id)->first();
-            if (!$branch)
-                throw new ModelNotFoundException();
-            return view('branch.show')->with(['branch' => $branch]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $branch = Branch::findOrFail($id);
+        return view('branch.show')->with(['branch' => $branch]);
     }
 
     public function edit($id)
     {
-        try {
-            $branch = Branch::where('id', $id)->first();
-            if (!$branch)
-                throw new ModelNotFoundException();
-            return view('branch.edit')->with(['branch' => $branch]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $branch = Branch::findOrFail($id);
+        return view('branch.edit')->with(['branch' => $branch]);
     }
 
     public function update(BranchUpdateRequest $request, $id)
     {
-        try {
-            $branch = Branch::where('id', $id)->first();
-            if (!$branch)
-                throw new ModelNotFoundException();
-            $branch->update([
-                'ruc' => $request->post('ruc'),
-                'name' => $request->post('name'),
-                'address' => $request->post('address'),
-                'phone' => $request->post('phone'),
-                'email' => $request->post('email'),
-                'website' => $request->post('website'),
-            ]);
-            return redirect()->route('sucursales.show', ['sucursale' => $branch]);
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404');
-        }
+        $branch = Branch::findOrFail($id);
+        $branch->update($request->validated());
+        return redirect()->route('sucursales.show', ['sucursale' => $branch]);
     }
 
     public function destroy($id)
