@@ -55,6 +55,13 @@
                         <li>
                             <a href="{{ route('compras.index') }}" class="waves-effect">Ver todas</a>
                         </li>
+                        <li class="menu-title">Ventas</li>
+                        <li>
+                            <a href="{{ route('ventas.create') }}" class="waves-effect">Registrar</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ventas.index') }}" class="waves-effect">Ver todas</a>
+                        </li>
                         <li class="menu-title">Administración</li>
                         <li>
                             <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
