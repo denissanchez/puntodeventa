@@ -138,6 +138,22 @@ class Purchase extends Model
         }
     }
 
+    public function cancel($commentary)
+    {
+        $this->update([
+            'commentary' => $commentary,
+            'state' => StateInfo::CANCELED_STATE
+        ]);
+
+        foreach ($purchase->details as $detail) {
+            $detail->removeUnits();
+        }
+
+        $purchase->details()->update([
+            'state' => StateInfo::CANCELED_STATE
+        ]);
+    }
+
     public function addDetail($detail)
     {
         $this->details()->create($detail);

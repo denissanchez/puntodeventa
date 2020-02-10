@@ -101,7 +101,7 @@ class Sale extends Model
             'commentary' => $commentary,
             'state' => StateInfo::CANCELED_STATE
         ]);
-        $this->details->update(['state' => StateInfo::CANCELED_STATE]);
+        $this->details()->update(['state' => StateInfo::CANCELED_STATE]);
     }
 
     public function branch()
