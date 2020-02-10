@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Builders\ResponseDataBuilder;
 use App\Builders\SaleBuilder;
+use App\Http\Requests\SaleDeleteRequest;
 use App\Http\Requests\SaleStoreRequest;
 use App\Models\OwnerDocument;
 use App\Models\Product;
@@ -61,7 +62,7 @@ class SaleController extends Controller
         return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 
-    public function destroy($id, Request $request)
+    public function destroy($id, SaleDeleteRequest $request)
     {
         $sale = Sale::findOrFail($id);
         if ($sale->is_deleteable) {
