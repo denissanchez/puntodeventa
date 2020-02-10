@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\PurchaseDetail;
 use App\Models\SaleDetail;
 use App\Models\SaleDetailControl;
-use App\Services\StockProduct;
 
 class SaleDetailControlObserver
 {
@@ -21,7 +20,10 @@ class SaleDetailControlObserver
         $purchase_detail = PurchaseDetail::find($sale_detail_control->purchase_detail_id);
         $purchase_detail->current_quantity -= $sale_detail_control->quantity;
         $purchase_detail->save();
-        StockProduct::updateSoldUnits($purchase_detail->product_id, $sale_detail_control->quantity);
+
+        $product = Product::find($purchase_detail->product_id);
+        $product->sold_units += $sale_detail_control->quantity;
+        $product->save();
     }
 
     /**
