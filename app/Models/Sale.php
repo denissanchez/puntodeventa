@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Scopes\CurrentBranchScope;
 use App\User;
+use App\Utils\StateInfo;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +49,24 @@ class Sale extends Model
         return unserialize($this->attributes['owner_document']);
     }
 
+    private function isSameSellerOrIsAdmin()
+    {
+        return $this->attributes['seller_id'] === Auth::user()->id;
+    }
+
+    private function isInRangeDateToAction($days)
+    {
+        $registered_at = date('Y-m-d', strtotime($this->attributes['created_at']));
+        $now = date('Y-m-d', strtotime(Carbon::now()));
+        $interval = date_diff(new \DateTime($now), new \DateTime($registered_at));
+        return $interval->format('%a') < $days;
+    }
+
+    public function getIsDeleteableAttribute()
+    {
+        return $this->isSameSellerOrIsAdmin() && $this->isInRangeDateToAction(1);
+    }
+
     public static function addRecord($values)
     {
         return self::create(array_merge($values,
@@ -73,6 +93,15 @@ class Sale extends Model
     public function addDetail($detail)
     {
         $this->details()->create($detail);
+    }
+
+    public function cancel($commentary)
+    {
+        $this->update([
+            'commentary' => $commentary,
+            'state' => StateInfo::CANCELED_STATE
+        ]);
+        $this->details->update(['state' => StateInfo::CANCELED_STATE]);
     }
 
     public function branch()

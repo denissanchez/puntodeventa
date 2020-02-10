@@ -53,16 +53,20 @@ class SaleController extends Controller
 
     public function edit($id)
     {
-        //
+        return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $sale = Sale::findOrFail($id);
+        if ($sale->is_deleteable) {
+            $sale->cancel($request->post('commentary'));
+        }
+        return redirect()->route('ventas.show', [ 'venta' => $sale]);
     }
 }
