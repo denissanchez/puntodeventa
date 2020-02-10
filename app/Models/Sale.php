@@ -47,7 +47,7 @@ class Sale extends Model
         return unserialize($this->attributes['owner_document']);
     }
 
-    public function addRecord($values)
+    public static function addRecord($values)
     {
         return self::create(array_merge($values,
             [

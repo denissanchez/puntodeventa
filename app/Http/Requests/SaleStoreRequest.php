@@ -15,7 +15,7 @@ class SaleStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'client.identity_document' => ['required', 'digits:11'],
+            'client.identity_document' => ['required', 'numeric'],
             'client.name' => ['required', 'string'],
             'client.address' => ['required', 'string'],
             'products' => ['array', 'min:1'],

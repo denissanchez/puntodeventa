@@ -8,10 +8,19 @@
         </div>
     </div>
 </div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <form action="{{ route('compras.store') }}" method="POST">
+            <form action="{{ route('ventas.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-row">
@@ -60,32 +69,24 @@
                             <label>Producto</label>
                         </div>
                     </div>
-                    <div class="form-row mb-3">
-                        <div class="col-md-12">
+                    <div class="row">
+                        <div class="col mb-3">
                             <select id="select2-product" class="form-control select2">
                                 <option value="">SELECCIONAR</option>
                             </select>
                         </div>
                     </div>
-                    @error('products')
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            </div>
-                        </div>
-                    @enderror
                     <table id="table-detail" class="table">
                         <thead>
                         <tr>
-                            <th width="5%">#</th>
-                            <th width="45%">Producto</th>
-                            <th width="10%">P. Unit</th>
-                            <th width="10%">Cantidad</th>
+                            <th width="38%">Producto</th>
+                            <th width="8%">P.U (S)</th>
+                            <th width="8%">Stock</th>
+                            <th width="8%">Cantidad</th>
                             <th width="10%">Dscto</th>
+                            <th width="10%">P. Unit</th>
                             <th width="10%">Subtotal</th>
-                            <th width="10%"></th>
+                            <th width="8%"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -108,8 +109,10 @@
                 id: {{ $product->id }},
                 text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
                 uom: "{{ $product->measure_unit }}",
-                unit_price: {{ $product->unit_price }}
-            } @if(count($products) - 1 !== $key), @endif
+                unit_price: {{ $product->unit_price }},
+                stock: {{ $product->current_quantity }}
+            }
+            @if(count($products) - 1 !== $key), @endif
         @endforeach
     ];
 
@@ -133,7 +136,8 @@
                     text: '{{ $product['text'] }}',
                     uom: '{{ $product['uom'] }}',
                     quantity: '{{ $product['quantity'] }}',
-                    unit_price: '{{ $product['unit_price'] }}'
+                    unit_price: '{{ $product['unit_price'] }}',
+                    discount: '{{ $product['discount'] }}',
                 }
                 @if(count(old('products')) - 1 !== $key), @endif
             @endforeach
@@ -152,7 +156,6 @@
     $('#select2-product').on('select2:select', function(e){
         let data = e.params.data;
         data.quantity = 0;
-        data.unit_price = 0;
         data.discount = 0;
         selectedProducts.push(data);
         $('#select2-product').val('');
@@ -166,16 +169,17 @@
             function (product, index) {
                 table.append(
                     '<tr id="item-' + index + '">' +
-                        '<td>'+ (index + 1) +
+                        '<td>'+ product.text +
                             '<input type="hidden" name="products[' + index + '][id]" value="' + product.id + '">' +
                             '<input type="hidden" name="products[' + index + '][text]" value="' + product.text + '">' +
                             '<input type="hidden" name="products[' + index + '][uom]" value="' + product.uom + '">' +
                             '<input type="hidden" name="products[' + index + '][unit_price]" value="' + product.unit_price + '">' +
                         '</td>' +
-                        '<td>'+ product.text + '</td>' +
                         '<td>'+ product.unit_price + '</td>' +
-                        '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
-                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
+                        '<td>'+ product.stock + '</td>' +
+                        '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
+                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm" required></td>' +
+                        '<td><input type="text" id="product-'+ index +'-unit_price" value="0.00" class="form-control form-control-sm" disabled></td>' +
                         '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>'+
                         '<td>' +
                             '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +
@@ -201,7 +205,7 @@
                     setClientAddress(client.address);
                     toastr.success('Cliente encontrado')
                 } else {
-                    toastr.error('No se encontró ningún registro con el número de documento', 'Cliente no encontrado')
+                    toastr.warning('No se encontró ningún registro con el número de documento', 'Cliente no encontrado')
                 }
             } else {
                 toastr.error('Por favor ingrese un número de documento válido', 'Error')
@@ -232,14 +236,25 @@
 
     function onChangeQuantity(index) {
         selectedProducts[index].quantity = $('#product-'+ index +'-quantity').val();
-    }
-
-    function onChangeUnitPrice(index) {
-        selectedProducts[index].unit_price = $('#product-'+ index +'-unit_price').val();
+        calculateSubtotal(index);
     }
 
     function onChangeDiscount(index) {
-        selectedProducts[index].unit_price = $('#product-'+ index +'-unit_price').val();
+        selectedProducts[index].discount = $('#product-'+ index +'-discount').val();
+        calculateSubtotal(index);
+    }
+
+    function calculateSubtotal(index) {
+        let discount = +selectedProducts[index].discount;
+        let unit_price = +selectedProducts[index].unit_price;
+        if (discount > 0)
+        {
+            unit_price -= discount;
+        }
+        $('#product-'+ index +'-unit_price').val(unit_price.toFixed(2));
+        let subtotal = +selectedProducts[index].quantity * unit_price;
+        $('#product-'+ index +'-subtotal').val(subtotal.toFixed(2));
+
     }
 </script>
 @endsection

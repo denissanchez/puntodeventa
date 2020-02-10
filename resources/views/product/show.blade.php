@@ -56,7 +56,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Descripción</label>
-                                <textarea rows="3" class="form-control" disabled>{{ $product->composition }}</textarea>
+                                <textarea rows="3" class="form-control" disabled>{{ $product->description }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">

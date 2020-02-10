@@ -44,6 +44,13 @@ class PurchaseDetail extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function removeUnits()
+    {
+        $product = $this->product;
+        $product->purchased_units -= $this->attributes['init_quantity'];
+        $product->save();
+    }
+
     public function scopeConfirmedState($query)
     {
         return $query->where('state', StateInfo::CONFIRMED_STATE);

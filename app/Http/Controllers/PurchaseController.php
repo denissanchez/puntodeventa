@@ -67,7 +67,11 @@ class PurchaseController extends Controller
         $purchase = Purchase::findOrfail($id);
         if ($purchase->is_editable)
         {
-            PurchaseDetail::where('purchase_id', $id)->delete();
+            foreach ($purchase->details as $detail)
+            {
+                $detail->removeUnits();
+                $detail->delete();
+            }
             $products = $request->post('products');
             $purchase->addDetails($products);
         }
@@ -84,10 +88,14 @@ class PurchaseController extends Controller
                 'state' => StateInfo::CANCELED_STATE
             ]);
 
+            foreach ($purchase->details as $detail) {
+                $detail->removeUnits();
+            }
+
             $purchase->details()->update([
                 'state' => StateInfo::CANCELED_STATE
             ]);
         }
-        return redirect()->route('compras.show', ['compra' => $purchase]);
+        return redirect()->route('compras.index');
     }
 }

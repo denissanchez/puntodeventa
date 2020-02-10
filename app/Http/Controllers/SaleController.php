@@ -41,44 +41,15 @@ class SaleController extends Controller
         $sale = Sale::addRecord($data);
         $products = $request->post('products');
         $sale->addDetails($products);
-
-        $sale_builder = new SaleBuilder();
-        $sale = $sale_builder
-            ->currentBranch()
-            ->currentUser()
-            ->code($request->post('code'))
-            ->ownerDocument([
-                'identity_document' => $request->post('client_identity_document'),
-                'name' => $request->post('client_name'),
-                'address' => $request->post('client_address')
-            ])
-            ->state()
-            ->defaultCurrency()
-            ->withoutCommentary()
-            ->build();
-        $this->setDetailsToSale($sale, $request->post('products'));
-    }
-
-    private function setDetailsToSale(Sale $sale, $details)
-    {
-        foreach ($details as $key=>$detail) {
-            $product = $this->getProduct($detail);
-            $sale_detail = SaleDetail::create([
-                'sale_id' => $sale->id,
-                'product_id' => $product->id,
-                'sale_code' => $sale->code,
-                'item' => $key + 1,
-                'purchase_code' => 1231,
-                'quantiity' => $detail['quantity'],
-                'unit_price' => $product->unit_price,
-                'discount' => $detail['discount']
-            ]);
-        }
+        return redirect()->route('ventas.show', ['venta' => $sale]);
     }
 
     public function show($id)
     {
-        //
+        $sale = Sale::findOrFail($id);
+        return view('sale.show', [
+            'sale' => $sale
+        ]);
     }
 
     public function edit($id)

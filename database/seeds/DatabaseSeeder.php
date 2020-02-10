@@ -14,9 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         factory(Branch::class, 5)->create();
         factory(User::class, 5)->create();
-//        factory(Product::class, 50)->create();
-//        factory(OwnerDocument::class, 50)->create();
-//
+        factory(OwnerDocument::class, 50)->create();
+
 //        factory(Purchase::class, 150)->create()->each(function($purchase) {
 //            $max = random_int(8, 15);
 //            $i = 0;
