@@ -145,11 +145,11 @@ class Purchase extends Model
             'state' => StateInfo::CANCELED_STATE
         ]);
 
-        foreach ($purchase->details as $detail) {
+        foreach ($this->details as $detail) {
             $detail->removeUnits();
         }
 
-        $purchase->details()->update([
+        $this->details()->update([
             'state' => StateInfo::CANCELED_STATE
         ]);
     }

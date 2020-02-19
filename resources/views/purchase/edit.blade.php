@@ -15,6 +15,15 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('compras.update', [ 'compra' => $purchase ]) }}" method="POST">
                 @csrf
                 @method('PATCH')
@@ -22,18 +31,18 @@
                     <div class="form-row">
                         <div class="col-md-2">
                             <label>RUC</label>
-                            <input type="number" class="form-control" name="provider_identity_document" id="provider_identity_document" value="{{ $purchase->provider['identity_document'] }}">
+                            <input type="number" class="form-control" name="provider[identity_document]" id="provider_identity_document" value="{{ $purchase->provider['identity_document'] }}">
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Razón social</label>
-                                <input type="text" class="form-control to-upper" name="provider_name" id="provider_name" value="{{ $purchase->provider['name'] }}">
+                                <input type="text" class="form-control to-upper" name="provider[name]" id="provider_name" value="{{ $purchase->provider['name'] }}">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Dirección</label>
-                                <input type="text" class="form-control to-upper" name="provider_address" id="provider_address" value="{{ $purchase->provider['address'] }}">
+                                <input type="text" class="form-control to-upper" name="provider[address]" id="provider_address" value="{{ $purchase->provider['address'] }}">
                             </div>
                         </div>
                         <div class="col-md-2">

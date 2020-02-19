@@ -92,8 +92,15 @@ class Sale extends Model
 
     public function generateBillingCode($type)
     {
-        $latest = BillingCode::where('type', $type)->lastest();
-
+        $latest = BillingCode::where('type', $type)->latest()->first();
+        if (!$latest) {
+            return new BillingCode([
+                'branch_id' => Auth::user()->branch_id,
+                'prefix' => '-',
+                'type' => '-',
+                'incrementable' => 0,
+            ]);
+        }
         return BillingCode::create([
             'branch_id' => Auth::user()->branch_id,
             'prefix' => $latest->prefix,
