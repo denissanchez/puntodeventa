@@ -18,7 +18,7 @@ class PurchaseDetailObserver
 
     public function updated(PurchaseDetail $purchase_detail)
     {
-        $sold_units = SaleDetail::where('product_id', $sale_detail->product_id)->get()->sum('quantity');
+        $sold_units = SaleDetail::where('product_id', $purchase_detail->product_id)->get()->sum('quantity');
         $product = Product::find($purchase_detail->product_id);
         $product->update([
             'purchased_units' => $product->purchased_units - $purchase_detail->init_quantity,

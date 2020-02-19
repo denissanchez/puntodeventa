@@ -29,6 +29,9 @@ class BillingCode extends Model
 
     public function getCodeAttribute($value)
     {
+        if ($this->attributes['prefix'] === '-') {
+            return '-';
+        }
         return $this->attributes['prefix'].'-'.str_pad($this->attributes['incrementable'], 8, STR_PAD_LEFT);
     }
 }
