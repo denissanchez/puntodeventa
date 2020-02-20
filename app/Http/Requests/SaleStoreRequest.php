@@ -18,11 +18,18 @@ class SaleStoreRequest extends FormRequest
             'client.identity_document' => ['required', 'numeric'],
             'client.name' => ['required', 'string'],
             'client.address' => ['required', 'string'],
-            'products' => ['array', 'min:1'],
+            'products' => ['required', 'array', 'min:1'],
             'products.*.id' => ['required', 'exists:products,id'],
             'products.*.quantity' => ['required', 'numeric', 'min:0.01'],
             'products.*.discount' => ['required', 'numeric', 'min:0'],
             'products.*.unit_price' => ['required', 'numeric', 'min:0.01']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'products.required' => 'Debe agregar por lo menos un producto'
         ];
     }
 }

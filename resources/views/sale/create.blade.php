@@ -8,15 +8,7 @@
         </div>
     </div>
 </div>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -76,6 +68,11 @@
                             </select>
                         </div>
                     </div>
+                    @error('products')
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <table id="table-detail" class="table">
                         <thead>
                         <tr>
