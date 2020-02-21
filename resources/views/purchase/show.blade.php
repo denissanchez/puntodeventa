@@ -22,19 +22,19 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Razón social</label>
-                            <input type="text" class="form-control to-upper" value="{{ $purchase->provider['name'] }}" disabled>
+                            <input type="text" class="form-control text-uppercase" value="{{ $purchase->provider['name'] }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Dirección</label>
-                            <input type="text" class="form-control to-upper" value="{{ $purchase->provider['address'] }}" disabled>
+                            <input type="text" class="form-control text-uppercase" value="{{ $purchase->provider['address'] }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Código</label>
-                            <input type="text" class="form-control to-upper" value="{{ $purchase->code }}" disabled>
+                            <input type="text" class="form-control text-uppercase" value="{{ $purchase->code }}" disabled>
                         </div>
                     </div>
                     <div class="col-md-2">

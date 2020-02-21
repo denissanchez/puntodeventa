@@ -23,8 +23,8 @@
                     <tbody>
                     @foreach($sales as $key=>$sale)
                         <tr>
-                            <td>{{ $sale->code }}</td>
-                            <td>{{ $sale->client['name'] }}</td>
+                            <td class="text-uppercase">{{ $sale->code }}</td>
+                            <td class="text-uppercase">{{ $sale->client['name'] }}</td>
                             <td>
                                 <a href="{{ route('ventas.show', ['venta' => $sale]) }}" class="btn btn-link">Ver</a>
                             </td>
