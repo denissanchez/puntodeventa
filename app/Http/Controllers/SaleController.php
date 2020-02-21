@@ -37,11 +37,15 @@ class SaleController extends Controller
 
     public function store(SaleStoreRequest $request)
     {
-        $data = $request->validated();
-        $sale = Sale::addRecord($data);
-        $products = $request->post('products');
-        $sale->addDetails($products);
-        return redirect()->route('ventas.show', ['venta' => $sale]);
+        if ($request->isValidStock($request->post('products')))
+        {
+            $data = $request->validated();
+            $sale = Sale::addRecord($data);
+            $products = $request->post('products');
+            $sale->addDetails($products);
+            return redirect()->route('ventas.show', ['venta' => $sale]);
+        }
+        // TODO: Validar stock
     }
 
     public function show($id)

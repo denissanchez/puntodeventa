@@ -32,4 +32,9 @@ class SaleStoreRequest extends FormRequest
             'products.required' => 'Debe agregar por lo menos un producto'
         ];
     }
+
+    public function isValidStock($details)
+    {
+
+    }
 }
