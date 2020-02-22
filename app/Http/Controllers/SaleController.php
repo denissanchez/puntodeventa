@@ -45,7 +45,9 @@ class SaleController extends Controller
             $sale->addDetails($products);
             return redirect()->route('ventas.show', ['venta' => $sale]);
         }
-        // TODO: Validar stock
+        return redirect(route('ventas.create'))->withInput()->withErrors([
+            'products' => 'Ingrese una cantidad válida.'
+        ]);
     }
 
     public function show($id)

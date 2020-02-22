@@ -79,12 +79,14 @@ class Sale extends Model
 
     public function addDetails($details)
     {
+
         foreach ($details as $key=>$detail) {
+            $product = Product::find($detaiil['id']);
             $this->addDetail([
                 'product_id' => $detail['id'],
                 'item' => $key + 1,
                 'quantity' => $detail['quantity'],
-                'unit_price' => $detail['unit_price'],
+                'unit_price' => $product->unit_price,
                 'discount' => $detail['discount']
             ]);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use App\Rules\AvailableStock;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -35,6 +36,15 @@ class SaleStoreRequest extends FormRequest
 
     public function isValidStock($details)
     {
-
+        $is_valid = true;
+        foreach($details as $detail) {
+            $product = Product::find($detail['id']);
+            if($product->current_quantity < $detail['quantity'])
+            {
+                $is_valid = false;
+                break;
+            }
+        }
+        return $is_valid;
     }
 }

@@ -190,7 +190,7 @@
                         '<td>'+ product.stock + '</td>' +
                         '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_quantity +'" required></td>' +
                         '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.discount +'" class="form-control form-control-sm '+ product.error_unit_price +'" required></td>' +
-                        '<td><input type="text" id="product-'+ index +'-unit_price" value="0.00" class="form-control form-control-sm" disabled></td>' +
+                        '<td><input type="text" id="product-'+ index +'-unit_price" value="'+ (product.unit_price - product.discount).toFixed(2) +'" class="form-control form-control-sm" disabled></td>' +
                         '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>'+
                         '<td>' +
                             '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +
