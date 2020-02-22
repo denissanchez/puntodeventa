@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\DB;
  * @property double quantity
  */
 
-class SaleDetailControl extends Pivot
+class SaleDetailControl extends Model
 {
     public $incrementing = true;
 
@@ -21,6 +22,6 @@ class SaleDetailControl extends Pivot
 
     public static function newRecord($record)
     {
-        DB::table('sale_detail_controls')->insert($record);
+        self::create($record);
     }
 }

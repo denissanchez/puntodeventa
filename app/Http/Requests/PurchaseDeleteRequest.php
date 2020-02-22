@@ -10,8 +10,7 @@ class PurchaseDeleteRequest extends FormRequest
 
     public function authorize()
     {
-        $purchase = Purchase::find('id', $this->id);
-        return $purchase->init_quantity === $purchase->current_quantity;
+        return true;
     }
 
     public function rules()

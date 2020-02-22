@@ -79,12 +79,14 @@ class Sale extends Model
 
     public function addDetails($details)
     {
+
         foreach ($details as $key=>$detail) {
+            $product = Product::find($detaiil['id']);
             $this->addDetail([
                 'product_id' => $detail['id'],
                 'item' => $key + 1,
                 'quantity' => $detail['quantity'],
-                'unit_price' => $detail['unit_price'],
+                'unit_price' => $product->unit_price,
                 'discount' => $detail['discount']
             ]);
         }
@@ -92,8 +94,15 @@ class Sale extends Model
 
     public function generateBillingCode($type)
     {
-        $latest = BillingCode::where('type', $type)->lastest();
-
+        $latest = BillingCode::where('type', $type)->latest()->first();
+        if (!$latest) {
+            return new BillingCode([
+                'branch_id' => Auth::user()->branch_id,
+                'prefix' => '-',
+                'type' => '-',
+                'incrementable' => 0,
+            ]);
+        }
         return BillingCode::create([
             'branch_id' => Auth::user()->branch_id,
             'prefix' => $latest->prefix,

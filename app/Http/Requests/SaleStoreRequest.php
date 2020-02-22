@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use App\Rules\AvailableStock;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -18,11 +19,32 @@ class SaleStoreRequest extends FormRequest
             'client.identity_document' => ['required', 'numeric'],
             'client.name' => ['required', 'string'],
             'client.address' => ['required', 'string'],
-            'products' => ['array', 'min:1'],
+            'products' => ['required', 'array', 'min:1'],
             'products.*.id' => ['required', 'exists:products,id'],
             'products.*.quantity' => ['required', 'numeric', 'min:0.01'],
             'products.*.discount' => ['required', 'numeric', 'min:0'],
             'products.*.unit_price' => ['required', 'numeric', 'min:0.01']
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'products.required' => 'Debe agregar por lo menos un producto'
+        ];
+    }
+
+    public function isValidStock($details)
+    {
+        $is_valid = true;
+        foreach($details as $detail) {
+            $product = Product::find($detail['id']);
+            if($product->current_quantity < $detail['quantity'])
+            {
+                $is_valid = false;
+                break;
+            }
+        }
+        return $is_valid;
     }
 }

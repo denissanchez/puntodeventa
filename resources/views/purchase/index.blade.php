@@ -24,9 +24,9 @@
                     <tbody>
                     @foreach($purchases as $purchase)
                         <tr>
-                            <td>{{ $purchase->date }}</td>
-                            <td>{{ $purchase->code }}</td>
-                            <td>{{ $purchase->provider['name'] }}</td>
+                            <td class="text-uppercase">{{ $purchase->date }}</td>
+                            <td class="text-uppercase">{{ $purchase->code }}</td>
+                            <td class="text-uppercase">{{ $purchase->provider['name'] }}</td>
                             <td>
                                 <a href="{{ route('compras.show', [ 'compra' => $purchase ]) }}" class="btn btn-link">Ver</a>
                             </td>

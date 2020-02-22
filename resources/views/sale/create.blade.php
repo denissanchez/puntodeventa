@@ -8,15 +8,7 @@
         </div>
     </div>
 </div>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -76,6 +68,11 @@
                             </select>
                         </div>
                     </div>
+                    @error('products')
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <table id="table-detail" class="table">
                         <thead>
                         <tr>
@@ -155,6 +152,7 @@
                     theme: 'bootstrap',
                     data: products
                 });
+            reloadTableContent();
     })
 
     $('#select2-product').on('select2:select', function(e){
@@ -167,6 +165,15 @@
     });
 
     function reloadTableContent() {
+        if (selectedProducts.length > 0) {
+            selectedProducts.forEach(
+                (selectedProduct, index) => {
+                    let productBd = products.find(product => product.id == selectedProduct.id);
+                    selectedProduct.stock = productBd.stock;
+                }
+            );
+        }
+
         let table = $('#table-detail');
         table.find('tbody tr').remove();
         selectedProducts.forEach(
@@ -182,8 +189,8 @@
                         '<td>'+ product.unit_price + '</td>' +
                         '<td>'+ product.stock + '</td>' +
                         '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_quantity +'" required></td>' +
-                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_unit_price +'" required></td>' +
-                        '<td><input type="text" id="product-'+ index +'-unit_price" value="0.00" class="form-control form-control-sm" disabled></td>' +
+                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.discount +'" class="form-control form-control-sm '+ product.error_unit_price +'" required></td>' +
+                        '<td><input type="text" id="product-'+ index +'-unit_price" value="'+ (product.unit_price - product.discount).toFixed(2) +'" class="form-control form-control-sm" disabled></td>' +
                         '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>'+
                         '<td>' +
                             '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +

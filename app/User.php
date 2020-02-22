@@ -30,6 +30,11 @@ class User extends Authenticatable
         $this->attributes['name'] = strtoupper($value);
     }
 
+    public function scopeCurrentBranch($query)
+    {
+        return $query->where('branch_id', \Auth::user()->branch_id);
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class);
