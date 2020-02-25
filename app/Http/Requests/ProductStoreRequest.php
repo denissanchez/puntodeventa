@@ -14,6 +14,7 @@ class ProductStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'origin_code' => ['nullable', 'string'],
             'category' => ['required', 'string'],
             'brand' => ['required', 'string'],
             'laboratory' => ['required', 'string'],

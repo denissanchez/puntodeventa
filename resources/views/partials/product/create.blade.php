@@ -3,6 +3,10 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 </div>
 <div class="modal-body">
+    <div class="form-group">
+        <label>Código</label>
+        <input type="text" class="form-control" name="origin_code">
+    </div>
     <div class="form-row">
         <div class="col-sm-12 col-md-6">
             <div class="form-group">

@@ -301,6 +301,7 @@
 
     function saveProduct() {
         let product = {
+            origin_code: $.trim(getInputFromModalByName('origin_code').val()),
             code: $.trim(getInputFromModalByName('code').val()),
             category : $.trim(getSelect2FromModalByName('category')),
             brand : $.trim(getSelect2FromModalByName('brand')),
@@ -362,7 +363,7 @@
     }
 
     function openModalRegisterProduct() {
-        $('#modal-content_create').html('')
+        $('#modal-content_create').html('');
         $('#modalNewProduct').modal('show');
         axios.get("{{ route('partial.create.product')  }}").then(
             res => {

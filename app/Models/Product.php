@@ -26,6 +26,7 @@ class Product extends Model
     protected $fillable = [
         'branch_id',
         'code',
+        'origin_code',
         'category',
         'brand',
         'laboratory',
@@ -47,6 +48,11 @@ class Product extends Model
     public function setCodeAttribute($value)
     {
         $this->attributes['code'] = strtoupper($value);
+    }
+
+    public function setOriginCodeAttribute($value)
+    {
+        $this->attributes['origin_code'] = strtoupper($value);
     }
 
     public function setCategoryAttribute($value)
@@ -86,13 +92,12 @@ class Product extends Model
 
     public function getCurrentQuantityAttribute()
     {
-        return $this->attributes['purchased_units'] - $this->attributes['sold_units'];
+        return $this->purchased_units - $this->sold_units;
     }
 
     public function getDisplayNameAttribute()
     {
-        return $this->code;
-        // return $this->attributes['code'].' | '.$this->attributes['name'].' - '.$this->attributes['brand'];
+        return $this->origin_code.'-'.$this->code.' | '.$this->name.' - '.$this->brand;
     }
 
     public function branch()

@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('branch_id');
             $table->string('code')->nullable();
+            $table->string('origin_code')->nullable();
             $table->string('category');
             $table->string('brand');
             $table->string('laboratory')->default('-');
