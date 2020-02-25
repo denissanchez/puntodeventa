@@ -21,7 +21,7 @@ class CreateSaleDetailsTable extends Migration
             $table->integer('item')->unsigned();
             $table->decimal('quantity', 8, 2)->unsigned();
             $table->decimal('unit_price', 8, 2)->unsigned();
-            $table->decimal('discount', 8, 2)->unsigned()->default(0);
+            $table->decimal('unit_price_defined', 8, 2)->unsigned();
             $table->string('state')->default(StateInfo::CONFIRMED_STATE);
             $table->timestamps();
 

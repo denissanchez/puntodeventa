@@ -34,6 +34,11 @@ class Sale extends Model
         self::addGlobalScope(new CurrentBranchScope());
     }
 
+    public function getCreatedAtAttribute()
+    {
+        return date('Y-m-d', strtotime($this->attributes['created_at']));
+    }
+
     public function setClientAttribute($value)
     {
         $this->attributes['client'] = serialize($value);
@@ -87,7 +92,7 @@ class Sale extends Model
                 'item' => $key + 1,
                 'quantity' => $detail['quantity'],
                 'unit_price' => $product->unit_price,
-                'discount' => $detail['discount']
+                'unit_price_defined' => $detail['unit_price_defined']
             ]);
         }
     }

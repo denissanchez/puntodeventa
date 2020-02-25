@@ -53,7 +53,6 @@
                             <th width="20%">UOM</th>
                             <th width="10%">Cantidad</th>
                             <th width="10%">P. Unit</th>
-                            <th width="10%">Dscto</th>
                             <th width="10%">Total</th>
                         </tr>
                         </thead>
@@ -64,8 +63,7 @@
                                 <td>{{ $detail->product->display_name }}</td>
                                 <td>{{ $detail->product->measure_unit }}</td>
                                 <td>{{ $detail->quantity }}</td>
-                                <td>{{ $detail->unit_price }}</td>
-                                <td>{{ $detail->discoun }}</td>
+                                <td>{{ $detail->unit_price_defined }}</td>
                                 <td>{{ $detail->subtotal }}</td>
                             </tr>
                         @endforeach

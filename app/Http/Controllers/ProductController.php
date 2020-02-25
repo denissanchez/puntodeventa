@@ -47,7 +47,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $data = $request->validated();
         $product->update($data);
-        return redirect()->route('productos.show', ['product' => $product]);
+        return redirect()->route('productos.show', $product);
     }
 
     public function destroy($id)
