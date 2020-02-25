@@ -122,7 +122,7 @@ class Purchase extends Model
     }
 
     /* El array del detalle sería los productos que se agregan en la tabla inferior
-     * por lo tanto el $detail[id] sería el ID del producto que ya se encuentra
+     * por lo tanto el $detail[id] sería el ID del product que ya se encuentra
      * registrado en la base de datos
      * */
     public function addDetails($details) {

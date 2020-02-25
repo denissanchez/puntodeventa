@@ -102,8 +102,7 @@
                         <div class="col-md-1">
                             <button type="button"
                                     class="btn btn-primary btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#modalNewProduct">
+                                    onclick="openModalRegisterProduct()">
                                 Nuevo
                             </button>
                         </div>
@@ -140,83 +139,7 @@
 <div class="modal fade" id="modalNewProduct" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="form-new_product" onsubmit="return false;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="moda-title">Registrar nuevo producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="col-sm-12 col-md-6">
-                            <div class="form-group">
-                                <label>Categoría</label>
-                                <select name="category" class="form-control select2" data-data="" required>
-                                    <option value="-" selected>-</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="form-group">
-                                <label>Marca</label>
-                                <select name="brand" class="form-control select2" data-data="" required>
-                                    <option value="-" selected>-</option>
-                                    @foreach($brands as $brand)
-                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-12 col-md-7">
-                            <div class="form-group">
-                                <label>Laboratorio</label>
-                                <select name="laboratory" id="" class="form-control select2" data-data="" required>
-                                    <option value="-" selected>-</option>
-                                    @foreach($laboratories as $laboratory)
-                                        <option value="{{ $laboratory->id }}">{{ $laboratory->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-5">
-                            <div class="form-group">
-                                <label>U. medida</label>
-                                <select name="measure_unit" class="form-control select2" data-data="" data-tags="true" required>
-                                    <option value="-" selected>-</option>
-                                    @foreach($measure_units as $measure_unit)
-                                        <option value="{{ $measure_unit->id }}">{{ $measure_unit->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" name="name" class="form-control to-upper" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea name="description" rows="3" class="form-control to-upper" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Composición</label>
-                        <textarea name="composition" rows="3" class="form-control to-upper" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
+            <div class="modal-content" id="modal-content_create">
             </div>
         </form>
     </div>
@@ -268,7 +191,6 @@
         function() {
             $('.select2').select2(
                 {
-                    tags: true,
                     theme: 'bootstrap',
                     data: products
                 });
@@ -379,6 +301,7 @@
 
     function saveProduct() {
         let product = {
+            origin_code: $.trim(getInputFromModalByName('origin_code').val()),
             code: $.trim(getInputFromModalByName('code').val()),
             category : $.trim(getSelect2FromModalByName('category')),
             brand : $.trim(getSelect2FromModalByName('brand')),
@@ -437,6 +360,22 @@
     function calculateSubtotal(index) {
         let subtotal = +selectedProducts[index].quantity * +selectedProducts[index].unit_price;
         $('#product-'+ index +'-subtotal').val(subtotal.toFixed(2));
+    }
+
+    function openModalRegisterProduct() {
+        $('#modal-content_create').html('');
+        $('#modalNewProduct').modal('show');
+        axios.get("{{ route('partial.create.product')  }}").then(
+            res => {
+                $('#modal-content_create').html(res.data);
+                $('.select2Product').select2(
+                {
+                    theme: 'bootstrap',
+                    data: products,
+                    tags: true
+                });
+            }
+        );
     }
 </script>
 @endsection

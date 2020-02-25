@@ -14,17 +14,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property int item
  * @property double quantity
  * @property double unit_price
- * @property double discount
+ * @property double unit_price_defined
  */
 class SaleDetail extends Model
 {
     protected $fillable = [
-        'sale_id', 'product_id', 'item', 'quantity', 'unit_price', 'discount'
+        'sale_id', 'product_id', 'item', 'quantity', 'unit_price', 'unit_price_defined'
     ];
 
     public function getSubtotalAttribute()
     {
-        return ($this->attributes['unit_price'] - $this->attributes['discount']) * $this->attributes['quantity'];
+        return $this->unit_price_defined * $this->quantity;
     }
 
     public function scopeConfirmedState($query)

@@ -22,15 +22,14 @@ class SaleStoreRequest extends FormRequest
             'products' => ['required', 'array', 'min:1'],
             'products.*.id' => ['required', 'exists:products,id'],
             'products.*.quantity' => ['required', 'numeric', 'min:0.01'],
-            'products.*.discount' => ['required', 'numeric', 'min:0'],
-            'products.*.unit_price' => ['required', 'numeric', 'min:0.01']
+            'products.*.unit_price_defined' => ['required', 'numeric', 'min:0.01']
         ];
     }
 
     public function messages()
     {
         return [
-            'products.required' => 'Debe agregar por lo menos un producto'
+            'products.required' => 'Debe agregar por lo menos un product'
         ];
     }
 

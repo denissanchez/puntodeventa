@@ -67,6 +67,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <a href="{{ route('productos.edit', $product) }}" class="btn btn-primary">Editar</a>
+                </div>
             </div>
         </div>
     </div>

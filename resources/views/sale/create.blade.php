@@ -80,7 +80,6 @@
                             <th width="8%">P.U (S)</th>
                             <th width="8%">Stock</th>
                             <th width="8%">Cantidad</th>
-                            <th width="10%">Dscto</th>
                             <th width="10%">P. Unit</th>
                             <th width="10%">Subtotal</th>
                             <th width="8%"></th>
@@ -107,6 +106,7 @@
                 text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
                 uom: "{{ $product->measure_unit }}",
                 unit_price: {{ $product->unit_price }},
+                unit_price_defined: {{ $product->unit_price }},
                 stock: {{ $product->current_quantity }},
                 error_quantity: '',
                 error_unit_price: ''
@@ -136,9 +136,9 @@
                     uom: '{{ $product['uom'] }}',
                     quantity: '{{ $product['quantity'] }}',
                     unit_price: '{{ $product['unit_price'] }}',
-                    discount: '{{ $product['discount'] }}',
-                    @error('products.'.$key.'.quantity') error_quantity: 'is-invalid', @enderror
-                    @error('products.'.$key.'.unit_price') error_unit_price: 'is-invalid' @enderror
+                    unit_price_defined: '{{ $product['unit_price_defined'] }}'
+                    @error('products.'.$key.'.quantity'), error_quantity: 'is-invalid' @enderror
+                    @error('products.'.$key.'.unit_price_defined'), error_unit_price: 'is-invalid' @enderror
                 }
                 @if(count(old('products')) - 1 !== $key), @endif
             @endforeach
@@ -158,7 +158,6 @@
     $('#select2-product').on('select2:select', function(e){
         let data = e.params.data;
         data.quantity = 0;
-        data.discount = 0;
         selectedProducts.push(data);
         $('#select2-product').val('');
         reloadTableContent();
@@ -185,12 +184,12 @@
                             '<input type="hidden" name="products[' + index + '][text]" value="' + product.text + '">' +
                             '<input type="hidden" name="products[' + index + '][uom]" value="' + product.uom + '">' +
                             '<input type="hidden" name="products[' + index + '][unit_price]" value="' + product.unit_price + '">' +
+                            '<input type="hidden" name="products[' + index + '][unit_price_defined]" value="' + product.unit_price_defined + '">' +
                         '</td>' +
-                        '<td>'+ product.unit_price + '</td>' +
+                        '<td>'+ (+product.unit_price).toFixed(2) + '</td>' +
                         '<td>'+ product.stock + '</td>' +
-                        '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ product.quantity +'" class="form-control form-control-sm '+ product.error_quantity +'" required></td>' +
-                        '<td><input type="text" name="products[' + index + '][discount]" id="product-'+ index +'-discount" onchange="onChangeDiscount('+ index +')" value="'+ product.discount +'" class="form-control form-control-sm '+ product.error_unit_price +'" required></td>' +
-                        '<td><input type="text" id="product-'+ index +'-unit_price" value="'+ (product.unit_price - product.discount).toFixed(2) +'" class="form-control form-control-sm" disabled></td>' +
+                        '<td><input type="text" name="products[' + index + '][quantity]" id="product-'+ index +'-quantity" onchange="onChangeQuantity('+ index +')" value="'+ (+product.quantity).toFixed(2) +'" class="form-control form-control-sm '+ product.error_quantity +'" required></td>' +
+                        '<td><input type="text" name="products[' + index + '][unit_price_defined]" id="product-'+ index +'-unit_price_defined" value="'+ (+product.unit_price_defined).toFixed(2) +'" onchange="onChangeUnitPriceDefined('+ index +')" class="form-control form-control-sm"></td>' +
                         '<td><input type="text" id="product-'+ index +'-subtotal"  class="form-control form-control-sm" value="0.00" readonly></td>'+
                         '<td>' +
                             '<button type="button" onclick="deleteItem(' + index + ', \''+ product.text +'\')" class="btn btn-danger btn-sm" >' +
@@ -250,22 +249,15 @@
         calculateSubtotal(index);
     }
 
-    function onChangeDiscount(index) {
-        selectedProducts[index].discount = $('#product-'+ index +'-discount').val();
+    function onChangeUnitPriceDefined(index) {
+        selectedProducts[index].unit_price_defined = $('#product-'+ index +'-unit_price_defined').val();
         calculateSubtotal(index);
     }
 
     function calculateSubtotal(index) {
-        let discount = +selectedProducts[index].discount;
-        let unit_price = +selectedProducts[index].unit_price;
-        if (discount > 0)
-        {
-            unit_price -= discount;
-        }
-        $('#product-'+ index +'-unit_price').val(unit_price.toFixed(2));
+        let unit_price = +selectedProducts[index].unit_price_defined;
         let subtotal = +selectedProducts[index].quantity * unit_price;
         $('#product-'+ index +'-subtotal').val(subtotal.toFixed(2));
-
     }
 </script>
 @endsection

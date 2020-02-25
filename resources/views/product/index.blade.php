@@ -33,7 +33,7 @@
                             <td>{{ $product->category }}</td>
                             <td>{{ $product->current_quantity }}</td>
                             <td>
-                                <a href="{{ route('productos.show', [ 'producto' => $product ]) }}" class="btn btn-link btn-sm">Ver</a>
+                                <a href="{{ route('productos.show', $product ) }}" class="btn btn-link btn-sm">Ver</a>
                             </td>
                         </tr>
                     @endforeach

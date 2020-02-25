@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Builders\ResponseDataBuilder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\ProductStoreRequest;
 use App\Http\Resources\API\ProductResource;
@@ -20,6 +21,13 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return ProductResource::collection($products);
+    }
+
+    public function create()
+    {
+        $data = new ResponseDataBuilder();
+        $data = $data->categories()->brands()->laboratories()->measure_units()->build();
+        return view('partials.product.create', $data);
     }
 
     public function store(ProductStoreRequest $request)
