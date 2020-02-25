@@ -30,7 +30,7 @@ class PurchaseStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'products.required' => 'Seleecione por lo menos un producto',
+            'products.required' => 'Seleecione por lo menos un product',
         ];
     }
 }

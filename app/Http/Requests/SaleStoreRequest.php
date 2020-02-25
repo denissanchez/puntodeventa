@@ -30,7 +30,7 @@ class SaleStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'products.required' => 'Debe agregar por lo menos un producto'
+            'products.required' => 'Debe agregar por lo menos un product'
         ];
     }
 

@@ -91,7 +91,8 @@ class Product extends Model
 
     public function getDisplayNameAttribute()
     {
-        return $this->attributes['code'].' | '.$this->attributes['name'].' - '.$this->attributes['brand'];
+        return $this->code;
+        // return $this->attributes['code'].' | '.$this->attributes['name'].' - '.$this->attributes['brand'];
     }
 
     public function branch()

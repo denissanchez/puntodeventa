@@ -31,7 +31,7 @@ class PurchaseController extends Controller
     public function create()
     {
         $data = new ResponseDataBuilder();
-        $data = $data->providers()->products()->categories()->brands()->laboratories()->measure_units()->build();
+        $data = $data->providers()->products()->build();
         return view('purchase.create', $data);
     }
 

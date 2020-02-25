@@ -81,7 +81,7 @@ class Sale extends Model
     {
 
         foreach ($details as $key=>$detail) {
-            $product = Product::find($detaiil['id']);
+            $product = Product::find($detail['id']);
             $this->addDetail([
                 'product_id' => $detail['id'],
                 'item' => $key + 1,
