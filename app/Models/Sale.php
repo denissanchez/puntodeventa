@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Scopes\CurrentBranchScope;
 use App\User;
+use App\Utils\Interfaces\Document;
 use App\Utils\StateInfo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
  * @property string currency
  * @property string commentary
  */
-class Sale extends Model
+class Sale extends Model implements Document
 {
     protected $fillable = [
         'branch_id', 'seller_id', 'code', 'client',
@@ -32,6 +33,11 @@ class Sale extends Model
     {
         parent::boot();
         self::addGlobalScope(new CurrentBranchScope());
+    }
+
+    public function getOwnerDocument()
+    {
+        return $this->attributes['client'];
     }
 
     public function getCreatedAtAttribute()

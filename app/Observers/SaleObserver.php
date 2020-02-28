@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\VerifyOwnerDocument;
 use App\Models\Sale;
 use App\Utils\DocumentInfo;
 
@@ -9,6 +10,7 @@ class SaleObserver
 {
     public function created(Sale $sale)
     {
+        VerifyOwnerDocument::dispatch($sale);
         $client_document = $sale->client['identity_document'];
         $type = (strlen($client_document) === 11) ? DocumentInfo::FACTURA : DocumentInfo::BOLETA;
         $billing_code = $sale->generateBillingCode($type);
