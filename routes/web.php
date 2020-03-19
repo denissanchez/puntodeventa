@@ -19,3 +19,4 @@ Route::resource('productos', 'ProductController');
 Route::resource('compras', 'PurchaseController');
 Route::resource('ventas', 'SaleController');
 Route::resource('facturacion', 'BillingCodeController');
+Route::resource('usuarios', 'UserController');
