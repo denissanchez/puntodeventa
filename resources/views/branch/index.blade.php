@@ -12,6 +12,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card m-b-30">
+            <div class="card-header">
+                <a href="{{ route('sucursales.create') }}" class="btn btn-primary">Registrar</a>
+            </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
