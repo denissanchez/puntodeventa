@@ -365,7 +365,7 @@
     function openModalRegisterProduct() {
         $('#modal-content_create').html('');
         $('#modalNewProduct').modal('show');
-        axios.get("{{ route('partial.create.product')  }}").then(
+        axios.get("{{ route('partial.modal.report')  }}").then(
             res => {
                 $('#modal-content_create').html(res.data);
                 $('.select2Product').select2(
