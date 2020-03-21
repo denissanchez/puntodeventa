@@ -66,6 +66,9 @@
                         <li>
                             <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
                         </li>
+                        <li>
+                            <a href="{{ route('usuarios.index') }}" class="waves-effect">Usuarios</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
