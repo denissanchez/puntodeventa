@@ -60,6 +60,16 @@ class Sale extends Model implements Document
         return unserialize($this->attributes['owner_document']);
     }
 
+    public function getAmmountAttribute()
+    {
+        $accumulated = 0;
+        foreach ($this->details as $detail)
+        {
+            $accumulated += $detail->unit_price_defined;
+        }
+        return $accumulated;
+    }
+
     private function isSameSellerOrIsAdmin()
     {
         return $this->attributes['seller_id'] === Auth::user()->id;

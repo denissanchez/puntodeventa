@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -18,8 +16,5 @@ class ReportController extends Controller
         return view('partials.report.generate');
     }
 
-    public function generate()
-    {
-        
-    }
+
 }

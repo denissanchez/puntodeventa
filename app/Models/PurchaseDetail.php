@@ -29,6 +29,11 @@ class PurchaseDetail extends Model
         'state'
     ];
 
+    public function getInStockAttribute()
+    {
+        return number_format($this->attributes['init_quantity'] - $this->attributes['current_quantity'], 2);
+    }
+
     public function getSubtotalAttribute()
     {
         return $this->attributes['init_quantity'] * $this->attributes['unit_price'];

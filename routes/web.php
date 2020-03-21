@@ -20,3 +20,4 @@ Route::resource('compras', 'PurchaseController');
 Route::resource('ventas', 'SaleController');
 Route::resource('facturacion', 'BillingCodeController');
 Route::resource('usuarios', 'UserController');
+Route::get('generar-reporte', 'ReportController@generate')->name('generate.report');

@@ -9,7 +9,10 @@
             <select id="type" class="form-control">
                 <option value="0">Reporte de stock</option>
                 <option value="1">Productos más vendidos</option>
-                <option value="2">Reporte de vendedores</option>
+                <option value="2">Reporte de compras</option>
+                <option value="3">Reporte de todas las compras</option>
+                <option value="4">Reporte de compras detallado</option>
+                <option value="5">Reporte de ventas</option>
             </select>
         </div>
         <div class="form-group">
@@ -37,14 +40,9 @@
     });
 
     function requestReport() {
-        axios.post("{{ route('generate.report') }}", {
-            type: $('#type').val(),
-            startDate: startDate,
-            endDate: endDate
-        }).then(
-            res => {
-                
-            }
-        );
+        const url = "{{ route('generate.report') }}?type=" + $('#type').val() + "&startDate=" +  startDate + "&endDate=" +  endDate;
+        console.log(url)
+        let win = window.open(url, '_blank');
+        win.focus();
     }
 </script>

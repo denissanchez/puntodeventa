@@ -78,6 +78,16 @@ class Purchase extends Model implements Document
         return date('d-m-Y', strtotime($this->attributes['date']));
     }
 
+    public function getAmmountAtribute()
+    {
+        $accumulated = 0;
+        foreach ($this->details as $detail)
+        {
+            $accumulated = $accumulated + $detail->subtotal;
+        }
+        return number_format($accumulated, 2);
+    }
+
     private function quantitiesSoldAndPurchasedIsEquals()
     {
         foreach($this->details as $detail)
