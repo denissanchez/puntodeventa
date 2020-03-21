@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ $sale->date }}</td>
                 <td>{{ $sale->code }}</td>
-                <td>{{ $sale->client['name'] }}</td>
+                <td style="text-transform: uppercase;">{{ $sale->client['name'] }}</td>
                 <td>{{ $sale->ammount }}</td>
             </tr>
         @endforeach

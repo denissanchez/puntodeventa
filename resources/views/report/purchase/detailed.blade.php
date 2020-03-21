@@ -21,7 +21,7 @@
                 <td>{{ $purchase->date }}</td>
                 <td>{{ $purchase->code }}</td>
                 <td><strong>{{ $purchase->state }}</strong></td>
-                <td>{{ $purchase->provider['name'] }}</td>
+                <td style="text-transform: uppercase;">{{ $purchase->provider['name'] }}</td>
                 <td>{{ $purchase->ammount }}</td>
             </tr>
         @endforeach
