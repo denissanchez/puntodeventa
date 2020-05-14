@@ -7,5 +7,5 @@ use Illuminate\Support\Collection;
 
 interface ProductRepositoryInterface
 {
-    public function all(): Collection;
+    public function all();
 }

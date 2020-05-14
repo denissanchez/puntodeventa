@@ -19,8 +19,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'name' => 'PROD-FAKE0'.$number_one.'-'.$number_two,
         'composition' => 'COMP-FAKE0'.$number_one.'-'.$number_two,
         'description' => 'DESC-FAKE0'.$number_one.'-'.$number_two,
-        'unit_price' => $faker->randomFloat(2, 0, 150),
-//        'purchased_units' => $faker->numberBetween(100, 200),
-//        'sold_units' => $faker->numberBetween(15, 100)
+        'unit_price' => $faker->randomFloat(2, 0, 150)
     ];
 });
