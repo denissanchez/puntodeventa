@@ -6,18 +6,17 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Product;
 use App\Repositories\ProductRepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
     /**
      * ProductRepository constructor.
-     *
+     * @param Product $product
      */
-    public function __construct()
+    public function __construct(Product $product)
     {
-        parent::__construct(new Product());
+        parent::__construct($product);
     }
 
     /**
@@ -27,4 +26,5 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return $this->model->all();
     }
+
 }

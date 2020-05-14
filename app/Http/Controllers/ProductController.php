@@ -17,9 +17,10 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index($filter)
     {
         $products = $this->service->all();
+
         return view('product.index', ['products' => $products]);
     }
 
