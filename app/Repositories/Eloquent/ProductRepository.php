@@ -14,11 +14,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     /**
      * ProductRepository constructor.
      *
-     * @param Product $model
      */
-    public function __construct($model)
+    public function __construct()
     {
-        parent::__construct($model);
+        parent::__construct(new Product());
     }
 
     /**
