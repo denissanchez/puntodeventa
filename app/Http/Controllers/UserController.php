@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Models\Branch;
+use App\Repositories\UserRepositoryInterface;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct()
+    private $repository;
+
+    public function __construct(UserRepositoryInterface $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth');
     }
 
     public function index()
     {
-        $users = User::get();
+        $users = $this->repository->all();
         return view('user.index', [ 'users' => $users ]);
     }
 
