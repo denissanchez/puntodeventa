@@ -9,18 +9,17 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    private $service;
+    private $repository;
 
     public function __construct(ProductRepositoryInterface $service)
     {
-        $this->service = $service;
+        $this->repository = $service;
         $this->middleware('auth');
     }
 
-    public function index($filter)
+    public function index()
     {
-        $products = $this->service->all();
-
+        $products = $this->repository->all();
         return view('product.index', ['products' => $products]);
     }
 

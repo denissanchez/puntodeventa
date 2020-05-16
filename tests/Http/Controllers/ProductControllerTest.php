@@ -18,12 +18,14 @@ class ProductControllerTest extends TestCase
 
     public function testSearchProductByName_IfNameIsNullReturnZeroProducts()
     {
+        // var mock = new Mock<IProductRepository>();
         $mock = Mockery::mock(ProductRepositoryInterface::class);
-        $mock->shouldReceive('find')->with(null)->once()->andReturn([]);
+        // mock = mock.Setup(o => o.Find).Returns([...respuesta])
+        $mock->shouldReceive('all')->once()->andReturn([]);
 
         $controller = new ProductController($mock);
         $view = $controller->index();
-        $controller->index();
+        $this->assertEquals([], $view->getData()['products']);
     }
 
     public function testSearchProductByInternalCode()
