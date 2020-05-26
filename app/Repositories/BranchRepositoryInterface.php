@@ -4,7 +4,7 @@
 namespace App\Repositories;
 
 
-interface UserRepositoryInterface
+interface BranchRepositoryInterface
 {
     public function all();
     public function get($id);

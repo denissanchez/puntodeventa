@@ -14,7 +14,6 @@ class ProductController extends Controller
     public function __construct(ProductRepositoryInterface $service)
     {
         $this->repository = $service;
-        $this->middleware('auth');
     }
 
     public function index()

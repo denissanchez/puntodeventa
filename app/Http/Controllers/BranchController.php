@@ -5,19 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BranchStoreRequest;
 use App\Http\Requests\BranchUpdateRequest;
 use App\Models\Branch;
+use App\Repositories\BranchRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
-    public function __construct()
+    private $repository;
+
+    public function __construct(BranchRepositoryInterface $repository)
     {
-        $this->middleware('auth');
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $branches = Branch::orderBy('id', 'DESC')->paginate(20);
+        $branches = $this->repository->all();
         return view('branch.index')->with(['branches' => $branches]);
     }
 
@@ -26,27 +29,27 @@ class BranchController extends Controller
         return view('branch.create');
     }
 
-    public function store(BranchStoreRequest $request)
+    public function store($data)
     {
-        $branch = Branch::create($request->validated());
+        $branch = $this->repository->save($data);
         return redirect()->route('sucursales.show', ['sucursale' => $branch]);
     }
 
     public function show($id)
     {
-        $branch = Branch::findOrFail($id);
+        $branch = $this->repository->get($id);
         return view('branch.show')->with(['branch' => $branch]);
     }
 
     public function edit($id)
     {
-        $branch = Branch::findOrFail($id);
+        $branch = $this->repository->get($id);
         return view('branch.edit')->with(['branch' => $branch]);
     }
 
     public function update(BranchUpdateRequest $request, $id)
     {
-        $branch = Branch::findOrFail($id);
+        $branch = $this->repository->get($id);
         $branch->update($request->validated());
         return redirect()->route('sucursales.show', ['sucursale' => $branch]);
     }

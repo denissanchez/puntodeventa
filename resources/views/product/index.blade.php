@@ -46,7 +46,12 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#dataTable').DataTable();
+        var html = $('#dataTable').html();
+        $('#dataTable').html('');
+        setTimeout(() => {
+            $('#dataTable').html(html);
+            $('#dataTable').DataTable();
+        }, 1500)
     });
 </script>
 

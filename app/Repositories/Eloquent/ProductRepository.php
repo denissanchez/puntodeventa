@@ -3,42 +3,33 @@
 
 namespace App\Repositories\Eloquent;
 
-
 use App\Models\Product;
-use App\Pipelines\Filters\SearchFilter;
 use App\Repositories\ProductRepositoryInterface;
-use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Collection;
 
-class ProductRepository extends BaseRepository implements ProductRepositoryInterface
+class ProductRepository implements ProductRepositoryInterface
 {
-    /**
-     * ProductRepository constructor.
-     * @param Product $product
-     */
-    public function __construct(Product $product)
+    public function all()
     {
-        parent::__construct($product);
+        return Product::all()->toArray();
     }
 
-    /**
-     * @return Collection
-     */
-    public function all(): Collection
+    public function get($id)
     {
-        return $this->model->all();
+        return Product::where("id", $id)->first();
+    }
 
-//        $pipelines = [
-//            SearchFilter::class,
-//        ];
-//
-//        $builder = $this->model->newQuery();
-//
-//        return app(Pipeline::class)
-//            ->send($builder)
-//            ->through($pipelines)
-//            ->then(function($builder) {
-//                return $builder->get();
-//            });
+    public function find($value)
+    {
+        return Product::find($value);
+    }
+
+    public function save($values)
+    {
+        return Product::create($values);
+    }
+
+    public function update($id, array $data)
+    {
+
     }
 }

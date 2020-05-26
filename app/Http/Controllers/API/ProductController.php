@@ -7,19 +7,28 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\ProductStoreRequest;
 use App\Http\Resources\API\ProductResource;
 use App\Models\Product;
+use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    /**
+     * @var ProductRepositoryInterface
+     */
+    private $repository;
+
+    public function __construct(ProductRepositoryInterface $repository)
     {
-        $this->middleware('auth:api');
+        $this->repository = $repository;
     }
 
+    /**
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index()
     {
-        $products = Product::all();
+        $products = $this->repository->all();
         return ProductResource::collection($products);
     }
 
@@ -30,15 +39,18 @@ class ProductController extends Controller
         return view('partials.product.create', $data);
     }
 
-    public function store(ProductStoreRequest $request)
+    /**
+     * @return ProductResource
+     */
+    public function store($data)
     {
-        $data = array_merge($request->validated(), ['branch_id' => Auth::user()->branch_id]);
-        $product = Product::create($data);
+        $product = $this->repository->save($data);
         return new ProductResource($product);
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = $this->repository->get($id);
         return new ProductResource($product);
     }
 

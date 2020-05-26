@@ -4,29 +4,28 @@
 namespace App\Repositories\Eloquent;
 
 
-use App\User;
+use App\Models\OwnerDocument;
 
-class UserRepository implements \App\Repositories\UserRepositoryInterface
+class ClientRepository
 {
-
-    public function all()
+    public function all($paginate = 10)
     {
-        return User::all();
+        return OwnerDocument::all();
     }
 
     public function get($id)
     {
-        return User::where("id", $id)->first();
+        return OwnerDocument::where("id", $id)->first();
     }
 
     public function find($value)
     {
-        return User::find($value)->first();
+        return OwnerDocument::find($value)->first();
     }
 
     public function save(array $values)
     {
-        return User::create($values);
+        return OwnerDocument::create($values);
     }
 
     public function update($id, array $data)
