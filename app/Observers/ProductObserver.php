@@ -11,7 +11,7 @@ class ProductObserver
     {
         VerifyProductData::dispatch($product);
         $product->update([
-            'code' => substr($product->measure_unit, 0, 1).substr($product->name, 0, 4).$product->id
+            'code' => str_pad(substr($product->name, 0, 4).$product->id, 8, '0', STR_PAD_LEFT)
         ]);
     }
 

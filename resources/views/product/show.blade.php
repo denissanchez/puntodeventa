@@ -19,10 +19,16 @@
                                 <input type="text" class="form-control" value="{{ $product->code }}" disabled>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nombre</label>
                                 <input type="text" class="form-control" value="{{ $product->name }}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>P. UNIT</label>
+                                <input type="text" class="form-control" value="{{ $product->unit_price }}" disabled>
                             </div>
                         </div>
                     </div>

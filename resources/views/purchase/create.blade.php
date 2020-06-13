@@ -150,7 +150,7 @@
         @foreach($products as $key => $product)
             {
                 id: {{ $product->id }},
-                text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
+                text:  "{{ $product->getDisplayNameAttribute() }}",
                 uom: "{{ $product->measure_unit }}",
                 error_quantity: '',
                 error_unit_price: ''
@@ -311,6 +311,8 @@
             description : $.trim(getTextAreaFromModalByName('description').val()),
             composition : $.trim(getTextAreaFromModalByName('composition').val()),
         };
+
+        console.log(product);
 
         axios.post('/api/productos', product).then(
             res => {
