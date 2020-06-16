@@ -14,7 +14,7 @@ class BranchStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'ruc' => ['required', 'digits:11', 'unique:branches, ruc'],
+            'ruc' => ['required', 'digits:11', 'unique:branches,ruc'],
             'name' => ['required', 'string'],
             'address' => ['required', 'string'],
             'phone' => ['nullable'],
