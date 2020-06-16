@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sale;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
