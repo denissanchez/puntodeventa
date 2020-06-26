@@ -14,12 +14,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->translateResourceVerbs();
-
-//        Product::observe(ProductObserver::class);
-//        PurchaseDetail::observe(PurchaseDetailObserver::class);
-//        Sale::observe(SaleObserver::class);
-//        SaleDetail::observe(SaleDetailObserver::class);
-//        SaleDetailControl::observe(SaleDetailControlObserver::class);
     }
 
     public function translateResourceVerbs() {
