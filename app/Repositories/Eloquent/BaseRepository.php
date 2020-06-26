@@ -28,14 +28,6 @@ class BaseRepository implements EloquentRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function all(): Collection
-    {
-        $this->model->all();
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function create(array $attributes): Model
     {
         return $this->model->create($attributes);

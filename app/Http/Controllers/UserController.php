@@ -18,8 +18,9 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->all();
-        ddd($users);
-        return view('user.index');
+        return view('user.index')->with([
+            'users' => $users
+        ]);
     }
 
     public function create()

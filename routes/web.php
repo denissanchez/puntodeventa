@@ -14,6 +14,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
+Route::get('/usuarios', 'UserController@index')->name('usuarios.index');
+
+
 Route::resource('sucursales', 'BranchController');
 Route::resource('productos', 'ProductController');
 Route::resource('compras', 'PurchaseController');

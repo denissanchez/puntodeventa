@@ -5,16 +5,9 @@ namespace App\Repositories;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 interface EloquentRepositoryInterface
 {
-
-    /**
-     * @return Collection
-     */
-    public function all(): Collection;
-
     /**
      * @param array $attributes
      * @return Model

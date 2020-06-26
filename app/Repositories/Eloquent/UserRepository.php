@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 
 
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
@@ -18,4 +19,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct($model);
     }
 
+    public function all(): Collection
+    {
+        return $this->model->all();
+    }
 }
