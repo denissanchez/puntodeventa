@@ -14,7 +14,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
-Route::get('/usuarios', 'UserController@index')->name('usuarios.index');
+
+Route::namespace('Admin')->prefix('admin')->group(function () {
+    Route::resource('usuarios', 'UserController');
+});
+
+
+
 
 
 Route::resource('sucursales', 'BranchController');
