@@ -11,7 +11,7 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
-            <li class="nav-item nav-category">Main</li>
+            <li class="nav-item nav-category">Inicio</li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
@@ -39,6 +39,27 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+            <li class="nav-item nav-category">Administración</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">
+                    <i class="link-icon" data-feather="feather"></i>
+                    <span class="link-title">Usuarios</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="users">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="link-icon" data-feather="message-square"></i>
+                    <span class="link-title">Sucursales</span>
+                </a>
             </li>
         </ul>
     </div>

@@ -26,8 +26,11 @@
             @include('partials.footer')
         </div>
     </div>
-    <script src="{{ asset('vendors/core/core.js') }}"></script>
-    <script src="{{ asset('vendors/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('js/admin/template.js') }}"></script>
+
+    @section('scripts')
+        <script src="{{ asset('vendors/core/core.js') }}"></script>
+        <script src="{{ asset('vendors/feather-icons/feather.min.js') }}"></script>
+        <script src="{{ asset('js/admin/template.js') }}"></script>
+    @show
 </body>
 </html>

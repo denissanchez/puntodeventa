@@ -13,6 +13,6 @@ class UserTest extends TestCase
      */
     public function testRegisterUser()
     {
-        $this->assertTrue(true);
+
     }
 }
