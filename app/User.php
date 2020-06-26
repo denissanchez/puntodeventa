@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable, HasRoles;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'password',
     ];
 
     protected $hidden = [
@@ -22,19 +22,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = strtoupper($value);
-    }
-
-    public function scopeCurrentBranch($query)
-    {
-        return $query->where('branch_id', \Auth::user()->branch_id);
-    }
-
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
 }

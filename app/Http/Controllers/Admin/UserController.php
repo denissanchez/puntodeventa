@@ -17,14 +17,14 @@ class UserController extends Controller
 
     public function index() {
         $users = $this->userRepository->all();
-        return view('admin.user.index')->with([
+        return view('user.index')->with([
             'users' => $users
         ]);
     }
 
     public function show($id) {
         $user = $this->userRepository->find($id);
-        return view('admin.user.show')->with([
+        return view('user.show')->with([
             'user' => $user
         ]);
     }

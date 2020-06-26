@@ -9,54 +9,72 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendors/core/core.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{ asset('fonts/feather-font/css/iconfont.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}"/>
 </head>
-<body class="fixed-left">
-<div class="accouting"></div>
-<div class="wrapper-page">
-    <div class="card">
-        <div class="card-body">
-            <h3 class="text-center mt-0 m-b-15">
-                <a href="#" class="logo logo-admin"><img src="" height="24" alt="logo"></a>
-            </h3>
-            <div class="p-3">
-                <form action="{{ route('login') }}" method="POST" class="form-horizontal m-t-20">
-                    @csrf
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <input type="text" name="email" class="form-control"  required placeholder="Usuario">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <input type="password" name="password" class="form-control" required placeholder="Contraseña">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label for="customCheck1" class="custom-control-label">{{ __('Remember Me') }}</label>
+<body>
+    <div class="main-wrapper">
+        <div class="page-wrapper full-page">
+            <div class="page-content d-flex align-items-center justify-content-center">
+                <div class="row w-100 mx-0 auth-page">
+                    <div class="col-md-8 col-xl-6 mx-auto">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-4 pr-md-0">
+                                    <div class="auth-left-wrapper">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pl-md-0">
+                                    <div class="auth-form-wrapper px-4 py-5">
+                                        <a href="#" class="noble-ui-logo logo-light d-block mb-2">EXPER<span>TI</span></a>
+                                        <h5 class="text-muted font-weight-normal mb-4">Bienvenido!</h5>
+                                        <form action="{{ route('login') }}" method="POST" class="forms-sample">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Usuario</label>
+                                                <input name="username" type="text" class="form-control" id="username" placeholder="Usuario">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Contraseña</label>
+                                                <input name="password" type="password" class="form-control" id="password" autocomplete="current-password" placeholder="Contraseña">
+                                            </div>
+                                            <div class="form-check form-check-flat form-check-primary">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input">
+                                                    Recuérdame
+                                                </label>
+                                            </div>
+                                            <div class="mt-3">
+                                                <button type="submit" class="btn btn-primary mr-2 mb-2 mb-md-0 text-white">Ingresar</button>
+                                            </div>
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group text-center row m-t-20">
-                        <div class="col-12">
-                            <button class="btn btn-danger btn-block waves-effect waves-light" type="submit">{{ __('Login') }}</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+<script src="{{ asset('vendors/core/core.js') }}"></script>
+<script src="{{ asset('vendors/feather-icons/feather.min.js') }}"></script>
+<script src="{{ asset('js/admin/template.js') }}"></script>
 </body>
 </html>

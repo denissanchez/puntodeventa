@@ -17,13 +17,13 @@
 </head>
 <body class="sidebar-dark">
     <div class="main-wrapper">
-        @include('admin.partials.sidebar')
+        @include('partials.sidebar')
         <div class="page-wrapper">
-            @include('admin.partials.navbar')
+            @include('partials.navbar')
             <div class="page-content">
                 @yield('content')
             </div>
-            @include('admin.partials.footer')
+            @include('partials.footer')
         </div>
     </div>
     <script src="{{ asset('vendors/core/core.js') }}"></script>

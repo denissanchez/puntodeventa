@@ -79,14 +79,12 @@
                             <li class="list-inline-item dropdown notification-list hide-phone">
                                 <span class="nav-link dropdown-toggle arrow-none waves-effect text-white"
                                    data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
-                                   <i class="fas fa-cubes" style="margin-right: 10px"></i> {{ Auth::user()->branch->name }}
                                 </span>
                             </li>
                             <li class="list-inline-item dropdown notification-list">
                                 <a href="#" class="nav-link dropdown-toggle arrow-none waves-effect nav-user"
                                    data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
                                     <img src="{{ asset('images/users/avatar.png') }}" alt="user"  style="margin-right: 10px" class="rounded-circle">
-                                    <span class="text-white">{{ Auth::user()->name }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                                     <div class="dropdown-item noti-title">
