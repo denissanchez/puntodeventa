@@ -21,14 +21,10 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        if ($this->app->environment() !== 'production') {
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-        }
     }
 
     public function boot()
     {
-        Passport::routes();
         Product::observe(ProductObserver::class);
         PurchaseDetail::observe(PurchaseDetailObserver::class);
         Sale::observe(SaleObserver::class);

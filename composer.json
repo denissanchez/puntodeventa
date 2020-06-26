@@ -9,15 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "barryvdh/laravel-dompdf": "^0.8.5",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
-        "laravel/passport": "^8.3",
         "laravel/tinker": "^2.0",
         "laraveles/spanish": "^1.4"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.6",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "laravel/ui": "^1.1",
@@ -62,10 +59,5 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "post-update-cmd" : [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
-        ]
     }
 }

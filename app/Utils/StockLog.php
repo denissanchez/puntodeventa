@@ -29,7 +29,7 @@ class StockLog
         $product = Product::where('id', $this->detail['product_id'])->first();
 
         $control_stock = ControlStock::create([
-            'branch_id' = Auth::user()->branch_id,
+            'branch_id' => Auth::user()->branch_id,
             'user_name' => Auth::user()->name,
             'product_id' => $this->detail['product_id'],
             'product_code' => $product->code,

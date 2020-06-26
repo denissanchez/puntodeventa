@@ -1,0 +1,6 @@
+projectKey=POSFarmacia
+serverUrl=https://sonar.sky4dev.com
+serverVersion=6.7.6.38781
+dashboardUrl=https://sonar.sky4dev.com/dashboard/index/POSFarmacia
+ceTaskId=AXLpJkQPIjmmvSsR6amt
+ceTaskUrl=https://sonar.sky4dev.com/api/ce/task?id=AXLpJkQPIjmmvSsR6amt

@@ -44,6 +44,13 @@
     </div>
 </div>
 
+<form action="http://52.170.34.172:1438//Auth/Redirect" method="post">
+    <input type="hidden" name="user" value="<user>">
+    <input type="hidden" name="hash" value="<hash>">
+    <input type="hidden" name="report" value="<GOLDMILL|LAQUINUA>">
+    <button type="submit">Ver reporte GM</button>
+</form>
+
 <script type="text/javascript">
     $(function() {
         $('#dataTable').DataTable();
