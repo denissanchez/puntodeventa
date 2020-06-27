@@ -6,15 +6,21 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\UtilsRepositoryInterface;
+use App\Utils\UtilsKey;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     private $productRepository;
+    private $utilsRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
-    {
+    public function __construct(
+        ProductRepositoryInterface $productRepository,
+        UtilsRepositoryInterface $utilsRepository
+    ) {
         $this->productRepository = $productRepository;
+        $this->utilsRepository = $utilsRepository;
     }
 
     public function index()
@@ -25,7 +31,17 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('product.create');
+        $laboratories = $this->utilsRepository->get(UtilsKey::LABORATORY);
+        $brands = $this->utilsRepository->get(UtilsKey::BRAND);
+        $categories = $this->utilsRepository->get(UtilsKey::CATEGORY);
+        $measureUnits = $this->utilsRepository->get(UtilsKey::MEASURE_UNIT);
+
+        return view('product.create')->with([
+            'laboratories' => $laboratories,
+            'brands' => $brands,
+            'categories' => $categories,
+            'measureUnits' => $measureUnits
+        ]);
     }
 
     public function store(Request $request)
