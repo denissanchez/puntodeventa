@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
 use App\Repositories\Eloquent\BaseRepository;
+use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\EloquentRepositoryInterface;
+use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +25,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(UserRepositoryInterface::class, function () {
             return new UserRepository(new User);
+        });
+        $this->app->bind(ProductRepositoryInterface::class, function () {
+            return new ProductRepository(new Product);
         });
     }
 
