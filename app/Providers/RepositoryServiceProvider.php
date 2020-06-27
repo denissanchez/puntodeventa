@@ -8,10 +8,12 @@ use App\Repositories\Eloquent\BaseRepository;
 use App\Repositories\Eloquent\OfficeRepository;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\UserRepository;
+use App\Repositories\Eloquent\UtilsRepository;
 use App\Repositories\EloquentRepositoryInterface;
 use App\Repositories\OfficeRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\UtilsRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 use App\User;
@@ -37,6 +39,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(OfficeRepositoryInterface::class, function () {
             return new OfficeRepository(new Office);
         });
+
+        $this->app->bind(UtilsRepositoryInterface::class, UtilsRepository::class);
     }
 
     /**
