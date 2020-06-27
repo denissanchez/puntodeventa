@@ -4,24 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
+use App\Repositories\Eloquent\ProductRepository;
+use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    private $productRepository;
+
+    public function __construct(ProductRepositoryInterface $productRepository)
     {
-        $this->middleware('auth');
+        $this->productRepository = $productRepository;
     }
 
     public function index()
     {
-        $products = Product::all();
+        $products = $this->productRepository->all();
         return view('product.index', ['products' => $products]);
     }
 
     public function create()
     {
-        return view('errors.404');
+        return view('product.create');
     }
 
     public function store(Request $request)

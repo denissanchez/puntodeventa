@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function translateResourceVerbs() {
 
         Route::resourceVerbs([
-            'create' => 'crear',
+            'create' => 'registrar',
             'store' => 'guardar',
             'show' => 'detalle',
             'edit' => 'editar',

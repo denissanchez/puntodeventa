@@ -1,60 +1,45 @@
-@extends('layouts.app')
+@extends('partials.layout')
 
 @section('content')
 <div class="row">
-    <div class="col-sm-12">
-        <div class="page-title-box">
-            <h4 class="page-title">Productos</h4>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="card m-b-30">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
             <div class="card-body">
-                <table id="dataTable" class="table table-striped table-bordered" width="100%">
-                    <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Marca</th>
-                        <th>Categoría</th>
-                        <th>En stock</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($products as $key=>$product)
+                <h6 class="card-title">Productos</h6>
+                <div class="table-responsive">
+                    <table id="table" class="table">
+                        <thead>
                         <tr>
-                            <td>{{ $product->code }}</td>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->brand }}</td>
-                            <td>{{ $product->category }}</td>
-                            <td>{{ $product->current_quantity }}</td>
-                            <td>
-                                <a href="{{ route('productos.show', $product ) }}" class="btn btn-link btn-sm">Ver</a>
-                            </td>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Categoría</th>
+                            <th>En stock</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($products as $product)
+                            <tr>
+                                <td>{{ $product->code }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->brand }}</td>
+                                <td>{{ $product->category }}</td>
+                                <td>{{ $product->current_quantity }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
 
-<form action="http://52.170.34.172:1438//Auth/Redirect" method="post">
-    <input type="hidden" name="user" value="<user>">
-    <input type="hidden" name="hash" value="<hash>">
-    <input type="hidden" name="report" value="<GOLDMILL|LAQUINUA>">
-    <button type="submit">Ver reporte GM</button>
-</form>
+@section('scripts')
+    @parent
+    <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
 
-<script type="text/javascript">
-    $(function() {
-        $('#dataTable').DataTable();
-    });
-</script>
-
+    <script src="{{ asset('js/custom/product.index.js') }}"></script>
 @endsection
