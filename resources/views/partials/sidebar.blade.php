@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
-            Noble<span>UI</span>
+            CALI<span>DAD</span>
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -13,38 +13,61 @@
         <ul class="nav">
             <li class="nav-item nav-category">Inicio</li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('home') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">web apps</li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="link-icon" data-feather="message-square"></i>
-                    <span class="link-title">Chat</span>
+                <a href="{{ route('home') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Lista de ventas</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">Components</li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false" aria-controls="uiComponents">
+                <a class="nav-link" data-toggle="collapse" href="#product" role="button" aria-expanded="false" aria-controls="product">
                     <i class="link-icon" data-feather="feather"></i>
-                    <span class="link-title">UI Kit</span>
+                    <span class="link-title">Productos</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="uiComponents">
+                <div class="collapse" id="product">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Alerts</a>
+                            <a href="{{ route('productos.create') }}" class="nav-link">Marcas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('productos.create') }}" class="nav-link">Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('productos.index') }}" class="nav-link">En stock</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('productos.create') }}" class="nav-link">Registrar</a>
                         </li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item nav-category">Administración</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#purchase" role="button" aria-expanded="false" aria-controls="purchase">
+                    <i class="link-icon" data-feather="feather"></i>
+                    <span class="link-title">Compras</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="purchase">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('compras.create') }}" class="nav-link">Lista de compras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('compras.create') }}" class="nav-link">Registrar</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">
                     <i class="link-icon" data-feather="feather"></i>
-                    <span class="link-title">Usuarios</span>
+                    <span class="link-title">Administración</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
                 <div class="collapse" id="users">
@@ -52,14 +75,11 @@
                         <li class="nav-item">
                             <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('usuarios.index') }}" class="nav-link">Registrar usuario</a>
+                        </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="link-icon" data-feather="message-square"></i>
-                    <span class="link-title">Sucursales</span>
-                </a>
             </li>
         </ul>
     </div>

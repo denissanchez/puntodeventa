@@ -19,7 +19,6 @@ Route::middleware(['auth'])->group(function() {
     Route::namespace('Admin')->prefix('admin')->group(function () {
         Route::resource('usuarios', 'UserController');
     });
-    Route::resource('sucursales', 'BranchController');
     Route::resource('productos', 'ProductController');
     Route::resource('compras', 'PurchaseController');
     Route::resource('ventas', 'SaleController');

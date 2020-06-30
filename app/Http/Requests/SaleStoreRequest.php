@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Product;
-use App\Rules\AvailableStock;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SaleStoreRequest extends FormRequest
