@@ -47,20 +47,24 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         $data = $request->validated();
-        $product = $this->productRepository->create($data);
-        // return redirect()->route('productos.index');
+        $this->productRepository->create($data);
+        return redirect()->route('productos.index');
     }
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('product.show', ['product' => $product]);
+        $product = $this->productRepository->find($id);
+        if ($product) {
+            return view('product.show', ['product' => $product]);
+        }
     }
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        return view('product.edit', ['product' => $product]);
+        $product = $this->productRepository->find($id);
+        if (product) {
+            return view('product.edit', ['product' => $product]);
+        }
     }
 
     public function update(ProductStoreRequest $request, $id)

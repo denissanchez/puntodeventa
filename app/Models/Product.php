@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Product
  * @package App\Models
- * @property int branch_id
+ * @property int store_id
  * @property string code
  * @property string category
  * @property string brand
