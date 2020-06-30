@@ -44,9 +44,11 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        return redirect()->route('productos.index');
+        $data = $request->validated();
+        $product = $this->productRepository->create($data);
+        // return redirect()->route('productos.index');
     }
 
     public function show($id)
