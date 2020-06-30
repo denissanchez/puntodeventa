@@ -17,7 +17,6 @@ class CreateUtilsTable extends Migration
             $table->id();
             $table->string('key');
             $table->string('value');
-            $table->timestamps();
         });
     }
 

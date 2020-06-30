@@ -9,29 +9,29 @@ interface UtilsRepositoryInterface
 
     /**
      * @param $key
-     * @param $name
-     * @return string
-     */
-    public function store($key, $name): string;
-
-    /**
-     * @param $key
-     * @param $name
+     * @param $value
      * @return void
      */
-    public function delete($key, $name);
+    public function store($key, $value);
 
     /**
      * @param $key
-     * @param $name
-     * @return array
+     * @param $value
+     * @return void
      */
-    public function find($key, $name): array;
+    public function delete($key, $value);
 
     /**
      * @param $key
-     * @param $name
+     * @param $value
      * @return string
      */
-    public function edit($key, $name): string;
+    public function find($key, $value): string;
+
+    /**
+     * @param $key
+     * @param $value
+     * @return string
+     */
+    public function edit($key, $value): string;
 }

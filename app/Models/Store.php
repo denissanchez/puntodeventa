@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string address
  * @property string phone
  */
-class Office extends Model
+class Store extends Model
 {
     protected $fillable = [
         'ruc', 'name', 'address', 'phone'

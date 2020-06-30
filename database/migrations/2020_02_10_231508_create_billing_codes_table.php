@@ -15,13 +15,13 @@ class CreateBillingCodesTable extends Migration
     {
         Schema::create('billing_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('store_id');
             $table->string('type');
             $table->string('prefix');
             $table->integer('incrementable')->unsigned();
             $table->timestamps();
 
-            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('store_id')->references('id')->on('stores')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

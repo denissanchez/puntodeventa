@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Office;
+use App\Models\Store;
 use App\Models\Product;
 use App\Repositories\Eloquent\BaseRepository;
 use App\Repositories\Eloquent\OfficeRepository;
@@ -37,7 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(OfficeRepositoryInterface::class, function () {
-            return new OfficeRepository(new Office);
+            return new OfficeRepository(new Store);
         });
 
         $this->app->bind(UtilsRepositoryInterface::class, UtilsRepository::class);

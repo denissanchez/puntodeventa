@@ -16,7 +16,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('seller_id');
             $table->string('code')->nullable();
             $table->text('client');
@@ -26,7 +26,7 @@ class CreateSalesTable extends Migration
             $table->string('commentary')->nullable();
             $table->timestamps();
 
-            $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('seller_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
