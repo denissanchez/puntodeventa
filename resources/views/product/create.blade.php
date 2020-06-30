@@ -110,18 +110,6 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="form-group col-12 col-md-4 col-lg-6">
-                                <label for="preview">Imagen</label>
-                                <div class="custom-file">
-                                    <input type="file" name="preview" id="preview" class="custom-file-input" lang="es">
-                                    <label class="custom-file-label">Subir imagen</label>
-                                </div>
-                                @error('preview')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
                         </div>
                         <div class="form-group">
                             <label for="description">Descripción</label>
@@ -136,8 +124,8 @@
                         <div class="form-group">
                             <label for="commentary">Comentario adicional</label>
                             <textarea name="commentary" id="commentary" rows="3"
-                                      class="form-control @error('commentary') is-invalid @enderror"></textarea>
-                            @error('commentary')
+                                      class="form-control @error('composition') is-invalid @enderror"></textarea>
+                            @error('composition')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

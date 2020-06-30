@@ -24,9 +24,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'branch_id',
-        'code',
+        'store_id',
         'origin_code',
+        'internal_code',
         'category',
         'brand',
         'laboratory',
@@ -35,6 +35,7 @@ class Product extends Model
         'composition',
         'description',
         'unit_price',
+        'minimun_quantity',
         'purchased_units',
         'sold_units',
     ];
@@ -42,66 +43,5 @@ class Product extends Model
     protected static function boot()
     {
         parent::boot();
-        self::addGlobalScope(new CurrentBranchScope());
-    }
-
-    public function setCodeAttribute($value)
-    {
-        $this->attributes['code'] = strtoupper($value);
-    }
-
-    public function setOriginCodeAttribute($value)
-    {
-        $this->attributes['origin_code'] = strtoupper($value);
-    }
-
-    public function setCategoryAttribute($value)
-    {
-        $this->attributes['category'] = strtoupper($value);
-    }
-
-    public function setBrandAttribute($value)
-    {
-        $this->attributes['brand'] = strtoupper($value);
-    }
-
-    public function setLaboratoryAttribute($value)
-    {
-        $this->attributes['laboratory'] = strtoupper($value);
-    }
-
-    public function setMeasureUnitAttribute($value)
-    {
-        $this->attributes['measure_unit'] = strtoupper($value);
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = strtoupper($value);
-    }
-
-    public function setCompositionAttribute($value)
-    {
-        $this->attributes['composition'] = strtoupper($value);
-    }
-
-    public function setDescriptionAttribute($value)
-    {
-        $this->attributes['description'] = strtoupper($value);
-    }
-
-    public function getCurrentQuantityAttribute()
-    {
-        return $this->purchased_units - $this->sold_units;
-    }
-
-    public function getDisplayNameAttribute()
-    {
-        return $this->origin_code.'-'.$this->code.' | '.$this->name.' - '.$this->brand;
-    }
-
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
     }
 }

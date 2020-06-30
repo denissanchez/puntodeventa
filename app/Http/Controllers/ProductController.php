@@ -36,8 +36,6 @@ class ProductController extends Controller
         $categories = $this->utilsRepository->get(UtilsKey::CATEGORY);
         $measureUnits = $this->utilsRepository->get(UtilsKey::MEASURE_UNIT);
 
-        ddd($laboratories);
-
         return view('product.create')->with([
             'laboratories' => $laboratories,
             'brands' => $brands,

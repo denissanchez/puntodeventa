@@ -16,16 +16,17 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id');
-            $table->string('code')->nullable();
             $table->string('origin_code')->nullable();
-            $table->string('category');
-            $table->string('brand');
-            $table->string('laboratory')->default('-');
-            $table->string('measure_unit');
+            $table->string('internal_code')->nullable();
+            $table->string('category')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('laboratory')->nullable();
+            $table->string('measure_unit')->nullable();
             $table->string('name');
             $table->string('composition')->nullable();
             $table->string('description');
             $table->decimal('unit_price', 6, 2)->default(0)->unsigned();
+            $table->decimal('minimun_quantity', 6, 2)->default(0)->unsigned();
             $table->decimal('purchased_units', 6, 2)->default(0)->unsigned();
             $table->decimal('sold_units', 6, 2)->default(0)->unsigned();
             $table->timestamps();
