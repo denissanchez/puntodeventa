@@ -4,11 +4,10 @@
     </a>
     <div class="navbar-content">
         <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <i data-feather="truck"></i><span class="font-weight-medium ml-3 mr-1">{{ session('current_branch_name') }}</span>
-            </li>
             <li class="nav-item dropdown nav-profile">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="truck"></i>
+                    <span class="font-weight-medium mx-3 mr-1">{{ session('current_branch_name') }}</span>
                     <img src="https://via.placeholder.com/30x30" alt="userr">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="profileDropdown">
@@ -43,7 +42,7 @@
                                     @csrf
                                     <button type="submit" class="btn btn-link nav-link">
                                         <i data-feather="log-out"></i>
-                                        <span>Log Out</span>
+                                        <span>Cerrar sesión</span>
                                     </button>
                                 </form>
                             </li>
