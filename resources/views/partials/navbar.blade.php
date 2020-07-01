@@ -4,6 +4,9 @@
     </a>
     <div class="navbar-content">
         <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <i data-feather="truck"></i><span class="font-weight-medium ml-3 mr-1">{{ session('current_branch_name') }}</span>
+            </li>
             <li class="nav-item dropdown nav-profile">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="https://via.placeholder.com/30x30" alt="userr">
@@ -27,10 +30,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="javascript:;" class="nav-link">
-                                    <i data-feather="repeat"></i>
-                                    <span>Ir a otra sucursal</span>
-                                </a>
+                                <form action="{{ route('remove.session') }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link nav-link">
+                                        <i data-feather="repeat"></i>
+                                        <span>Ir a otra sucursal</span>
+                                    </button>
+                                </form>
                             </li>
                             <li class="nav-item">
                                 <form action="{{ route('logout') }}" method="post">

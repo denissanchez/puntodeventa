@@ -13,6 +13,8 @@
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::post('/home', 'HomeController@post')->name('store.session')->middleware('auth');
+Route::post('/sucursal', 'HomeController@remove')->name('remove.session')->middleware('auth');
 
 
 Route::middleware(['auth'])->group(function() {

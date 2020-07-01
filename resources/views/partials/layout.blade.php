@@ -26,7 +26,8 @@
     @include('partials.footer')
 
     @if(!\Illuminate\Support\Facades\Session::get('current_branch'))
-        <form method="POST">
+        <form action="{{ route('store.session') }}" method="POST">
+            @csrf
             <div class="modal fade" id="changeOfficeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="changeOfficeModal"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -38,10 +39,14 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            @php
+                                $stores = \App\Models\Store::all();
+                            @endphp
                                 <select name="office" id="office" class="form-control">
                                     <option selected disabled>Seleccionar</option>
-                                    <option value="1">Sucursal A</option>
-                                    <option value="2">Sucursal A</option>
+                                    @foreach($stores as $store)
+                                        <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                    @endforeach
                                 </select>
                         </div>
                         <div class="modal-footer">
