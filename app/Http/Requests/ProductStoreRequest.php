@@ -15,7 +15,7 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'origin_code' => ['nullable', 'string'],
-            'internal_code' => ['nullable', 'string', 'unique:products'],
+            'internal_code' => ['nullable', 'string', 'max:6', 'unique:products'],
             'category' => ['nullable', 'string'],
             'brand' => ['nullable', 'string'],
             'laboratory' => ['nullable', 'string'],

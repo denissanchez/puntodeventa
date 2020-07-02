@@ -26,6 +26,7 @@
                                 <input type="text" name="internal_code" id="internal_code"
                                        class="form-control @error('internal_code') is-invalid @enderror"
                                        value="{{ old('internal_code', '') }}"
+                                       maxlength="6"
                                        placeholder="AUTOGENERADO">
                                 @error('internal_code')
                                     <div class="invalid-feedback">

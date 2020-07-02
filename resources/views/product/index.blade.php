@@ -20,7 +20,7 @@
                         <tbody>
                         @foreach($products as $product)
                             <tr>
-                                <td>{{ $product->code }}</td>
+                                <td>{{ $product->internal_code }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->brand }}</td>
                                 <td>{{ $product->category }}</td>

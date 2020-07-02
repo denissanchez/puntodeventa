@@ -10,4 +10,6 @@ class UtilsKey
     const LABORATORY = "Laboratory";
     const CATEGORY = "Category";
     const MEASURE_UNIT = "MeasureUnit";
+    const CURRENT_STORE_ID = "current_store";
+    const CURRENT_STORE_NAME = "current_store_name";
 }

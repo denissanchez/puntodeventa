@@ -25,7 +25,7 @@
         </div>
     @include('partials.footer')
 
-    @if(!\Illuminate\Support\Facades\Session::get('current_branch'))
+    @if(!\Illuminate\Support\Facades\Session::get(\App\Utils\UtilsKey::CURRENT_STORE_ID))
         <form action="{{ route('store.session') }}" method="POST">
             @csrf
             <div class="modal fade" id="changeOfficeModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="changeOfficeModal"

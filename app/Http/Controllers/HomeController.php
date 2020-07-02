@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sale;
 use App\Repositories\OfficeRepositoryInterface;
+use App\Utils\UtilsKey;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
@@ -35,18 +36,17 @@ class HomeController extends Controller
         }
 
         session([
-            'current_branch' => $office->id,
-            'current_branch_name' => $office->name,
+            UtilsKey::CURRENT_STORE_ID => $office->id,
+            UtilsKey::CURRENT_STORE_NAME => $office->name,
         ]);
 
         return redirect()->route('home');
     }
 
-
     public function remove(Request $request)
     {
         $request->session()->forget([
-            'current_branch', 'current_branch_name'
+            UtilsKey::CURRENT_STORE_ID, UtilsKey::CURRENT_STORE_NAME
         ]);
 
         return redirect()->route('home');

@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 
 
 use App\Repositories\EloquentRepositoryInterface;
+use App\Utils\UtilsKey;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository implements EloquentRepositoryInterface
@@ -29,6 +30,8 @@ abstract class BaseRepository implements EloquentRepositoryInterface
      */
     public function create(array $attributes): Model
     {
+        $store_id = session(UtilsKey::CURRENT_STORE_ID);
+        $attributes = array_merge($attributes,  ['store_id' => $store_id ]);
         return $this->model->create($attributes);
     }
 
