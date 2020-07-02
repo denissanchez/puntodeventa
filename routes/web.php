@@ -18,9 +18,7 @@ Route::post('/sucursal', 'HomeController@remove')->name('remove.session')->middl
 
 
 Route::middleware(['auth'])->group(function() {
-    Route::namespace('Admin')->prefix('admin')->group(function () {
-        Route::resource('usuarios', 'UserController');
-    });
+    Route::resource('usuarios', 'UserController');
     Route::resource('productos', 'ProductController');
     Route::resource('compras', 'PurchaseController');
     Route::resource('ventas', 'SaleController');
