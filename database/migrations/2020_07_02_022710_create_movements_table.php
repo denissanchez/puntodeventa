@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillingCodesTable extends Migration
+class CreateMovementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateBillingCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('billing_codes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('movements', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('store_id');
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('owner_id');
             $table->string('type');
-            $table->string('prefix');
-            $table->integer('incrementable')->unsigned();
+            $table->string('document');
+            $table->string('document_type');
+            $table->string('commentary')->nullable();
+            $table->string('state');
             $table->timestamps();
-
-            $table->foreign('store_id')->references('id')->on('stores')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ class CreateBillingCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billing_codes');
+        Schema::dropIfExists('movements');
     }
 }

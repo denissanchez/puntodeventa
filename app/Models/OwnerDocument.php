@@ -16,8 +16,4 @@ class OwnerDocument extends Model
     protected $fillable = [
         'identity_document', 'name', 'address', 'phone'
     ];
-
-    public function scopeOnlyCompanies($query) {
-        return $query->whereRaw('LENGTH(identity_document) = 11');
-    }
 }
