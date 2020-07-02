@@ -4,6 +4,8 @@
 namespace App\Repositories;
 
 
+use Illuminate\Support\Facades\DB;
+
 class Repository implements RepositoryInterface
 {
     private ProductRepositoryInterface $productRepository;
@@ -81,5 +83,19 @@ class Repository implements RepositoryInterface
     public function measureUnits(): MeasureUnitRepositoryInterface
     {
         return $this->measureUnitRepository;
+    }
+
+    public function utils(): array
+    {
+        $categories = $this->categories()->get();
+        $laboratories = $this->laboratories()->get();
+        $brands = $this->brands()->get();
+        $measureUnits = $this->measureUnits()->get();
+        return [
+            'categories' => $categories,
+            'laboratories' => $laboratories,
+            'brands' => $brands,
+            'measureUnits' => $measureUnits,
+        ];
     }
 }

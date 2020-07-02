@@ -14,4 +14,5 @@ interface RepositoryInterface
     public function categories(): CategoryRepositoryInterface;
     public function laboratories(): LaboratoryRepositoryInterface;
     public function measureUnits(): MeasureUnitRepositoryInterface;
+    public function utils(): array;
 }

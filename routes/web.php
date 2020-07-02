@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
@@ -21,5 +22,5 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('productos', 'ProductController');
     Route::resource('compras', 'PurchaseController');
     Route::resource('ventas', 'SaleController');
-    Route::resource('facturacion', 'BillingCodeController');
+    Route::get('/utilitarios', 'UtilsController@index')->name('utils.index');
 });

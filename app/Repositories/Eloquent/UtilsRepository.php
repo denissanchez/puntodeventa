@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 abstract class UtilsRepository implements UtilsRepositoryInterface
 {
     private string $tableName = "utils";
-
     protected string $key;
 
     private function mapCollection(Collection $collection) : array

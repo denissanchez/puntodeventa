@@ -22,17 +22,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        $laboratories = $this->repository->laboratories()->get();
-        $brands = $this->repository->brands()->get();
-        $categories = $this->repository->categories()->get();
-        $measureUnits = $this->repository->measureUnits()->get();
-
-        return view('product.create')->with([
-            'laboratories' => $laboratories,
-            'brands' => $brands,
-            'categories' => $categories,
-            'measureUnits' => $measureUnits
-        ]);
+        $utils = $this->repository->utils();
+        return view('product.create')->with($utils);
     }
 
     public function store(ProductStoreRequest $request)
@@ -44,7 +35,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = $this->productRepository->find($id);
+        $product = $this->repository->products()->find($id);
         if ($product) {
             return view('product.show', ['product' => $product]);
         }
@@ -52,9 +43,10 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = $this->productRepository->find($id);
-        if (product) {
-            return view('product.edit', ['product' => $product]);
+        $product = $this->repository->products()->find($id);
+        $utils = $this->repository->utils();
+        if ($product) {
+            return view('product.edit', [...$utils, 'product' => $product]);
         }
     }
 
