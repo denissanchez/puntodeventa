@@ -5,12 +5,12 @@ namespace App\Repositories;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Collection\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 interface EloquentRepositoryInterface
 {
     /**
-     * @return Model
+     * @return Collection
      */
     public function all() : Collection;
 
