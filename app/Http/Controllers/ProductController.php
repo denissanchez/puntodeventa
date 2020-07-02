@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
-use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\UtilsRepositoryInterface;
 use App\Utils\UtilsKey;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {

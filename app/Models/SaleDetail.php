@@ -22,11 +22,6 @@ class SaleDetail extends Model
         'sale_id', 'product_id', 'item', 'quantity', 'unit_price', 'unit_price_defined'
     ];
 
-    public function getSubtotalAttribute()
-    {
-        return $this->unit_price_defined * $this->quantity;
-    }
-
     public function scopeConfirmedState($query)
     {
         return $query->where('state', StateInfo::CONFIRMED_STATE);

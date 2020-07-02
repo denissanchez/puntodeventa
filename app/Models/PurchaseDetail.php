@@ -29,42 +29,6 @@ class PurchaseDetail extends Model
         'state'
     ];
 
-    public function getSubtotalAttribute()
-    {
-        return $this->attributes['init_quantity'] * $this->attributes['unit_price'];
-    }
-
-    public function document()
-    {
-        return $this->belongsTo(Purchase::class);
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function removeUnits()
-    {
-        $product = $this->product;
-        $product->purchased_units -= $this->attributes['init_quantity'];
-        $product->save();
-    }
-
-    public function scopeConfirmedState($query)
-    {
-        return $query->where('state', StateInfo::CONFIRMED_STATE);
-    }
-
-    public function scopeOfProduct($query, $product_id) {
-        return $query->where('product_id', $product_id);
-    }
-
-    public function scopeWithAvailableStock($query)
-    {
-        return $query->where('current_quantity', '>', 0);
-    }
-
     public function saleDetails()
     {
         return $this->belongsToMany(SaleDetail::class)
