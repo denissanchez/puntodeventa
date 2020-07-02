@@ -56,7 +56,7 @@
                 <div class="collapse" id="purchase">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('compras.create') }}" class="nav-link">Lista de compras</a>
+                            <a href="{{ route('compras.index') }}" class="nav-link">Lista de compras</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('compras.create') }}" class="nav-link">Registrar</a>

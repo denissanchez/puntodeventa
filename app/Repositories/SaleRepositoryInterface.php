@@ -6,10 +6,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 
-interface MovementRepositoryInterface
+interface SaleRepositoryInterface
 {
-    /**
-     * @return Collection
-     */
     public function all(): Collection;
 }

@@ -1,48 +1,39 @@
-@extends('layouts.app')
+@extends('partials.layout')
 
 @section('content')
 <div class="row">
-    <div class="col-sm-12">
-        <div class="page-title-box">
-            <h4 class="page-title">Productos</h4>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card m-b-30">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
             <div class="card-body">
-                <table id="dataTable" class="table table-striped table-bordered" width="100%">
-                    <thead>
-                    <tr>
-                        <th>Fecha y hora</th>
-                        <th>Código</th>
-                        <th>Proveedor</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($purchases as $purchase)
+                <h6 class="card-title">Productos</h6>
+                <div class="table-responsive">
+                    <table id="table" class="table">
+                        <thead>
                         <tr>
-                            <td class="text-uppercase">{{ $purchase->date }}</td>
-                            <td class="text-uppercase">{{ $purchase->code }}</td>
-                            <td class="text-uppercase">{{ $purchase->provider['name'] }}</td>
-                            <td>
-                                <a href="{{ route('compras.show', [ 'compra' => $purchase ]) }}" class="btn btn-link">Ver</a>
-                            </td>
+                            <th>Fecha</th>
+                            <th>Código</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($purchases as $purchase)
+                            <tr>
+                                <td class="text-uppercase">{{ $purchase->date }}</td>
+                                <td class="text-uppercase">{{ $purchase->document }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
 
+@section('scripts')
+    @parent
+    <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
 
-<script type="text/javascript">
-    $(function() {
-        $('#dataTable').DataTable();
-    });
-</script>
+    <script src="{{ asset('js/custom/product.index.js') }}"></script>
 @endsection

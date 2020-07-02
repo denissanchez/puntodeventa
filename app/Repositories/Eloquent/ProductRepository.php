@@ -35,10 +35,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $product;
     }
 
-    public function all(): Collection
-    {
-        $store_id = session(UtilsKey::CURRENT_STORE_ID);
-        return $this->model->where('store_id', '=', $store_id)->get();
-    }
+//    public function all(): Collection
+//    {
+//        $store_id = session(UtilsKey::CURRENT_STORE_ID);
+//        return $this->model->where('store_id', '=', $store_id)->get();
+//    }
 
 }

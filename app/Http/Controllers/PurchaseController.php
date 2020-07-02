@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Builders\ResponseDataBuilder;
 use App\Http\Requests\PurchaseDeleteRequest;
 use App\Http\Requests\PurchaseStoreRequest;
 use App\Http\Requests\PurchaseUpdateRequest;
-use App\Models\Purchase;
-use Illuminate\Http\Request;
+use App\Repositories\UnitOfWork;
+use App\Utils\MovementType;
 
 class PurchaseController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
+    private UnitOfWork $unitOfWork;
+
+    public function __construct() {
+        $this->unitOfWork = new UnitOfWork;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $purchases = Purchase::orderBy('id', 'desc')->get();
+        $purchases = $this->unitOfWork->purchaseRepository->all();
         return view('purchase.index', [
             'purchases' => $purchases
         ]);
@@ -26,14 +26,16 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        $data = new ResponseDataBuilder();
-        $data = $data->providers()->products()->build();
-        return view('purchase.create', $data);
+        $products = $this->unitOfWork->productRepository->all();
+        return view('purchase.create', [
+            'products' => $products
+        ]);
     }
 
     public function store(PurchaseStoreRequest $request)
     {
         $data = $request->validated();
+        $purchase = $this->unitOfWork->purchaseRepository->create();
         $purchase = Purchase::addRecord($data);
         $products = $request->post('products');
         $purchase->addDetails($products);
