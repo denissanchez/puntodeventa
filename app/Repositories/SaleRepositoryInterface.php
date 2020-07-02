@@ -4,9 +4,6 @@
 namespace App\Repositories;
 
 
-use Illuminate\Database\Eloquent\Collection;
-
-interface SaleRepositoryInterface
+interface SaleRepositoryInterface extends EloquentRepositoryInterface
 {
-    public function all(): Collection;
 }

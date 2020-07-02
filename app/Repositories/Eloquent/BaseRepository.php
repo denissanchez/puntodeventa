@@ -11,11 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository implements EloquentRepositoryInterface
 {
-
-    /**
-     * @var Model
-     */
-    protected $model;
+    protected Model $model;
 
     /**
      * BaseRepository constructor.

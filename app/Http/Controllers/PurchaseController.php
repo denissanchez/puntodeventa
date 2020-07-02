@@ -5,20 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PurchaseDeleteRequest;
 use App\Http\Requests\PurchaseStoreRequest;
 use App\Http\Requests\PurchaseUpdateRequest;
-use App\Repositories\UnitOfWork;
-use App\Utils\MovementType;
+use App\Repositories\RepositoryInterface;
 
 class PurchaseController extends Controller
 {
-    private UnitOfWork $unitOfWork;
+    private RepositoryInterface $repository;
 
-    public function __construct() {
-        $this->unitOfWork = new UnitOfWork;
+    public function __construct(RepositoryInterface $repository) {
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $purchases = $this->unitOfWork->purchaseRepository->all();
+        $purchases = $this->repository->purchases()->all();
         return view('purchase.index', [
             'purchases' => $purchases
         ]);
@@ -26,7 +25,7 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        $products = $this->unitOfWork->productRepository->all();
+        $products = $this->repository->purchases()->all();
         return view('purchase.create', [
             'products' => $products
         ]);
@@ -35,7 +34,7 @@ class PurchaseController extends Controller
     public function store(PurchaseStoreRequest $request)
     {
         $data = $request->validated();
-        $purchase = $this->unitOfWork->purchaseRepository->create();
+//        $purchase = $this->purchaseRepository->create();
         $purchase = Purchase::addRecord($data);
         $products = $request->post('products');
         $purchase->addDetails($products);

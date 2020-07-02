@@ -5,7 +5,13 @@ namespace App\Providers;
 use App\Models\Movement;
 use App\Models\Store;
 use App\Models\Product;
+use App\Repositories\BrandRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\Eloquent\BaseRepository;
+use App\Repositories\Eloquent\BrandRepository;
+use App\Repositories\Eloquent\CategoryRepository;
+use App\Repositories\Eloquent\LaboratoryRepository;
+use App\Repositories\Eloquent\MeasureUnitRepository;
 use App\Repositories\Eloquent\MovementRepository;
 use App\Repositories\Eloquent\PurchaseRepository;
 use App\Repositories\Eloquent\SaleRepository;
@@ -14,8 +20,12 @@ use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\UtilsRepository;
 use App\Repositories\EloquentRepositoryInterface;
+use App\Repositories\LaboratoryRepositoryInterface;
+use App\Repositories\MeasureUnitRepositoryInterface;
 use App\Repositories\MovementRepositoryInterface;
 use App\Repositories\PurchaseRepositoryInterface;
+use App\Repositories\Repository;
+use App\Repositories\RepositoryInterface;
 use App\Repositories\SaleRepositoryInterface;
 use App\Repositories\StoreRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
@@ -34,8 +44,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
-
         $this->app->bind(UserRepositoryInterface::class, function () {
             return new UserRepository(new User);
         });
@@ -56,7 +64,12 @@ class RepositoryServiceProvider extends ServiceProvider
             return new SaleRepository(new Movement);
         });
 
-        $this->app->bind(UtilsRepositoryInterface::class, UtilsRepository::class);
+        $this->app->bind(BrandRepositoryInterface::class, BrandRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(LaboratoryRepositoryInterface::class, LaboratoryRepository::class);
+        $this->app->bind(MeasureUnitRepositoryInterface::class, MeasureUnitRepository::class);
+
+        $this->app->bind(RepositoryInterface::class, Repository::class);
     }
 
     /**

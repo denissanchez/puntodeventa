@@ -3,19 +3,15 @@
 
 namespace App\Repositories\Eloquent;
 
-
 use App\Repositories\UtilsRepositoryInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class UtilsRepository implements UtilsRepositoryInterface
+abstract class UtilsRepository implements UtilsRepositoryInterface
 {
-    private $tableName;
+    private string $tableName = "utils";
 
-    public function __construct()
-    {
-        $this->tableName = 'utils';
-    }
+    protected string $key;
 
     private function mapCollection(Collection $collection) : array
     {
@@ -24,52 +20,28 @@ class UtilsRepository implements UtilsRepositoryInterface
         })->toArray();
     }
 
-    public function get($key): array
+    public function get(): array
     {
-        $collection = DB::table($this->tableName)->where('key', '=', $key)->get();
+        $collection = DB::table($this->tableName)->where('key', $this->key)->get();
         return $this->mapCollection($collection);
     }
 
     /**
      * @inheritDoc
      */
-    public function store($key, $value)
+    public function store($value) : void
     {
         DB::table($this->tableName)->insert([
-            'key' => $key,
+            'key' => $this->key,
             'value' => $value
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function delete($key, $value)
+    public function delete($value) : void
     {
         DB::table($this->tableName)->where([
-            ['key', '=', $key],
+            ['key', '=', $this->key],
             ['value', '=', $value],
         ])->delete();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function find($key, $value): string
-    {
-        $util = DB::table($this->tableName)->where([
-            ['key', '=', $key],
-            ['value', '=', $value],
-        ])->first();
-
-        return $util->value;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function edit($key, $value): string
-    {
-        // TODO: Implement edit() method.
     }
 }

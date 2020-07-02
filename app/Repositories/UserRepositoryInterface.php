@@ -3,10 +3,6 @@
 
 namespace App\Repositories;
 
-
-use Illuminate\Database\Eloquent\Collection;
-
-interface UserRepositoryInterface
+interface UserRepositoryInterface extends EloquentRepositoryInterface
 {
-    public function all(): Collection;
 }

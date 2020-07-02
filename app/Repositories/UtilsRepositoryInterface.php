@@ -3,35 +3,21 @@
 
 namespace App\Repositories;
 
+
 interface UtilsRepositoryInterface
 {
-    public function get($key): array;
+    /**
+     * @return array
+     */
+    public function get() : array;
 
     /**
-     * @param $key
      * @param $value
-     * @return void
      */
-    public function store($key, $value);
+    public function store($value) : void;
 
     /**
-     * @param $key
      * @param $value
-     * @return void
      */
-    public function delete($key, $value);
-
-    /**
-     * @param $key
-     * @param $value
-     * @return string
-     */
-    public function find($key, $value): string;
-
-    /**
-     * @param $key
-     * @param $value
-     * @return string
-     */
-    public function edit($key, $value): string;
+    public function delete($value) : void;
 }

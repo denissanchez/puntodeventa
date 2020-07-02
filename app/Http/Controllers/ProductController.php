@@ -4,35 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
-use App\Repositories\ProductRepositoryInterface;
-use App\Repositories\UtilsRepositoryInterface;
-use App\Utils\UtilsKey;
+use App\Repositories\RepositoryInterface;
 
 class ProductController extends Controller
 {
-    private $productRepository;
-    private $utilsRepository;
+    private RepositoryInterface $repository;
 
-    public function __construct(
-        ProductRepositoryInterface $productRepository,
-        UtilsRepositoryInterface $utilsRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->utilsRepository = $utilsRepository;
+    public function __construct(RepositoryInterface $repository) {
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $products = $this->productRepository->all();
+        $products = $this->repository->products()->all();
         return view('product.index', ['products' => $products]);
     }
 
     public function create()
     {
-        $laboratories = $this->utilsRepository->get(UtilsKey::LABORATORY);
-        $brands = $this->utilsRepository->get(UtilsKey::BRAND);
-        $categories = $this->utilsRepository->get(UtilsKey::CATEGORY);
-        $measureUnits = $this->utilsRepository->get(UtilsKey::MEASURE_UNIT);
+        $laboratories = $this->repository->laboratories()->get();
+        $brands = $this->repository->brands()->get();
+        $categories = $this->repository->categories()->get();
+        $measureUnits = $this->repository->measureUnits()->get();
 
         return view('product.create')->with([
             'laboratories' => $laboratories,
@@ -45,7 +38,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         $data = $request->validated();
-        $this->productRepository->create($data);
+        $this->repository->products()->create($data);
         return redirect()->route('productos.index');
     }
 

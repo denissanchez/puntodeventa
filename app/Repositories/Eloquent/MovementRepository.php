@@ -20,16 +20,12 @@ abstract class MovementRepository extends BaseRepository
         parent::__construct($model);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function all(): Collection
     {
-        $store_id = session(UtilsKey::CURRENT_STORE_ID);
-        return $this->model->where([
-            ['store_id', $store_id],
-            ['type', $this->type]
-        ])->get();
+        $movements = parent::all();
+        return $movements->filter(function ($movement) {
+            return $movement->type === $this->type;
+        });
     }
 
     public function create(array $attributes): Model

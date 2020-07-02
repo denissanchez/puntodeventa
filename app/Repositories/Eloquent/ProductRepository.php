@@ -5,8 +5,6 @@ namespace App\Repositories\Eloquent;
 
 
 use App\Repositories\ProductRepositoryInterface;
-use App\Utils\UtilsKey;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
@@ -34,11 +32,4 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $product->save();
         return $product;
     }
-
-//    public function all(): Collection
-//    {
-//        $store_id = session(UtilsKey::CURRENT_STORE_ID);
-//        return $this->model->where('store_id', '=', $store_id)->get();
-//    }
-
 }
