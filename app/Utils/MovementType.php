@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-class MovementInfo
+class MovementType
 {
     const PURCHASE_MOVEMENT = 'COMPRA';
     const SALE_MOVEMENT = 'VENTA';
