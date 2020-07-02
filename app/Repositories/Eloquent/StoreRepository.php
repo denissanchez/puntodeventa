@@ -3,11 +3,11 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Repositories\OfficeRepositoryInterface;
+use App\Repositories\StoreRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class OfficeRepository extends BaseRepository implements OfficeRepositoryInterface
+class StoreRepository extends BaseRepository implements StoreRepositoryInterface
 {
     /**
      * OfficeRepository constructor.

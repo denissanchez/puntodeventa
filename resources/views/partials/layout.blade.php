@@ -34,20 +34,22 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="changeOfficeModalLabel">Seleccionar sucursal</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </div>
                         <div class="modal-body">
                             @php
                                 $stores = \App\Models\Store::all();
                             @endphp
-                                <select name="office" id="office" class="form-control">
+                                <select name="store" id="store" class="form-control @error('store') is-invalid @enderror">
                                     <option selected disabled>Seleccionar</option>
                                     @foreach($stores as $store)
                                         <option value="{{ $store->id }}">{{ $store->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('store')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary btn-block">Seleccionar</button>

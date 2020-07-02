@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Purchase;
-use App\Models\Sale;
-use App\Repositories\OfficeRepositoryInterface;
+use App\Http\Requests\ChangeOfficeRequest;
+use App\Repositories\StoreRepositoryInterface;
 use App\Utils\UtilsKey;
-use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,7 +12,7 @@ class HomeController extends Controller
 
     private $officeRepository;
 
-    public function __construct(OfficeRepositoryInterface $officeRepository)
+    public function __construct(StoreRepositoryInterface $officeRepository)
     {
         $this->middleware('auth');
         $this->officeRepository = $officeRepository;
@@ -26,20 +23,13 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function post(Request $request)
+    public function post(ChangeOfficeRequest $request)
     {
-        $officeId = $request->post('office');
-        $office = $this->officeRepository->find($officeId);
-
-        if (!$office) {
-            return redirect()->route('logout');
-        }
-
+        $office = $this->officeRepository->find($request->post('store'));
         session([
             UtilsKey::CURRENT_STORE_ID => $office->id,
             UtilsKey::CURRENT_STORE_NAME => $office->name,
         ]);
-
         return redirect()->route('home');
     }
 

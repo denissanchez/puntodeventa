@@ -6,7 +6,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 
-interface OfficeRepositoryInterface
+interface StoreRepositoryInterface
 {
     public function all(): Collection;
 }

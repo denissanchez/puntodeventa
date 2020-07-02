@@ -7,7 +7,7 @@
             <li class="nav-item dropdown nav-profile">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="truck"></i>
-                    <span class="font-weight-medium mx-3 mr-1">{{ session('current_branch_name') }}</span>
+                    <span class="font-weight-medium mx-3 mr-1">{{ session(\App\Utils\UtilsKey::CURRENT_STORE_NAME) }}</span>
                     <img src="https://via.placeholder.com/30x30" alt="userr">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="profileDropdown">

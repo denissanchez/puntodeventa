@@ -5,12 +5,12 @@ namespace App\Providers;
 use App\Models\Store;
 use App\Models\Product;
 use App\Repositories\Eloquent\BaseRepository;
-use App\Repositories\Eloquent\OfficeRepository;
+use App\Repositories\Eloquent\StoreRepository;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\Eloquent\UtilsRepository;
 use App\Repositories\EloquentRepositoryInterface;
-use App\Repositories\OfficeRepositoryInterface;
+use App\Repositories\StoreRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\UtilsRepositoryInterface;
@@ -36,8 +36,8 @@ class RepositoryServiceProvider extends ServiceProvider
             return new ProductRepository(new Product);
         });
 
-        $this->app->bind(OfficeRepositoryInterface::class, function () {
-            return new OfficeRepository(new Store);
+        $this->app->bind(StoreRepositoryInterface::class, function () {
+            return new StoreRepository(new Store);
         });
 
         $this->app->bind(UtilsRepositoryInterface::class, UtilsRepository::class);
