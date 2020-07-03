@@ -3,8 +3,7 @@
 
 namespace App\Repositories;
 
-
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class Repository implements RepositoryInterface
 {
@@ -17,6 +16,8 @@ class Repository implements RepositoryInterface
     private CategoryRepositoryInterface $categoryRepository;
     private LaboratoryRepositoryInterface $laboratoryRepository;
     private MeasureUnitRepositoryInterface $measureUnitRepository;
+    private ProviderRepositoryInterface $providerRepository;
+    private ClientRepositoryInterface $clientRepository;
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
@@ -27,8 +28,11 @@ class Repository implements RepositoryInterface
         BrandRepositoryInterface $brandRepository,
         CategoryRepositoryInterface $categoryRepository,
         LaboratoryRepositoryInterface $laboratoryRepository,
-        MeasureUnitRepositoryInterface $measureUnitRepository
-    ) {
+        MeasureUnitRepositoryInterface $measureUnitRepository,
+        ProviderRepositoryInterface $providerRepository,
+        ClientRepositoryInterface $clientRepository
+    )
+    {
         $this->productRepository = $productRepository;
         $this->purchaseProductRepository = $purchaseRepository;
         $this->saleRepository = $saleRepository;
@@ -38,6 +42,8 @@ class Repository implements RepositoryInterface
         $this->brandRepository = $brandRepository;
         $this->laboratoryRepository = $laboratoryRepository;
         $this->measureUnitRepository = $measureUnitRepository;
+        $this->providerRepository = $providerRepository;
+        $this->clientRepository = $clientRepository;
     }
 
     public function products(): ProductRepositoryInterface
@@ -85,6 +91,16 @@ class Repository implements RepositoryInterface
         return $this->measureUnitRepository;
     }
 
+    public function providers(): ProviderRepositoryInterface
+    {
+        return $this->providerRepository;
+    }
+
+    public function clients(): ClientRepositoryInterface
+    {
+        return $this->clientRepository;
+    }
+
     public function utils(): array
     {
         $categories = $this->categories()->get();
@@ -97,5 +113,12 @@ class Repository implements RepositoryInterface
             'brands' => $brands,
             'measureUnits' => $measureUnits,
         ];
+    }
+
+    public function owners(): Collection
+    {
+        $clients = $this->clientRepository->all();
+        $providers = $this->providerRepository->all();
+        return $clients->merge($providers);
     }
 }
