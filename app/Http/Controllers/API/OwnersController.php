@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 
 
 use App\Repositories\RepositoryInterface;
+use Illuminate\Http\Request;
 
 class OwnersController
 {
@@ -15,12 +16,17 @@ class OwnersController
         $this->repository = $repository;
     }
 
-    public function search($value, $digits)
+    public function search(Request $request)
     {
-        if ($digits === 11) {
-            $this->repository->
-        } else {
+        $digits = $request->get('digits');
+        $search = $request->get('search');
 
+        if ($digits === 11) {
+            $owners = $this->repository->providers()->search($search);
+        } else {
+            $owners = $this->repository->clients()->search($search);
         }
+
+        return response()->json($owners);
     }
 }

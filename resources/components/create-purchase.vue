@@ -41,7 +41,7 @@
                 this.search(loading, search, this);
             },
             search: _.debounce((loading, search, vm) => {
-                axios.get(`/api/providers?search=${escape(search)}`).then((response) => {
+                axios.get(`/api/owners?search=${escape(search)}&digits=11`).then((response) => {
                     console.log(response);
                 }).catch((error) => {
                     console.log(error);

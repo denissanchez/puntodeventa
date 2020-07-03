@@ -2064,7 +2064,7 @@
                     this.search(loading, search, this);
                 },
                 search: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (loading, search, vm) {
-                    axios.get("/api/providers?search=".concat(escape(search))).then(function (response) {
+                    axios.get("/api/owners?search=".concat(escape(search), "&digits=11")).then(function (response) {
                         console.log(response);
                     })["catch"](function (error) {
                         console.log(error);
@@ -33062,6 +33062,7 @@
             /*  */
 
 
+
 // these keywords should not appear inside expressions, but operators like
 // typeof, instanceof and in are allowed
             var prohibitedKeywordRE = new RegExp('\\b' + (
@@ -33780,10 +33781,10 @@
         var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_4__);
 
 
-        /** Third componnets **/
-
         /** Vue Select **/
 
+
+        /** Third componnets **/
 
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vSelect', vue_select__WEBPACK_IMPORTED_MODULE_3___default.a);
         /** End Vue Select **/
