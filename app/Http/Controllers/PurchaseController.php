@@ -25,7 +25,7 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        $products = $this->repository->purchases()->all();
+        $products = $this->repository->products()->all();
         return view('purchase.create', [
             'products' => $products
         ]);

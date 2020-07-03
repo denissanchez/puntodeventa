@@ -14,13 +14,14 @@
     <link rel="stylesheet" href="{{ asset('fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}"/>
+
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
     @include('partials.sidebar')
     <div class="page-wrapper">
         @include('partials.navbar')
-        <div class="page-content">
+        <div id="app" class="page-content">
             @yield('content')
         </div>
     @include('partials.footer')
@@ -59,7 +60,7 @@
             </div>
         </form>
     @endif
-</div>
+    </div>
 </div>
 
 @section('scripts')
@@ -69,6 +70,8 @@
     @if(!\Illuminate\Support\Facades\Session::get('current_branch'))
         <script src="{{ asset('js/custom/layout.js') }}"></script>
     @endif
+
+    <script src="{{ asset('js/app.js') }}"></script>
 @show
 </body>
 </html>
