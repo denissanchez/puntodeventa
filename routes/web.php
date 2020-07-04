@@ -22,5 +22,6 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('productos', 'ProductController');
     Route::resource('compras', 'PurchaseController');
     Route::resource('ventas', 'SaleController');
+    Route::resource('proveedores', 'ProviderController');
     Route::get('/utilitarios', 'UtilsController@index')->name('utils.index');
 });

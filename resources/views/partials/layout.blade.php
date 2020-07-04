@@ -59,7 +59,7 @@
                 </div>
             </div>
         </form>
-    @endif
+        @endif
     </div>
 </div>
 
@@ -67,6 +67,8 @@
     <script src="{{ asset('vendors/core/core.js') }}"></script>
     <script src="{{ asset('vendors/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('js/admin/template.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
     @if(!\Illuminate\Support\Facades\Session::get('current_branch'))
         <script src="{{ asset('js/custom/layout.js') }}"></script>
     @endif
