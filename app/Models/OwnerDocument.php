@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class OwnerDocument
  * @package App\Models
- * @property string identity_document
+ * @property string document
  * @property string name
  * @property string phone
+ * @property string type
  */
 class OwnerDocument extends Model
 {
     protected $fillable = [
-        'identity_document', 'name', 'address', 'phone'
+        'document', 'name', 'address', 'phone', 'type'
     ];
 }

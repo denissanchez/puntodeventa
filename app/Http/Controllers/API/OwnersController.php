@@ -27,6 +27,6 @@ class OwnersController
             $owners = $this->repository->clients()->search($search);
         }
 
-        return response()->json($owners);
+        return response()->json($owners)->setStatusCode(200);
     }
 }

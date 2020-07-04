@@ -32,21 +32,25 @@
                 providers: []
             };
         },
-        beforeCreate() {
-            axios.get('/api/providers');
-        },
         methods: {
             fetchOptions(search, loading) {
                 loading(true);
                 this.search(loading, search, this);
             },
             search: _.debounce((loading, search, vm) => {
-                axios.get(`/api/owners?search=${escape(search)}&digits=11`).then((response) => {
-                    console.log(response);
-                }).catch((error) => {
-                    console.log(error);
-                });
-            }, 350)
+                const value = escape(search);
+                if (value.length > 3) {
+                    axios.get(`/api/owners?search=${escape(search)}&digits=11`).then(({ data }) => {
+                        vm.options = data.data;
+                    }).catch((error) => {
+                        console.log(error);
+                    }).finally(() => {
+                        loading(false);
+                    });
+                } else {
+                    loading(false);
+                }
+            }, 1000)
         }
     }
 </script>
