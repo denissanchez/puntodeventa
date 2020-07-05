@@ -36,9 +36,6 @@
                             <a href="{{ route('productos.index') }}" class="nav-link">En stock</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('utils.index') }}" class="nav-link">Utilitarios</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ route('productos.create') }}" class="nav-link">Registrar</a>
                         </li>
                     </ul>
