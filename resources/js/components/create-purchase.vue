@@ -6,8 +6,8 @@
                 <search-owner-document @selected="setProvider"/>
             </div>
             <div class="form-group col-12 col-lg-auto">
-                <label for="document">Código</label>
-                <input type="text" name="document" id="document" placeholder="COD-000000"
+                <label>Código</label>
+                <input type="text" placeholder="COD-000000" v-model="document"
                        class="form-control text-uppercase">
             </div>
             <div class="form-group col-12 col-lg-auto">
@@ -62,7 +62,11 @@
         </div>
         <div class="row justify-content-end">
             <div class="col-12 col-md-3 col-lg-2">
-                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                <button type="submit" class="btn btn-primary btn-block" @click="save">
+                    <span v-if="loading" class="spinner-border spinner-border-sm" role="status"
+                          aria-hidden="true"></span>
+                    Guardar
+                </button>
             </div>
         </div>
     </div>
@@ -83,7 +87,7 @@
             SearchProduct,
             SearchOwnerDocument,
             InputNumber,
-            DatePicker
+            DatePicker,
         },
         filters: {
             decimal: function (value) {
@@ -94,7 +98,9 @@
             return {
                 provider: null,
                 products: [],
-                date: new Date()
+                document: "",
+                date: new Date(),
+                loading: false
             };
         },
         methods: {
@@ -106,6 +112,9 @@
             },
             removeProduct(index) {
                 this.products.splice(index, 1);
+            },
+            save() {
+
             }
         },
         computed: {
