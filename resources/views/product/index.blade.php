@@ -6,6 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Productos</h6>
+                <x-alert />
                 <div class="table-responsive">
                     <table id="table" class="table">
                         <thead>

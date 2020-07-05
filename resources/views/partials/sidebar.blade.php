@@ -33,7 +33,7 @@
                 <div class="collapse" id="product">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('productos.index') }}" class="nav-link">En stock</a>
+                            <a href="{{ route('productos.index') }}" class="nav-link">Lista de productos</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('productos.create') }}" class="nav-link">Registrar</a>
