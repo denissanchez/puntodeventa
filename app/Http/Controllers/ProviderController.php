@@ -33,7 +33,7 @@ class ProviderController extends Controller
     {
         $data = $request->validated();
         $this->repository->providers()->create($data);
-        return redirect()->route('proveedores.index');
+        return redirect()->route('proveedores.index')->with('alert', 'Se registró correctamente el proveedor');
     }
 
     public function show($id)
