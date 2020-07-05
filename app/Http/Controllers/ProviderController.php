@@ -33,7 +33,7 @@ class ProviderController extends Controller
     {
         $data = $request->validated();
         $this->repository->providers()->create($data);
-        return redirect()->route('provider.index');
+        return redirect()->route('proveedores.index');
     }
 
     public function show($id)
