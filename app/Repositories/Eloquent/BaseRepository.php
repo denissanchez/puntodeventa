@@ -3,9 +3,7 @@
 
 namespace App\Repositories\Eloquent;
 
-
 use App\Repositories\EloquentRepositoryInterface;
-use App\Utils\UtilsKey;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,8 +22,7 @@ abstract class BaseRepository implements EloquentRepositoryInterface
 
     public function all(): Collection
     {
-        $store_id = session(UtilsKey::CURRENT_STORE_ID);
-        return $this->model->where('store_id', '=', $store_id)->get();
+        return $this->model->all();
     }
 
     /**

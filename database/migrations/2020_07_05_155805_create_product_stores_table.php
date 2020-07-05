@@ -13,7 +13,7 @@ class CreateProductStoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_stores', function (Blueprint $table) {
+        Schema::create('product_store', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('store_id');

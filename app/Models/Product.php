@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Scopes\CurrentBranchScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -40,7 +39,7 @@ class Product extends Model
     public function stores()
     {
         return $this->belongsToMany(Store::class)
-            ->using(Product::class)->withPivot([
+            ->using(ProductStore::class)->withPivot([
                 'unit_price',
                 'minimun_quantity',
                 'purchased_units',

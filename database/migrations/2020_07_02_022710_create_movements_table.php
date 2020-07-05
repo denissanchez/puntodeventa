@@ -24,6 +24,8 @@ class CreateMovementsTable extends Migration
             $table->string('commentary')->nullable();
             $table->string('state');
             $table->timestamps();
+
+            $table->foreign('store_id')->references('id')->on('stores')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

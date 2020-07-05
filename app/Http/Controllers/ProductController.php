@@ -36,18 +36,14 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->repository->products()->find($id);
-        if ($product) {
-            return view('product.show', ['product' => $product]);
-        }
+        return view('product.show', ['product' => $product]);
     }
 
     public function edit($id)
     {
         $product = $this->repository->products()->find($id);
         $utils = $this->repository->utils();
-        if ($product) {
-            return view('product.edit', [...$utils, 'product' => $product]);
-        }
+        return view('product.edit', [...$utils, 'product' => $product]);
     }
 
     public function update(ProductStoreRequest $request, $id)

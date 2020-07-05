@@ -15,7 +15,6 @@
                             <th>Nombre</th>
                             <th>Marca</th>
                             <th>Categoría</th>
-                            <th>En stock</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -25,7 +24,6 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->brand }}</td>
                                 <td>{{ $product->category }}</td>
-                                <td>{{ $product->current_quantity }}</td>
                             </tr>
                         @endforeach
                         </tbody>

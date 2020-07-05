@@ -53,7 +53,7 @@
                             <a href="{{ route('compras.index') }}" class="nav-link">Lista de compras</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('compras.create') }}" class="nav-link">Registrar</a>
+                            <a href="{{ route('compras.create') }}" class="nav-link">Registrar compra</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('proveedores.index') }}" class="nav-link">Proveedores</a>
