@@ -43,7 +43,7 @@ abstract class BaseRepository implements EloquentRepositoryInterface
      */
     public function find($id): Model
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
     /**
@@ -51,6 +51,14 @@ abstract class BaseRepository implements EloquentRepositoryInterface
      */
     public function delete($id)
     {
-        ($this->model->find($id))->destroy();
+        ($this->model->findOrFail($id))->destroy();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(array $attributes, $id)
+    {
+        $this->find($id)->update($attributes);
     }
 }

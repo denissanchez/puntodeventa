@@ -58,6 +58,9 @@
                         <li class="nav-item">
                             <a href="{{ route('compras.create') }}" class="nav-link">Registrar</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('proveedores.create') }}" class="nav-link">Proveedores</a>
+                        </li>
                     </ul>
                 </div>
             </li>

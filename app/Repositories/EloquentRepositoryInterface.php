@@ -30,4 +30,10 @@ interface EloquentRepositoryInterface
      * @param $id
      */
     public function delete($id);
+
+    /**
+     * @param array $attributes
+     * @param $id
+     */
+    public function update(array $attributes, $id);
 }

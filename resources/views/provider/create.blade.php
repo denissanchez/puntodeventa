@@ -5,12 +5,12 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Registrar proveedor</h6>
-                    <form method="post" action="{{ route('productos.store') }}">
+                    <h6 class="card-title">Regiapistrar proveedor</h6>
+                    <form method="post" action="{{ route('proveedores.store') }}">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-12 col-md-6 col-lg-4">
-                                <label for="origin_code">RUC</label>
+                                <label for="document">RUC</label>
                                 <input type="text" name="document" id="document"
                                        class="form-control @error('document') is-invalid @enderror"
                                        value="{{ old('document', '') }}"
