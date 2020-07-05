@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProviderUpdateRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class ProviderUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'document' => ['required', 'digits:11', 'unique:owner_documents,document'],
+            'document' => ['required', 'digits:11', Rule::unique('owner_documents', 'document')->ignore($this->id)],
             'name' => ['required'],
             'address' => ['nullable'],
             'phone' => ['nullable']
