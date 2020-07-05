@@ -10,9 +10,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Registrar compra</h6>
-                    <form action="{{ route('compras.store') }}" method="post">
-                        <create-purchase></create-purchase>
-                    </form>
+                    <create-purchase></create-purchase>
                 </div>
             </div>
         </div>

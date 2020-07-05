@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class StoreRepository extends BaseRepository implements StoreRepositoryInterface
 {
-    public function all(): Collection
+    public function products(): Collection
     {
-        return $this->model->all();
+        return $this->model->products;
     }
 }

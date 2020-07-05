@@ -1,73 +1,116 @@
 <template>
-    <div class="form-row">
-        <div class="form-group col-12 col-lg-7">
-            <label>Proveedor</label>
-            <v-select placeholder="Buscar proveedor" @input="handleChange" :options="providers" @search="fetchProviders"
-                      label="name" :filterable="false">
-                <template slot="no-options">
-                    Ingresar nombre o RUC del proveedor
-                </template>
-                <template slot="option" slot-scope="provider">
-                    <div class="d-center">
-                        {{ provider.document }} - {{ provider.name }}
-                    </div>
-                </template>
-                <template slot="selected-option" slot-scope="provider">
-                    <div class="selected d-center">
-                        {{ provider.document }} - {{ provider.name }}
-                    </div>
-                </template>
-            </v-select>
+    <div>
+        <div class="form-row">
+            <div class="form-group col-12 col-lg">
+                <label>Proveedor</label>
+                <search-owner-document @selected="setProvider"/>
+            </div>
+            <div class="form-group col-12 col-lg-auto">
+                <label for="document">Código</label>
+                <input type="text" name="document" id="document" placeholder="COD-000000"
+                       class="form-control text-uppercase">
+            </div>
+            <div class="form-group col-12 col-lg-auto">
+                <label>Fecha</label>
+                <br>
+                <date-picker input-class="form-control" v-model="date" format="DD/MM/YYYY"/>
+            </div>
         </div>
-        <div class="form-group col-12 col-lg-3">
-            <label for="document">Código</label>
-            <input type="text" name="document" id="document" placeholder="COD-000000"
-                   class="form-control">
+        <div class="form-row">
+            <div class="form-group col-12 col-lg-12">
+                <label>Producto</label>
+                <search-product @selected="addProduct"/>
+            </div>
         </div>
-        <div class="form-group col-12 col-lg-2">
-            <label for="date">Fecha</label>
-            <input type="date" name="date" id="date" class="form-control">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>P. Unit</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="({ name, internal_code, measure_unit, quantity, unit_price }, index) in products">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ `${internal_code} - ${name}` }}</td>
+                    <td>
+                        <InputNumber v-model="products[index].quantity" :min="0.01" mode="decimal"
+                                     :minFractionDigits="2" :maxFractionDigits="2" :suffix="` ${measure_unit}`"/>
+                    </td>
+                    <td>
+                        <InputNumber v-model="products[index].unit_price" :min="0.01" mode="decimal"
+                                     :minFractionDigits="2" :maxFractionDigits="2" prefix="S/ "/>
+                    </td>
+                    <td>S/ {{ quantity * unit_price | decimal }}</td>
+                    <td>
+                        <button type="button" @click="removeProduct(index)" class="btn btn-danger btn-sm">x</button>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="4">Total</th>
+                    <th colspan="2">S/ {{ total | decimal }}</th>
+                </tr>
+                </tfoot>
+            </table>
         </div>
-        <div class="form-group col-12 col-lg-12">
-            <label>Producto</label>
-            <search-product/>
+        <div class="row justify-content-end">
+            <div class="col-12 col-md-3 col-lg-2">
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import _ from 'lodash';
     import SearchProduct from './search-product'
+    import SearchOwnerDocument from './search-owner-document'
+    import InputNumber from 'primevue/inputnumber';
+
+    import DatePicker from 'vue2-datepicker';
+    import 'vue2-datepicker/index.css';
+    import 'vue2-datepicker/locale/es';
 
     export default {
         name: "create-purchase",
         components: {
-            SearchProduct
+            SearchProduct,
+            SearchOwnerDocument,
+            InputNumber,
+            DatePicker
+        },
+        filters: {
+            decimal: function (value) {
+                return value.toFixed(2);
+            }
         },
         data() {
             return {
-                providers: [],
-                products: []
+                provider: null,
+                products: [],
+                date: new Date()
             };
         },
         methods: {
-            fetchProviders(search, loading) {
-                loading(true);
-                this.searchProvider(loading, search, this);
+            setProvider(data) {
+                this.provider = {...data}
             },
-            searchProvider: _.debounce((loading, search, vm) => {
-                const value = escape(search);
-                if (value.length > 3) {
-                    axios.get(`/api/owners?search=${escape(search)}&digits=11`).then(response => {
-                        vm.providers = response.data;
-                        loading(false);
-                    });
-                } else {
-                    loading(false);
-                }
-            }, 1000),
-            handleChange(data) {
-                console.log(data);
+            addProduct(product) {
+                this.products = [...this.products, {...product, quantity: 0, unit_price: 0}];
+            },
+            removeProduct(index) {
+                this.products.splice(index, 1);
+            }
+        },
+        computed: {
+            total: function () {
+                return this.products.reduce((total, {quantity, unit_price}) => quantity * unit_price + total, 0);
             }
         }
     }

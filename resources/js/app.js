@@ -6,6 +6,10 @@ import CreatePurchase from './components/create-purchase';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
+
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css';
 /** Third componnets **/
 
 Vue.component('vSelect', vSelect);

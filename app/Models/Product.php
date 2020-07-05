@@ -31,11 +31,6 @@ class Product extends Model
         'description'
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-    }
-
     public function stores()
     {
         return $this->belongsToMany(Store::class)

@@ -19,8 +19,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $search = $request->get('search');
-        $products = $this->repository->products();
-
+        $products = $this->repository->products()->search($search);
         return response()->json($products)->setStatusCode(200);
     }
 }
