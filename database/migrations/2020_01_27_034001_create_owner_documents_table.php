@@ -18,8 +18,8 @@ class CreateOwnerDocumentsTable extends Migration
             $table->string('type');
             $table->string('document');
             $table->string('name');
-            $table->string('address')->default('-');
-            $table->string('phone')->default('-');
+            $table->string('address')->nullable($value = '-');
+            $table->string('phone')->nullable($value = '-');
             $table->timestamps();
         });
     }

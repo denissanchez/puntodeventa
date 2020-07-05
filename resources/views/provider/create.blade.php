@@ -5,7 +5,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Regiapistrar proveedor</h6>
+                    <h6 class="card-title">Registrar proveedor</h6>
                     <form method="post" action="{{ route('proveedores.store') }}">
                         @csrf
                         <div class="form-row">

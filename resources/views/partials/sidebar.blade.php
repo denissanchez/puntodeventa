@@ -59,7 +59,10 @@
                             <a href="{{ route('compras.create') }}" class="nav-link">Registrar</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('proveedores.create') }}" class="nav-link">Proveedores</a>
+                            <a href="{{ route('proveedores.index') }}" class="nav-link">Proveedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('proveedores.create') }}" class="nav-link">Registrar proveedor</a>
                         </li>
                     </ul>
                 </div>

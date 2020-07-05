@@ -18,8 +18,8 @@ abstract class OwnerDocumentRepository extends BaseRepository implements OwnerDo
 
     public function create(array $attributes): Model
     {
-        $attributes = [...$attributes, 'type' => $this->type];
-        parent::create($attributes);
+        $data = array_merge($attributes, ['type' => $this->type]);
+        return parent::create($data);
     }
 
     public function search($value): Collection
