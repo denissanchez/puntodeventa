@@ -33,8 +33,6 @@ abstract class BaseRepository implements EloquentRepositoryInterface
      */
     public function create(array $attributes): Model
     {
-        $store_id = session(UtilsKey::CURRENT_STORE_ID);
-        $attributes = array_merge($attributes,  ['store_id' => $store_id ]);
         return $this->model->create($attributes);
     }
 

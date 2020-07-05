@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 
 
 use App\Repositories\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
@@ -28,8 +29,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         }
 
         $internal_code = strtoupper($product->internal_code);
-        $product->internal_code = str_pad($internal_code, 6, "0",STR_PAD_LEFT);
+        $product->internal_code = str_pad($internal_code, 6, "0", STR_PAD_LEFT);
         $product->save();
         return $product;
+    }
+
+    public function search($value): Collection
+    {
+        return $this->model->where('origin_code', 'LIKE', '%' . $value . '%')->orWhere([
+            ['internal_code', 'LIKE', '%' . $value . '%'],
+            ['name', 'LIKE', '%' . $value . '%'],
+        ]);
     }
 }

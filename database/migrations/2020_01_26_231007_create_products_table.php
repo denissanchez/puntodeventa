@@ -15,7 +15,6 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('store_id');
             $table->string('origin_code')->nullable();
             $table->string('internal_code')->nullable();
             $table->string('category')->default('-');
@@ -25,13 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('composition')->nullable();
             $table->string('description');
-            $table->decimal('unit_price', 6, 2)->default(0)->unsigned();
-            $table->decimal('minimun_quantity', 6, 2)->default(0)->unsigned();
-            $table->decimal('purchased_units', 6, 2)->default(0)->unsigned();
-            $table->decimal('sold_units', 6, 2)->default(0)->unsigned();
             $table->timestamps();
-
-            $table->foreign('store_id')->references('id')->on('stores')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

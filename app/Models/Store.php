@@ -17,4 +17,14 @@ class Store extends Model
     protected $fillable = [
         'ruc', 'name', 'address', 'phone'
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->using(ProductStore::class)->withPivot([
+            'unit_price',
+            'minimun_quantity',
+            'purchased_units',
+            'sold_units'
+        ]);
+    }
 }

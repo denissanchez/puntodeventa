@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Product
  * @package App\Models
- * @property int store_id
  * @property string code
  * @property string category
  * @property string brand
@@ -17,14 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string name
  * @property string composition
  * @property string description
- * @property string unit_price
- * @property string purchased_units
- * @property string sold_units
  */
 class Product extends Model
 {
+
     protected $fillable = [
-        'store_id',
         'origin_code',
         'internal_code',
         'category',
@@ -33,15 +29,22 @@ class Product extends Model
         'measure_unit',
         'name',
         'composition',
-        'description',
-        'unit_price',
-        'minimun_quantity',
-        'purchased_units',
-        'sold_units',
+        'description'
     ];
 
     protected static function boot()
     {
         parent::boot();
+    }
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class)
+            ->using(Product::class)->withPivot([
+                'unit_price',
+                'minimun_quantity',
+                'purchased_units',
+                'sold_units'
+            ]);
     }
 }
