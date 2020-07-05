@@ -3,9 +3,19 @@
         <div class="form-row">
             <div class="form-group col-12 col-lg-7">
                 <label>Proveedor</label>
-                <v-select :options="providers" @search="fetchOptions" :filterable="false">
+                <v-select :options="providers" @search="fetchOptions" label="name" :filterable="false">
                     <template slot="no-options">
                         Ingresar nombre o RUC del proveedor
+                    </template>
+                    <template slot="option" slot-scope="provider">
+                        <div class="d-center">
+                            {{ provider.document }} - {{ provider.name }}
+                        </div>
+                    </template>
+                    <template slot="selected-option" slot-scope="provider">
+                        <div class="selected d-center">
+                            {{ provider.document }} - {{ provider.name }}
+                        </div>
                     </template>
                 </v-select>
             </div>
@@ -40,11 +50,8 @@
             search: _.debounce((loading, search, vm) => {
                 const value = escape(search);
                 if (value.length > 3) {
-                    axios.get(`/api/owners?search=${escape(search)}&digits=11`).then(({ data }) => {
-                        vm.options = data.data;
-                    }).catch((error) => {
-                        console.log(error);
-                    }).finally(() => {
+                    axios.get(`/api/owners?search=${escape(search)}&digits=11`).then(response => {
+                        vm.providers = response.data;
                         loading(false);
                     });
                 } else {

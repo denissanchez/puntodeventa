@@ -1934,6 +1934,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "create-purchase",
@@ -1951,12 +1961,8 @@ __webpack_require__.r(__webpack_exports__);
       var value = escape(search);
 
       if (value.length > 3) {
-        axios.get("/api/owners?search=".concat(escape(search), "&digits=11")).then(function (_ref) {
-          var data = _ref.data;
-          vm.options = data.data;
-        })["catch"](function (error) {
-          console.log(error);
-        })["finally"](function () {
+        axios.get("/api/owners?search=".concat(escape(search), "&digits=11")).then(function (response) {
+          vm.providers = response.data;
           loading(false);
         });
       } else {
@@ -20193,8 +20199,46 @@ var render = function() {
           _c(
             "v-select",
             {
-              attrs: { options: _vm.providers, filterable: false },
-              on: { search: _vm.fetchOptions }
+              attrs: {
+                options: _vm.providers,
+                label: "name",
+                filterable: false
+              },
+              on: { search: _vm.fetchOptions },
+              scopedSlots: _vm._u([
+                {
+                  key: "option",
+                  fn: function(provider) {
+                    return [
+                      _c("div", { staticClass: "d-center" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(provider.document) +
+                            " - " +
+                            _vm._s(provider.name) +
+                            "\n                    "
+                        )
+                      ])
+                    ]
+                  }
+                },
+                {
+                  key: "selected-option",
+                  fn: function(provider) {
+                    return [
+                      _c("div", { staticClass: "selected d-center" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(provider.document) +
+                            " - " +
+                            _vm._s(provider.name) +
+                            "\n                    "
+                        )
+                      ])
+                    ]
+                  }
+                }
+              ])
             },
             [
               _c("template", { slot: "no-options" }, [

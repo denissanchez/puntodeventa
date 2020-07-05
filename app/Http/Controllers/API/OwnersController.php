@@ -21,7 +21,7 @@ class OwnersController
         $digits = $request->get('digits');
         $search = $request->get('search');
 
-        if ($digits === 11) {
+        if ($digits == 11) {
             $owners = $this->repository->providers()->search($search);
         } else {
             $owners = $this->repository->clients()->search($search);
