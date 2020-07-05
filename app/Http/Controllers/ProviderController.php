@@ -33,7 +33,7 @@ class ProviderController extends Controller
     {
         $data = $request->validated();
         $this->repository->providers()->create($data);
-        return redirect()->route('index');
+        return redirect()->route('provider.index');
     }
 
     public function show($id)
@@ -50,7 +50,7 @@ class ProviderController extends Controller
 
     public function update(ProviderUpdateRequest $request, $id)
     {
-        
+
     }
 
     public function destroy($id)
