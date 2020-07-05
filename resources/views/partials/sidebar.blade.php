@@ -76,7 +76,7 @@
                             <a href="{{ route('usuarios.index') }}" class="nav-link">Usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('usuarios.index') }}" class="nav-link">Registrar usuario</a>
+                            <a href="{{ route('usuarios.create') }}" class="nav-link">Registrar usuario</a>
                         </li>
                     </ul>
                 </div>
