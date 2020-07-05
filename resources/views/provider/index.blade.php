@@ -6,11 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Proveedores</h6>
-                    @if (Session::has('alert'))
-                        <div class="alert alert-info">
-                            <p>{{ Session::get('alert') }}</p>
-                        </div>
-                    @endif
+                    <x-alert />
                     <div class="table-responsive">
                         <table id="table" class="table">
                             <thead>
