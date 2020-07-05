@@ -15,13 +15,17 @@
                         <table id="table" class="table">
                             <thead>
                             <tr>
+                                <th>RUC</th>
                                 <th>Nombre</th>
+                                <th>Dirección</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($providers as $provider)
                                 <tr>
+                                    <td>{{ $provider->document }}</td>
                                     <td>{{ $provider->name }}</td>
+                                    <td>{{ $provider->address }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
