@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 
-import CreatePurchase from '../components/create-purchase';
+import CreatePurchase from './components/create-purchase';
 /** Vue Select **/
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
