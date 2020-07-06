@@ -107,6 +107,7 @@ class Repository implements RepositoryInterface
         $laboratories = $this->laboratories()->get();
         $brands = $this->brands()->get();
         $measureUnits = $this->measureUnits()->get();
+
         return [
             'categories' => $categories,
             'laboratories' => $laboratories,

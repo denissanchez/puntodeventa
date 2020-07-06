@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Administración de usuarios</title>
 
+    <link rel="stylesheet" href="{{ asset('vendors/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/core/core.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}">
 
@@ -66,6 +67,7 @@
 
 @section('scripts')
     <script src="{{ asset('vendors/core/core.js') }}"></script>
+    <script src="{{ asset('vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('vendors/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('js/admin/template.js') }}"></script>
     <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>

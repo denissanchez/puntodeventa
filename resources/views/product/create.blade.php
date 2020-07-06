@@ -41,9 +41,9 @@
                                        value="{{ old('name', '') }}"
                                        required>
                                 @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                         </div>
@@ -51,37 +51,49 @@
                             <div class="form-group col-12 col-md-6 col-lg-3">
                                 <label for="category">Categoría</label>
                                 <select name="category" id="category"
-                                        class="form-control @error('category') is-invalid @enderror"
-                                        value="{{ old('category', '') }}">
+                                        class="@error('category') is-invalid @enderror selectable"
+                                        data-value="{{ old('category', '') }}">
+                                    <option></option>
+                                    @foreach($categories as $category)
+                                        <option>{{ $category }}</option>
+                                    @endforeach
                                 </select>
                                 @error('category')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                             <div class="form-group col-12 col-md-6 col-lg-3">
                                 <label for="brand">Marca</label>
                                 <select name="brand" id="brand"
-                                        class="form-control @error('brand') is-invalid @enderror"
-                                        value="{{ old('brand', '') }}">
+                                        class="form-control @error('brand') is-invalid @enderror selectable"
+                                        data-value="{{ old('brand', '') }}">
+                                    <option></option>
+                                    @foreach($brands as $brand)
+                                        <option>{{ $brand }}</option>
+                                    @endforeach
                                 </select>
                                 @error('brand')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                             <div class="form-group col-12 col-md-8 col-lg-6">
                                 <label for="laboratory">Laboratorio</label>
                                 <select name="laboratory" id="laboratory"
-                                        class="form-control @error('laboratory') is-invalid @enderror"
-                                        value="{{ old('laboratory', '') }}">
+                                        class="form-control @error('laboratory') is-invalid @enderror selectable"
+                                        data-value="{{ old('laboratory', '') }}">
+                                    <option></option>
+                                    @foreach($laboratories as $laboratory)
+                                        <option>{{ $brand }}</option>
+                                    @endforeach
                                 </select>
                                 @error('laboratory')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                         </div>
@@ -103,21 +115,25 @@
                                        class="form-control @error('unit_price') is-invalid @enderror"
                                        value="{{ old('unit_price', '') }}">
                                 @error('unit_price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                             <div class="form-group col-12 col-md-4 col-lg-2">
                                 <label for="measure_unit">Unidad de medida</label>
                                 <select name="measure_unit" id="measure_unit"
-                                        class="form-control @error('measure_unit') is-invalid @enderror"
-                                        value="{{ old('measure_unit', '') }}">
+                                        class="form-control @error('measure_unit') is-invalid @enderror selectable"
+                                        data-value="{{ old('measure_unit', '') }}">
+                                    <option></option>
+                                    @foreach($measureUnits as $measureUnit)
+                                        <option>{{ $measureUnit }}</option>
+                                    @endforeach
                                 </select>
                                 @error('measure_unit')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                         </div>
@@ -153,4 +169,5 @@
 
 @section('scripts')
     @parent
+    <script src="{{ asset('js/custom/product.create.js') }}"></script>
 @endsection
