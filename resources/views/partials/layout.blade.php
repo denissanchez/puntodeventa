@@ -23,6 +23,7 @@
         @include('partials.navbar')
         <div id="app" class="page-content">
             @yield('content')
+            <Toast />
         </div>
     @include('partials.footer')
 

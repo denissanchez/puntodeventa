@@ -14,4 +14,8 @@ class UtilsKey
     const CURRENT_STORE_NAME = "current_store_name";
     const PERSONA_JURIDICA = "PERSONA_JURIDICA";
     const PERSONA_NATURAL = "PERSONA_NATURAL";
+    const FACTURA = "FACTURA";
+    const BOLETA = "BOLETA";
+    const DOCUMENT_STATE_STORED = "GUARDADO";
+    const DOCUMENT_STATE_NULLED = "ANULADO";
 }

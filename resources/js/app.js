@@ -13,6 +13,10 @@ import 'primeicons/primeicons.css';
 /** Third componnets **/
 
 Vue.component('vSelect', vSelect);
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
+Vue.use(ToastService);
+
 /** End Vue Select **/
 
 /** End third components **/
@@ -24,6 +28,7 @@ window.Vue = Vue;
 new Vue({
     el: '#app',
     components: {
-        CreatePurchase
+        CreatePurchase,
+        Toast
     }
 });

@@ -14,22 +14,33 @@ class PurchaseStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'provider.identity_document' => ['required', 'digits:11'],
-            'provider.name' => ['required', 'string'],
-            'provider.address' => ['required', 'string'],
-            'code' => ['required'],
+            'owner_id' => ['required', 'exists:owner_documents,id'],
+            'document' => ['required'],
             'date' => ['required', 'date'],
             'products' => ['required', 'array', 'min:1'],
-            'products.*.id' => ['required', 'exists:products,id'],
-            'products.*.quantity' => ['required', 'numeric', 'min:0.01'],
-            'products.*.unit_price' => ['required', 'numeric', 'min:0.01'],
+            'products.*.product_id' => ['required', 'exists:products,id'],
+            'products.*.quantity' => ['required', 'numeric', 'gt:0'],
+            'products.*.price' => ['required', 'numeric', 'gt:0'],
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'owner_id' => 'proveedor',
+            'document' => 'código del documento',
+            'products' => 'productos',
+            'date' => 'fecha'
         ];
     }
 
     public function messages()
     {
         return [
-            'products.required' => 'Seleecione por lo menos un product',
+            'products.required' => 'Seleccione por lo menos un producto',
+            'products.*.id' => 'Los productos registrados no son válidos',
+            'products.*.quantity' => 'Las cantidades ingresadas no son válidas',
+            'products.*.unit_price' => 'Las precios unitarios ingresadas no son válidas',
         ];
     }
 }

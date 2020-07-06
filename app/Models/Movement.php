@@ -28,4 +28,8 @@ class Movement extends Model
         'commentary',
         'state'
     ];
+
+    public function details() {
+        return $this->hasMany(MovementDetail::class);
+    }
 }
