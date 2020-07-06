@@ -5,5 +5,5 @@ namespace App\Repositories;
 
 interface StoreRepositoryInterface extends EloquentRepositoryInterface
 {
-    public function products();
+    public function productsWithStock($search = ""): array;
 }

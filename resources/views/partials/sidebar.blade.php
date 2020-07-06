@@ -19,12 +19,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('home') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Lista de ventas</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#product" role="button" aria-expanded="false" aria-controls="product">
                     <i class="link-icon" data-feather="feather"></i>
                     <span class="link-title">Productos</span>
@@ -65,7 +59,26 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">
+                <a class="nav-link" data-toggle="collapse" href="#sales" role="button" aria-expanded="false"
+                   aria-controls="sales">
+                    <i class="link-icon" data-feather="feather"></i>
+                    <span class="link-title">Ventas</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="sales">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('ventas.index') }}" class="nav-link">Lista de ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('ventas.create') }}" class="nav-link">Registrar venta</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false"
+                   aria-controls="users">
                     <i class="link-icon" data-feather="feather"></i>
                     <span class="link-title">Administración</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>

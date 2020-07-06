@@ -124,6 +124,7 @@
                 this.products.splice(index, 1);
             },
             save() {
+                this.errors = null;
                 axios.post('/api/purchases', {
                     owner_id: this.provider.id,
                     date: this.date,

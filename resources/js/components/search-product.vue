@@ -22,6 +22,12 @@
 
     export default {
         name: "search-product",
+        props: {
+            validStock: {
+                type: Boolean,
+                default: false
+            }
+        },
         data() {
             return {
                 products: []
@@ -35,7 +41,11 @@
             search: _.debounce((loading, search, vm) => {
                 const value = (escape(search)).trim();
                 if (value.length > 3) {
-                    axios.get(`/api/products?search=${escape(value)}`).then(({data}) => {
+                    let url = `/api/products?search=${escape(value)}`;
+                    if (vm.validStock) {
+                        url += '&validStock=true'
+                    }
+                    axios.get(url).then(({data}) => {
                         vm.products = data;
                         loading(false);
                     });

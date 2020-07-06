@@ -15,20 +15,22 @@ class SaleStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'client.identity_document' => ['required', 'numeric'],
+            'client.document' => ['required', 'numeric'],
             'client.name' => ['required', 'string'],
             'client.address' => ['required', 'string'],
             'products' => ['required', 'array', 'min:1'],
-            'products.*.id' => ['required', 'exists:products,id'],
-            'products.*.quantity' => ['required', 'numeric', 'min:0.01'],
-            'products.*.unit_price_defined' => ['required', 'numeric', 'min:0.01']
+            'products.*.product_id' => ['required', 'exists:products,id'],
+            'products.*.quantity' => ['required', 'numeric', 'gt:0'],
+            'products.*.price_defined' => ['required', 'numeric', 'gt:0']
         ];
     }
 
     public function messages()
     {
         return [
-            'products.required' => 'Debe agregar por lo menos un product'
+            'products.required' => 'Debe agregar por lo menos un producto',
+            'products.*.quantity.gt' => 'Las cantidades ingresadas no son válidas',
+            'products.*.price_defined.gt' => 'Las cantidades ingresadas no son válidas',
         ];
     }
 
