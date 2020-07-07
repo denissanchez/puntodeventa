@@ -134,10 +134,11 @@
                 if (this.client.document.length === 11 || this.client.document.length === 8) {
                     axios.post('/api/sales', {
                         client: this.client,
-                        products: this.products.map(({id, quantity, price_defined}) => {
+                        products: this.products.map(({id, quantity, price, price_defined}) => {
                             return {
                                 product_id: id,
                                 quantity,
+                                price,
                                 price_defined
                             }
                         }),
@@ -148,7 +149,6 @@
                             detail: 'Venta guardada correctamente',
                             life: 3000
                         });
-                        this.saved = true;
                     }).catch(({response}) => {
                         const {data} = response;
                         this.errors = data.errors;

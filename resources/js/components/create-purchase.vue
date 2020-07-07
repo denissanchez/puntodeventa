@@ -82,11 +82,10 @@
     import SearchProduct from './search-product'
     import SearchOwnerDocument from './search-owner-document'
     import ShowErrors from './show-errors'
-    import InputNumber from 'primevue/inputnumber';
-
-    import DatePicker from 'vue2-datepicker';
-    import 'vue2-datepicker/index.css';
-    import 'vue2-datepicker/locale/es';
+    import InputNumber from 'primevue/inputnumber'
+    import DatePicker from 'vue2-datepicker'
+    import 'vue2-datepicker/index.css'
+    import 'vue2-datepicker/locale/es'
 
     export default {
         name: "create-purchase",

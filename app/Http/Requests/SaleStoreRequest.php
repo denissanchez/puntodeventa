@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Models\Product;
+use App\Models\ProductStore;
+use App\Utils\UtilsKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SaleStoreRequest extends FormRequest
@@ -34,12 +36,16 @@ class SaleStoreRequest extends FormRequest
         ];
     }
 
-    public function isValidStock($details)
+    public function isValidStock($details) : bool
     {
         $is_valid = true;
+
         foreach($details as $detail) {
-            $product = Product::find($detail['id']);
-            if($product->current_quantity < $detail['quantity'])
+            $stock = ProductStore::where([
+                ['store_id', session(UtilsKey::CURRENT_STORE_ID)],
+                ['product_id', $detail['product_id']]
+            ])->first();
+            if($stock->current_quantity < $detail['quantity'])
             {
                 $is_valid = false;
                 break;

@@ -47,7 +47,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function search($value): Collection
     {
-        $value = trim($value);
         return $this->model->where(function ($query) use ($value) {
             $query->where('name', 'LIKE', '%' . $value . '%');
             $query->orWhere('origin_code', 'LIKE', '%' . $value . '%');

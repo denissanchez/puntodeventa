@@ -17,10 +17,10 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('origin_code')->nullable();
             $table->string('internal_code')->nullable();
-            $table->string('category')->default('-');
-            $table->string('brand')->default('-');
-            $table->string('laboratory')->default('-');
-            $table->string('measure_unit')->default('-');
+            $table->string('category')->nullable('-');
+            $table->string('brand')->nullable('-');
+            $table->string('laboratory')->nullable('-');
+            $table->string('measure_unit')->nullable('-');
             $table->string('name');
             $table->string('composition')->nullable();
             $table->string('description');

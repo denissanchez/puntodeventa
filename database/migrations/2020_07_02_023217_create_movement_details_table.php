@@ -19,9 +19,13 @@ class CreateMovementDetailsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('item');
             $table->float('quantity', 8, 2);
+            $table->float('current_quantity', 8, 2)->nullable();
             $table->float('price', 8, 2);
-            $table->float('price_defined', 8, 2);
+            $table->float('price_defined', 8, 2)->nullable();
             $table->timestamps();
+
+            $table->foreign('movement_id')->references('id')->on('movements')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

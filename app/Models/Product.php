@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\MovementType;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -40,5 +41,10 @@ class Product extends Model
                 'purchased_units',
                 'sold_units'
             ]);
+    }
+
+    public function purchases()
+    {
+        return $this->belongsToMany(Movement::class, 'movement_details', 'product_id', 'movement_id')->where('type', MovementType::PURCHASE_MOVEMENT)->orderBy('id', 'asc');
     }
 }

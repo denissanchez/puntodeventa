@@ -2,5 +2,5 @@ projectKey=Grupo_1_POS_Farmacia
 serverUrl=https://sonar.sky4dev.com
 serverVersion=6.7.6.38781
 dashboardUrl=https://sonar.sky4dev.com/dashboard/index/Grupo_1_POS_Farmacia
-ceTaskId=AXMf7zorIjmmvSsR6apT
-ceTaskUrl=https://sonar.sky4dev.com/api/ce/task?id=AXMf7zorIjmmvSsR6apT
+ceTaskId=AXMpbne3GPvd_mxp_qSS
+ceTaskUrl=https://sonar.sky4dev.com/api/ce/task?id=AXMpbne3GPvd_mxp_qSS
