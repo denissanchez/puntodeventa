@@ -26,15 +26,17 @@
                                disabled>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="description">Descripción</label>
-                    <textarea name="description" id="description" rows="3"
-                              class="form-control" disabled>{{ $product->description }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="composition">Composición</label>
-                    <textarea name="composition" id="composition" rows="3"
-                              class="form-control" disabled>{{ $product->composition }}</textarea>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="description">Descripción</label>
+                        <textarea name="description" id="description" rows="3"
+                                  class="form-control" disabled>{{ $product->description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="composition">Composición</label>
+                        <textarea name="composition" id="composition" rows="3"
+                                  class="form-control" disabled>{{ $product->composition }}</textarea>
+                    </div>
                 </div>
             </div>
         </div>

@@ -30,7 +30,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     )
     {
         parent::__construct(new Product);
-
         $this->categoryRepository = $categoryRepository;
         $this->laboratoryRepository = $laboratoryRepository;
         $this->brandRepository = $brandRepository;
@@ -55,6 +54,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $this->saveUtil(UtilsKey::MEASURE_UNIT, $product->measure_unit);
 
         return $product;
+    }
+
+    public function update(array $attributes, $id)
+    {
+        $store_id = session(UtilsKey::CURRENT_STORE_ID);
+        $product = $this->find($id);
+        $product->update($attributes);
+        $product->stores()->updateExistingPivot($store_id, $attributes);
     }
 
     public function saveUtil($key, $value)
