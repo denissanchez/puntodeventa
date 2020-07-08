@@ -17,11 +17,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class MovementDetail extends Model
 {
+    const QUANTITY_KEY = "quantity";
+
+
     protected $fillable = [
         'movement_id',
         'product_id',
         'item',
-        'quantity',
+        MovementDetail::QUANTITY_KEY,
         'current_quantity',
         'price',
         'price_defined'
@@ -32,7 +35,7 @@ class MovementDetail extends Model
             ->belongsToMany(MovementDetail::class, 'movement_detail_infos', 'origin_movement_detail_id', 'target_movement_detail_id')
             ->using(MovementInfo::class)
             ->withPivot([
-                'quantity'
+                MovementDetail::QUANTITY_KEY
             ]);
     }
 
@@ -41,7 +44,7 @@ class MovementDetail extends Model
             ->belongsToMany(MovementDetail::class, 'movement_detail_infos', 'target_movement_detail_id', 'origin_movement_detail_id')
             ->using(MovementInfo::class)
             ->withPivot([
-                'quantity'
+                MovementDetail::QUANTITY_KEY
             ]);
     }
 }

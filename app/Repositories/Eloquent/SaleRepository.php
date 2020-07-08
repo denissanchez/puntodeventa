@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SaleRepository extends MovementRepository implements SaleRepositoryInterface
 {
+    const PRODUCT_ID_KEY = "product_id";
+    const QUANTITY_KEY = "quantity";
+
     public function __construct(Model $model)
     {
         parent::__construct($model);
@@ -31,20 +34,20 @@ class SaleRepository extends MovementRepository implements SaleRepositoryInterfa
         foreach ($attributes['products'] as $key => $detail) {
             $detail = array_merge($detail, ['item' => $key + 1]);
             $detail = $sale->details()->create($detail);
-            $product_id = $detail['product_id'];
+            $product_id = $detail[SaleRepository::PRODUCT_ID_KEY];
             $purchase_details = Product::find($product_id)
-                ->purchases()->where('store_id', $store_id)->get()->filter(function ($purchase, $key) use ($product_id) {
+                ->purchases()->where('store_id', $store_id)->get()->filter(function ($purchase) use ($product_id) {
                     return $purchase->details()->where([
-                        ['product_id', $product_id],
+                        [SaleRepository::PRODUCT_ID_KEY, $product_id],
                         ['current_quantity', '>', 0]
                     ])->get();
                 });
-            $required_quantity = $detail['quantity'];
+            $required_quantity = $detail[SaleRepository::QUANTITY_KEY];
             $index = 0;
 
             $product_store = ProductStore::where([
                 ['store_id', $sale->store_id],
-                ['product_id', $detail['product_id']]
+                [SaleRepository::PRODUCT_ID_KEY, $detail[SaleRepository::PRODUCT_ID_KEY]]
             ])->first();
 
             $product_store->sold_units += $detail->quantity;
@@ -63,7 +66,7 @@ class SaleRepository extends MovementRepository implements SaleRepositoryInterfa
                 }
                 $purchase_detail->save();
                 $detail->purchaseDocuments()->attach($purchase_detail->id, [
-                    'quantity' => $quantity
+                    SaleRepository::QUANTITY_KEY => $quantity
                 ]);
                 $index++;
             } while($required_quantity > 0);
