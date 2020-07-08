@@ -18,6 +18,15 @@ class ProductRepositoryTest extends TestCase
         $this->repository = Mockery::mock(ProductRepositoryInterface::class);
     }
 
+    public function testReturnCollection()
+    {
+        $this->repository->shouldReceive('all')->once()->andReturn(new Collection([]));
+
+        $prducts = $this->repository->all();
+
+        $this->assertEquals(new Collection([]), $prducts);
+    }
+
     public function testSearchByName()
     {
         $nameToSearch = "PRODUCTO";
