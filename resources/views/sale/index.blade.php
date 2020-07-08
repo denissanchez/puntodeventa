@@ -5,7 +5,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Productos</h6>
+                <h6 class="card-title">Ventas</h6>
                 <div class="table-responsive">
                     <table id="table" class="table">
                         <thead>
