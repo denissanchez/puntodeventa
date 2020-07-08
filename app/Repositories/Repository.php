@@ -103,17 +103,7 @@ class Repository implements RepositoryInterface
 
     public function utils(): array
     {
-        $categories = $this->categories()->get();
-        $laboratories = $this->laboratories()->get();
-        $brands = $this->brands()->get();
-        $measureUnits = $this->measureUnits()->get();
 
-        return [
-            'categories' => $categories,
-            'laboratories' => $laboratories,
-            'brands' => $brands,
-            'measureUnits' => $measureUnits,
-        ];
     }
 
     public function owners(): Collection

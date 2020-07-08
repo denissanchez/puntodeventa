@@ -1,110 +1,103 @@
-@extends('layouts.app')
+@extends('partials.layout')
 
 @section('content')
-<div class="row">
-    <div class="col-sm-12">
-        <div class="page-title-box">
-            <h4 class="page-title">Editar producto</h4>
-        </div>
-    </div>
-</div>
-
-<form action="{{ route('productos.update', $product) }}" method="POST">
-    @csrf
-    @method('PATCH')
     <div class="row">
-        <div class="col-md-12">
-            <div class="card m-b-30">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
                 <div class="card-body">
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Código</label>
-                                <input type="text" class="form-control" value="{{ $product->code }}" disabled>
+                    <h6 class="card-title">Registrar producto</h6>
+                    <form method="post" action="{{ route('productos.update', $product->id) }}">
+                        @method('PATCH')
+                        @csrf
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-6 col-lg-3">
+                                <label for="origin_code">Cód. origen</label>
+                                <input type="text" name="origin_code" id="origin_code"
+                                       class="form-control @error('origin_code') is-invalid @enderror"
+                                       value="{{ old('origin_code', $product->origin_code) }}"
+                                       placeholder="OPCIONAL">
+                                @error('origin_code')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $product->name }}" required>
+                            <div class="form-group col-12 col-md-6 col-lg-3">
+                                <label for="internal_code">Cód. interno</label>
+                                <input type="text" name="internal_code" id="internal_code"
+                                       class="form-control @error('internal_code') is-invalid @enderror"
+                                       value="{{ old('internal_code', $product->internal_code) }}"
+                                       maxlength="6"
+                                       placeholder="AUTOGENERADO">
+                                @error('internal_code')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-12 col-lg-6">
+                                <label for="name">Nombre</label>
+                                <input type="text" name="name" id="name"
+                                       class="form-control @error('name') is-invalid @enderror"
+                                       value="{{ old('name', $product->name) }}"
+                                       required>
                                 @error('name')
-                                    <span class="invalid-feedback">{{ $message }}</span>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Categoría</label>
-                                <input type="text" class="form-control @error('category') is-invalid @enderror" name="category" value="{{ $product->category }}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Marca</label>
-                                <input type="text" class="form-control @error('brand') is-invalid @enderror" name="brand" value="{{ $product->brand }}" required>
-                                @error('brand')
-                                    <span class="invalid-feedback">{{ $message }}</span>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-6 col-lg-2">
+                                <label for="minimun_quantity">Cantidad mínima</label>
+                                <input type="text" name="minimun_quantity" id="minimun_quantity"
+                                       class="form-control @error('minimun_quantity') is-invalid @enderror"
+                                       value="{{ old('minimun_quantity', $product->minimun_quantity ) }}">
+                                @error('minimun_quantity')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Laboratorio</label>
-                                <input type="text" class="form-control @error('laboratory') is-invalid @enderror" name="laboratory" value="{{ $product->laboratory }}" required>
-                                @error('laboratory')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Unidad de medida</label>
-                                <input type="text" class="form-control @error('measure_unit') is-invalid @enderror" name="measure_unit" value="{{ $product->measure_unit }}" required>
-                                @error('measure_unit')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Descripción</label>
-                                <textarea name="description" rows="3" class="form-control @error('description') is-invalid @enderror" required>{{ $product->description }}</textarea>
-                                @error('description')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Composición</label>
-                                <textarea name="composition" rows="3" class="form-control  @error('composition') is-invalid @enderror">{{ $product->composition }}</textarea>
-                                @error('composition')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Descripción</label>
-                                <input type="text" name="unit_price" class="form-control @error('unit_price') is-invalid @enderror" value="{{ $product->unit_price }}">
+                            <div class="form-group col-12 col-md-6 col-lg-2">
+                                <label for="unit_price">Precio de venta</label>
+                                <input type="text" name="unit_price" id="unit_price"
+                                       class="form-control @error('unit_price') is-invalid @enderror"
+                                       value="{{ old('unit_price', $product->unit_price) }}">
                                 @error('unit_price')
-                                    <span class="invalid-feedback">{{ $message }}</span>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea name="description" id="description" rows="3"
+                                      class="form-control @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
+                            @error('description')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="composition">Composición</label>
+                            <textarea name="composition" id="composition" rows="3"
+                                      class="form-control @error('composition') is-invalid @enderror">{{ old('composition', $product->composition) }}</textarea>
+                            @error('composition')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="float-right">
+                            <button type="submit" class="btn btn-primary px-5">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</form>
 @endsection

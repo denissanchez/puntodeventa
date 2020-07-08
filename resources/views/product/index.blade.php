@@ -15,6 +15,7 @@
                             <th>Nombre</th>
                             <th>Marca</th>
                             <th>Categoría</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -24,6 +25,10 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->brand }}</td>
                                 <td>{{ $product->category }}</td>
+                                <td>
+                                    <a href="{{ route('productos.show', $product->id) }}" class="btn btn-info btn-sm">Detalle</a>
+                                    <a href="{{ route('productos.edit', $product->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
