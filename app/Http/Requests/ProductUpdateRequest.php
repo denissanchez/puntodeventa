@@ -25,9 +25,6 @@ class ProductUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'origin_code' => ['nullable', 'string'],
-            'internal_code' => ['nullable', 'string', 'max:6',
-                Rule::unique('products', 'internal_code')->ignore($this->internal_code)],
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
             'composition' => ['nullable', 'string'],

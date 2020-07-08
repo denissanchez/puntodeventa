@@ -39,6 +39,18 @@ class ProductRepositoryTest extends TestCase
         $this->assertEquals($nameToSearch, $products[0]->name);
     }
 
+    public function testSearchByInternalCode()
+    {
+        $codeToSearch = "0487OI";
+        $this->repository->shouldReceive('search')->with($codeToSearch)->once()->andReturn(new Collection([
+            new Product([
+                'internal_code' => $codeToSearch,
+            ])
+        ]));
+        $products = $this->repository->search($codeToSearch);
+        $this->assertEquals($codeToSearch, $products[0]->internal_code);
+    }
+
     public function testSearchByNameIfNotFindElementsReturnsEmptyCollection()
     {
         $nameToSearch = "PRODUCTO";
