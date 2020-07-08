@@ -18,7 +18,7 @@
                         @foreach($sales as $sale)
                             <tr>
                                 <td class="text-uppercase">{{ $sale->owner->name }}</td>
-                                <td class="text-uppercase">{{ $purchase->document }}</td>
+                                <td class="text-uppercase">{{ $sale->document }}</td>
                             </tr>
                         @endforeach
                         </tbody>
