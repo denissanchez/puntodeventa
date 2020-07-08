@@ -29,6 +29,10 @@ class Movement extends Model
         'state'
     ];
 
+    public function owner() {
+        return $this->belongsTo(OwnerDocument::class);
+    }
+
     public function details() {
         return $this->hasMany(MovementDetail::class);
     }
