@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaleDeleteRequest;
 use App\Http\Requests\SaleStoreRequest;
 use App\Repositories\RepositoryInterface;
+use App\Repositories\SaleRepositoryInterface;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
-    private RepositoryInterface $repository;
+    private SaleRepositoryInterface $saleRepository;
 
-    public function __construct(RepositoryInterface $repository)
+    public function __construct(SaleRepositoryInterface $saleRepository)
     {
-        $this->repository = $repository;
+        $this->saleRepository = $saleRepository;
     }
 
     public function index()
     {
-        $sales = $this->repository->sales();
+        $sales = $this->saleRepository->all();
         return view('sale.index', [
             'sales' => $sales
         ]);

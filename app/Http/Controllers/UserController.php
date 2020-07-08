@@ -10,22 +10,22 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private RepositoryInterface $repository;
+    private UserRepositoryInterface $userRepository;
 
-    public function __construct(RepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->repository = $repository;
+        $this->userRepository = $userRepository;
     }
 
     public function index() {
-        $users = $this->repository->users()->all();
+        $users = $this->userRepository->all();
         return view('user.index')->with([
             'users' => $users
         ]);
     }
 
     public function show($id) {
-        $user = $this->repository->users()->find($id);
+        $user = $this->userRepository->find($id);
         return view('user.show')->with([
             'user' => $user
         ]);
@@ -37,7 +37,7 @@ class UserController extends Controller
 
     public function store(UserStoreRequest $request) {
         $data = $request->validated();
-        $this->repository->users()->create($data);
+        $this->userRepository->create($data);
         return redirect()->route('usuarios.index')->with('alert', 'Se registró el usuario correctamente');
     }
 
