@@ -20,8 +20,8 @@ class ClientRepositoryTest extends TestCase
     public function testReturnCollection()
     {
         $this->repository->shouldReceive('all')->once()->andReturn(new Collection([]));
-        $client = $this->repository->all();
-        $this->assertEquals(new Collection([]), $prducts);
+        $clients = $this->repository->all();
+        $this->assertEquals(new Collection([]), $clients);
     }
 
     public function testSearchByName()
