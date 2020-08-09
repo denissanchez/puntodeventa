@@ -6,12 +6,8 @@ use App\Builders\ResponseDataBuilder;
 use App\Http\Requests\PurchaseDeleteRequest;
 use App\Http\Requests\PurchaseStoreRequest;
 use App\Http\Requests\PurchaseUpdateRequest;
-use App\Models\Product;
 use App\Models\Purchase;
-use App\Models\PurchaseDetail;
-use App\Utils\StateInfo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
