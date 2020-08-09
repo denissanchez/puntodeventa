@@ -12,12 +12,12 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
     volumes:
-      - .:/puntodeventa
+      - .:/var/www/html
     networks:
       - app-network
     depends_on:
       - db
-    working_dir: /puntodeventa
+    working_dir: /var/www/html
 
   db:
     image: mysql:5.7.22
@@ -37,14 +37,15 @@ services:
       - app-network
 
   nginx:
-    image: nginx:1.18
+    image: nginx:alpine
     container_name: serv_punto_de_venta
     restart: unless-stopped
     ports:
       - "80:80"
     volumes:
       - ./nginx-conf/:/etc/nginx/conf.d/
-      - ./:/var/www
+      - .:/var/www/
+      - ./sites-enabled:/etc/nginx/sites-available/default
     networks:
       - app-network
 
