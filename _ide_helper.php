@@ -2,8 +2,6 @@
 // @formatter:off
 
 /**
- * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 6.14.0 on 2020-02-20 15:47:17.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -336,7 +334,7 @@ namespace Illuminate\Support\Facades {
         public static function environment($environments = null)
         {
                         /** @var \Illuminate\Foundation\Application $instance */
-                        return $instance->environment($environments);
+                        return $instance->environment(...$environments);
         }
         
         /**
@@ -2959,10 +2957,8 @@ namespace Illuminate\Support\Facades {
          * @return \Illuminate\Cache\CacheManager 
          * @static 
          */ 
-        public static function extend($driver, $callback)
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
-                        return $instance->extend($driver, $callback);
         }
         
         /**
@@ -4986,15 +4982,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Register an event listener with the dispatcher.
          *
-         * @param string|array $events
-         * @param mixed $listener
-         * @return void 
-         * @static 
-         */ 
-        public static function listen($events, $listener)
-        {
-                        /** @var \Illuminate\Events\Dispatcher $instance */
-                        $instance->listen($events, $listener);
         }
         
         /**
@@ -5011,7 +4998,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register an event and payload to be fired later.
          *
          * @param string $event
          * @param array $payload
@@ -6388,7 +6374,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Add a new namespace to the loader.
          *
          * @param string $namespace
          * @param string $hint
@@ -7818,7 +7803,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the full name for the given connection.
          *
          * @param string|null $connection
          * @return string 
@@ -9830,187 +9814,6 @@ namespace Illuminate\Support\Facades {
         /**
          * Checks whether or not the method is safe.
          *
-         * @see https://tools.ietf.org/html/rfc7231#section-4.2.1
-         * @return bool 
-         * @static 
-         */ 
-        public static function isMethodSafe()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->isMethodSafe();
-        }
-        
-        /**
-         * Checks whether or not the method is idempotent.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function isMethodIdempotent()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->isMethodIdempotent();
-        }
-        
-        /**
-         * Checks whether the method is cacheable or not.
-         *
-         * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
-         * @return bool True for GET and HEAD, false otherwise
-         * @static 
-         */ 
-        public static function isMethodCacheable()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->isMethodCacheable();
-        }
-        
-        /**
-         * Returns the protocol version.
-         * 
-         * If the application is behind a proxy, the protocol version used in the
-         * requests between the client and the proxy and between the proxy and the
-         * server might be different. This returns the former (from the "Via" header)
-         * if the proxy is trusted (see "setTrustedProxies()"), otherwise it returns
-         * the latter (from the "SERVER_PROTOCOL" server parameter).
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getProtocolVersion()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getProtocolVersion();
-        }
-        
-        /**
-         * Returns the request body content.
-         *
-         * @param bool $asResource If true, a resource will be returned
-         * @return string|resource The request body content or a resource to read the body stream
-         * @throws \LogicException
-         * @static 
-         */ 
-        public static function getContent($asResource = false)
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getContent($asResource);
-        }
-        
-        /**
-         * Gets the Etags.
-         *
-         * @return array The entity tags
-         * @static 
-         */ 
-        public static function getETags()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getETags();
-        }
-        
-        /**
-         * 
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function isNoCache()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->isNoCache();
-        }
-        
-        /**
-         * Gets the preferred format for the response by inspecting, in the following order:
-         *   * the request format set using setRequestFormat
-         *   * the values of the Accept HTTP header
-         *   * the content type of the body of the request.
-         *
-         * @static 
-         */ 
-        public static function getPreferredFormat($default = 'html')
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getPreferredFormat($default);
-        }
-        
-        /**
-         * Returns the preferred language.
-         *
-         * @param string[] $locales An array of ordered available locales
-         * @return string|null The preferred locale
-         * @static 
-         */ 
-        public static function getPreferredLanguage($locales = null)
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getPreferredLanguage($locales);
-        }
-        
-        /**
-         * Gets a list of languages acceptable by the client browser.
-         *
-         * @return array Languages ordered in the user browser preferences
-         * @static 
-         */ 
-        public static function getLanguages()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getLanguages();
-        }
-        
-        /**
-         * Gets a list of charsets acceptable by the client browser.
-         *
-         * @return array List of charsets in preferable order
-         * @static 
-         */ 
-        public static function getCharsets()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getCharsets();
-        }
-        
-        /**
-         * Gets a list of encodings acceptable by the client browser.
-         *
-         * @return array List of encodings in preferable order
-         * @static 
-         */ 
-        public static function getEncodings()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getEncodings();
-        }
-        
-        /**
-         * Gets a list of content types acceptable by the client browser.
-         *
-         * @return array List of content types in preferable order
-         * @static 
-         */ 
-        public static function getAcceptableContentTypes()
-        {
-            //Method inherited from \Symfony\Component\HttpFoundation\Request            
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->getAcceptableContentTypes();
-        }
-        
-        /**
-         * Returns true if the request is a XMLHttpRequest.
          * 
          * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
@@ -13601,7 +13404,6 @@ namespace Illuminate\Support\Facades {
          * @param mixed $parameters
          * @param bool $absolute
          * @return string 
-         * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
          * @static 
          */ 
         public static function route($name, $parameters = [], $absolute = true)
@@ -18177,6 +17979,106 @@ namespace  {
              * @return void 
              * @static 
              */ 
+            public static function dd()
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                $instance->dd();
+            }
+         
+            /**
+             * Register a custom macro.
+             *
+             * @param string $name
+             * @param object|callable $macro
+             * @return void 
+             * @static 
+             */ 
+            public static function macro($name, $macro)
+            {
+                                \Illuminate\Database\Query\Builder::macro($name, $macro);
+            }
+         
+            /**
+             * Mix another object into the class.
+             *
+             * @param object $mixin
+             * @param bool $replace
+             * @return void 
+             * @throws \ReflectionException
+             * @static 
+             */ 
+            public static function mixin($mixin, $replace = true)
+            {
+                                \Illuminate\Database\Query\Builder::mixin($mixin, $replace);
+            }
+         
+            /**
+             * Dynamically handle calls to the class.
+             *
+             * @param string $method
+             * @param array $parameters
+             * @return mixed 
+             * @throws \BadMethodCallException
+             * @static 
+             */ 
+            public static function macroCall($method, $parameters)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->macroCall($method, $parameters);
+            }
+        }
+
+    class Event extends \Illuminate\Support\Facades\Event {}
+
+    class File extends \Illuminate\Support\Facades\File {}
+
+    class Gate extends \Illuminate\Support\Facades\Gate {}
+
+    class Hash extends \Illuminate\Support\Facades\Hash {}
+
+    class Lang extends \Illuminate\Support\Facades\Lang {}
+
+    class Log extends \Illuminate\Support\Facades\Log {}
+
+    class Mail extends \Illuminate\Support\Facades\Mail {}
+
+    class Notification extends \Illuminate\Support\Facades\Notification {}
+
+    class Password extends \Illuminate\Support\Facades\Password {}
+
+    class Queue extends \Illuminate\Support\Facades\Queue {}
+
+    class Redirect extends \Illuminate\Support\Facades\Redirect {}
+
+    class Request extends \Illuminate\Support\Facades\Request {}
+
+    class Response extends \Illuminate\Support\Facades\Response {}
+
+    class Route extends \Illuminate\Support\Facades\Route {}
+
+    class Schema extends \Illuminate\Support\Facades\Schema {}
+
+    class Session extends \Illuminate\Support\Facades\Session {}
+
+    class Storage extends \Illuminate\Support\Facades\Storage {}
+
+    class Str extends \Illuminate\Support\Str {}
+
+    class URL extends \Illuminate\Support\Facades\URL {}
+
+    class Validator extends \Illuminate\Support\Facades\Validator {}
+
+    class View extends \Illuminate\Support\Facades\View {}
+
+    class PDF extends \Barryvdh\DomPDF\Facade {}
+
+    class Flare extends \Facade\Ignition\Facades\Flare {}
+ 
+}
+
+
+
+
             public static function dd()
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */

@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'branch_id', 'name', 'email', 'password', 'role'
     ];
 
     protected $hidden = [
@@ -24,6 +24,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtoupper($value);
+    }
 
     public function setNameAttribute($value)
     {

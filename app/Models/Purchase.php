@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\AvailableStateScope;
 use App\Scopes\CurrentBranchScope;
 use App\User;
+use App\Utils\Interfaces\Document;
 use App\Utils\StateInfo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -23,12 +24,17 @@ use Illuminate\Support\Facades\Auth;
  * @property string commentary
  * @property string state
  */
-class Purchase extends Model
+class Purchase extends Model implements Document
 {
     protected $fillable = [
         'branch_id', 'seller_id', 'provider', 'seller_name',
         'code', 'date', 'type', 'currency', 'commentary', 'state'
     ];
+
+    public function getOwnerDocument()
+    {
+        return $this->attributes['provider'];
+    }
 
     protected static function boot()
     {
@@ -70,6 +76,16 @@ class Purchase extends Model
     public function getDateAttribute()
     {
         return date('d-m-Y', strtotime($this->attributes['date']));
+    }
+
+    public function getAmmountAtribute()
+    {
+        $accumulated = 0;
+        foreach ($this->details as $detail)
+        {
+            $accumulated = $accumulated + $detail->subtotal;
+        }
+        return number_format($accumulated, 2);
     }
 
     private function quantitiesSoldAndPurchasedIsEquals()

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserStoreRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,18 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'branch_id' => ['required', 'exists:branches,id'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'name' => ['required'],
+            'role' => ['required', Rule::in(['ADMIN', 'SELLER'])]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'branch_id.required' => 'Seleccione una sucursal',
+            'branch_id.exists' => 'Seleccione una sucursal válida',
         ];
     }
 }

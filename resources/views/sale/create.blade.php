@@ -18,7 +18,7 @@
                     <div class="form-row">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>RUC</label>
+                                <label>RUC/DNI</label>
                                 <input type="text"
                                        class="form-control @error('client.identity_document') is-invalid @enderror"
                                        name="client[identity_document]"
@@ -103,7 +103,7 @@
         @foreach($products as $key => $product)
             {
                 id: {{ $product->id }},
-                text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
+                text:  "{{ $product->getDisplayNameAttribute() }}",
                 uom: "{{ $product->measure_unit }}",
                 unit_price: {{ $product->unit_price }},
                 unit_price_defined: {{ $product->unit_price }},
