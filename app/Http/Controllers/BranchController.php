@@ -27,7 +27,7 @@ class BranchController extends Controller
     public function store(BranchStoreRequest $request)
     {
         $branch = Branch::create($request->validated());
-        return redirect()->route('sucursales.show', ['id' => $branch->id]);
+        return redirect()->route('sucursales.show', ['sucursale' => $branch]);
     }
 
     public function show($id)

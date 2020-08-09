@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
+use App\Repositories\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    private $service;
+
+    public function __construct(ProductRepositoryInterface $service)
     {
+        $this->service = $service;
         $this->middleware('auth');
     }
 
     public function index()
     {
-        $products = Product::all();
+        $products = $this->service->all();
         return view('product.index', ['products' => $products]);
     }
 
