@@ -9,6 +9,7 @@ use App\Repositories\BranchRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+
 class BranchController extends Controller
 {
     private $repository;

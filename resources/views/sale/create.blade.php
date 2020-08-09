@@ -103,7 +103,7 @@
         @foreach($products as $key => $product)
             {
                 id: {{ $product->id }},
-                text:  "{{ $product->code }} | {{ $product->name }} - {{ $product->brand }}",
+                text:  "{{ $product->getDisplayNameAttribute() }}",
                 uom: "{{ $product->measure_unit }}",
                 unit_price: {{ $product->unit_price }},
                 unit_price_defined: {{ $product->unit_price }},

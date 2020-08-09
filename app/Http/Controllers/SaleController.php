@@ -6,12 +6,8 @@ use App\Builders\ResponseDataBuilder;
 use App\Builders\SaleBuilder;
 use App\Http\Requests\SaleDeleteRequest;
 use App\Http\Requests\SaleStoreRequest;
-use App\Models\OwnerDocument;
-use App\Models\Product;
 use App\Models\Sale;
-use App\Models\SaleDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
