@@ -1,35 +1,19 @@
-# Set master image
-FROM php:7.2-fpm-alpine
+FROM php:7.4-fpm
 
-# Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/html/
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Install dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    mysql-client \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        libzip-dev \
+               zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
-RUN apk --no-cache add curl
+RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+    && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install zip
 
-
-# Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-RUN docker-php-ext-install gd# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -38,15 +22,23 @@ RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/bin/composer
 
+RUN apt-get install -y git
+WORKDIR /var/www/
 
-RUN apk add --no-cache bash git openssh
 
-COPY . /var/www/html
-WORKDIR /var/www/html
+#RUN useradd -ms /bin/bash dev
+#RUN chown -R dev:dev /var/www/
 
-RUN useradd -ms /bin/bash dev
-RUN chown -R dev:dev /var/www/html
-RUN chmod 400 -R /var/www/html
+RUN groupadd -g 1000 dev
+RUN useradd -u 1000 -ms /bin/bash -g dev dev
+
+COPY . /var/www/
+
+COPY --chown=dev:dev . /var/www
+
+RUN chown -R dev:dev /var/www/
+
+
 USER dev
 
 EXPOSE 9000

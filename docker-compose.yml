@@ -12,12 +12,27 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
     volumes:
-      - .:/var/www/html
+      - .:/var/www/
     networks:
       - app-network
     depends_on:
       - db
-    working_dir: /var/www/html
+    working_dir: /var/www
+
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-conf/:/etc/nginx/conf.d/
+      - ./:/var/www/
+    networks:
+      - app-network
+
 
   db:
     image: mysql:5.7.22
@@ -33,19 +48,6 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql/
-    networks:
-      - app-network
-
-  nginx:
-    image: nginx:alpine
-    container_name: serv_punto_de_venta
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx-conf/:/etc/nginx/conf.d/
-      - .:/var/www/
-      - ./sites-enabled:/etc/nginx/sites-available/default
     networks:
       - app-network
 
