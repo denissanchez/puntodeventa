@@ -92,7 +92,7 @@ class Product extends Model
 
     public function getCurrentQuantityAttribute()
     {
-        return $this->purchased_units - $this->sold_units;
+        return number_format($this->purchased_units - $this->sold_units, 2);
     }
 
     public function getDisplayNameAttribute()

@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
     <div class="form-group">
-        <label>Código</label>
+        <label>Código de origen</label>
         <input type="text" class="form-control" name="origin_code">
     </div>
     <div class="form-row">

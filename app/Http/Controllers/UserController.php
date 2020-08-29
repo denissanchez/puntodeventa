@@ -2,30 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
+use App\Models\Branch;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $users = User::currentBranch()->get();
-        return view('user.index');
+        $users = User::get();
+        return view('user.index', [ 'users' => $users ]);
     }
 
     public function create()
     {
-        return view('user.create');
+        $branches = Branch::get();
+        return view('user.create', ['branches' => $branches]);
     }
 
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        return redirect()->route('usuarios.create');
+        $data = $request->validated();
+        $data = array_merge($data, ['password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
+        User::create($data);
+        return redirect()->route('usuarios.index');
     }
 
     public function show($id)
     {
-        $user = User::currentBranch()->where('id', $id)->get();
+        $user = User::currentBranch()->where('id', $id)->first();
         if (!$user) {
             return view('errors.404');
         }
@@ -34,7 +45,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::currentBranch()->where('id', $id)->get();
+        $user = User::currentBranch()->where('id', $id)->first();
         if (!$user) {
             return view('errors.404');
         }
