@@ -11,3 +11,9 @@ Route::resource('ventas', 'SaleController');
 Route::resource('facturacion', 'BillingCodeController');
 Route::resource('usuarios', 'UserController');
 Route::get('generar-reporte', 'ReportController@generate')->name('generate.report');
+
+Route::prefix('admin')->group(function() {
+    Route::group(['middleware' => ['role: super-admin']], function (){
+        Route::resource('accounts', 'admin\AccountController');
+    });
+});

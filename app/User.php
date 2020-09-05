@@ -5,10 +5,11 @@ namespace App;
 use App\Models\Branch;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasRoles, Notifiable;
 
     protected $fillable = [
         'branch_id', 'name', 'email', 'password', 'role'
