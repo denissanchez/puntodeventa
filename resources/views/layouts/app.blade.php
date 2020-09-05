@@ -97,7 +97,10 @@
                                     </div>
                                     <a href="#" class="dropdown-item"><i class="fa fa-user text-muted"></i> Cuenta</a>
                                     <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item"><i class="mdi mdi-logout m-r-5 text-muted"></i> Salir</a>
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item"><i class="mdi mdi-logout m-r-5 text-muted"></i> Salir</button>
+                                    </form>
                                 </div>
                             </li>
                         </ul>
