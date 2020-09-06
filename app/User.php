@@ -33,6 +33,11 @@ class User extends Authenticatable
         $this->attributes['name'] = strtoupper($value);
     }
 
+    public function scopeCurrentAccount($query)
+    {
+        return $query->join('branches', 'users.branch_id', '=', 'branches.id')->join('accounts', 'branches.account_id', 'accounts.id')->where('branches.account_id', 'accounts.id');
+    }
+
     public function scopeCurrentBranch($query)
     {
         return $query->where('branch_id', \Auth::user()->branch_id);

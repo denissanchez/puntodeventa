@@ -101,11 +101,17 @@
                 <div class="topbar">
                     <nav class="navbar-custom">
                         <ul class="list-inline float-right mb-0">
-                            <li class="list-inline-item dropdown notification-list hide-phone">
-{{--                                <a class="nav-link dropdown-toggle arrow-none waves-effect text-white"--}}
-{{--                                   href="{{ route('sucursales.show', [ 'sucursale' => Auth::user()->branch ]) }}">--}}
-{{--                                   <i class="fas fa-cubes" style="margin-right: 10px"></i> {{ Auth::user()->branch->name }}--}}
-{{--                                </a>--}}
+                            <li class="list-inline-item dropdown notification-list hide-phone show">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
+                                    <i class="fas fa-cubes" style="margin-right: 10px"></i> {{ Auth::user()->branch->name }}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right language-switch show">
+                                    @foreach(\App\Models\Account::currentAccount()->branches as $branch)
+                                        <a class="dropdown-item" href="#">
+                                            <span>{{ $branch->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
                             </li>
                             <li class="list-inline-item dropdown notification-list">
                                 <a href="#" class="nav-link dropdown-toggle arrow-none waves-effect nav-user"

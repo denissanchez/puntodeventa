@@ -14,6 +14,7 @@ Route::group(['middleware' => ['role:account-administrator']], function () {
 
 
 Route::resource('productos', 'ProductController');
+
 Route::resource('compras', 'PurchaseController');
 Route::resource('ventas', 'SaleController');
 Route::resource('facturacion', 'BillingCodeController');

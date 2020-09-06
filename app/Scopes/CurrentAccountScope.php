@@ -12,6 +12,6 @@ class CurrentAccountScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('branch_id', Auth::user()->branch->account_id);
+        $builder->where('id', Auth::user()->branch->account_id);
     }
 }

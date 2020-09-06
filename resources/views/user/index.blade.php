@@ -11,11 +11,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card m-b-30">
-            @can('add users')
+            @role('account-administrator')
                 <div class="card-header">
                     <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Registrar</a>
                 </div>
-            @endcan
+            @endrole
             <div class="card-body">
                 <table id="dataTable" class="table table-striped table-bordered w-100">
                     <thead>
@@ -31,7 +31,11 @@
                         <tr>
                             <td class="text-lowercase">{{ $user->email }}</td>
                             <td class="text-uppercase">{{ $user->name }}</td>
-                            <td class="text-uppercase">{{ $user->role }}</td>
+                            <td class="text-uppercase">
+                                @foreach($user->getRoleNames() as $role)
+                                    <span class="badge badge-pill badge-primary">{{ $role }}</span>
+                                @endforeach
+                            </td>
                             <td>
                                 <a href="{{ route('usuarios.show', [ 'usuario' => $user ]) }}" class="btn btn-link">Ver</a>
                             </td>

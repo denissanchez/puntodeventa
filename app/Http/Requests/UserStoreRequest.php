@@ -28,7 +28,7 @@ class UserStoreRequest extends FormRequest
             'branch_id' => ['required', 'exists:branches,id'],
             'email' => ['required', 'email', 'unique:users,email'],
             'name' => ['required'],
-            'role' => ['required', Rule::in(['ADMIN', 'SELLER'])]
+            'role' => ['required', Rule::in(['account-adminstrator', 'branch-administrator', 'seller'])]
         ];
     }
 

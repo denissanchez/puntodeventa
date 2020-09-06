@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Models\Account;
 use App\Models\Branch;
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,13 +18,13 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::currentBranch()->get();
+        $users = Account::currentAccount()->users;
         return view('user.index', [ 'users' => $users ]);
     }
 
     public function create()
     {
-        $branches = Branch::get();
+        $branches = Branch::currentAccount()->get();
         return view('user.create', ['branches' => $branches]);
     }
 
@@ -30,7 +32,10 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data = array_merge($data, ['password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
-        User::create($data);
+        $user = User::create($data);
+
+        $user->assignRole($request->post('role'));
+
         return redirect()->route('usuarios.index');
     }
 

@@ -60,8 +60,9 @@
                                 <div class="form-group">
                                     <label>Rol: <sup class="text-danger">*</sup></label>
                                     <select name="role" class="form-control @error('password') is-invalid @enderror">
-                                        <option value="VENDEDOR" selected>Vendedor</option>
-                                        <option value="ADMINISTRADOR">Administrador</option>
+                                        <option value="account-administrator" selected>Super administrador</option>
+                                        <option value="branch-administrator" selected>Administrador</option>
+                                        <option value="seller" selected>Vendedor</option>
                                     </select>
                                     @error('role')
                                         <div class="invalid-feedback">
