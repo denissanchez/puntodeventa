@@ -44,31 +44,57 @@
                                 <span> Dashboard</span>
                             </a>
                         </li>
-                        <li class="menu-title">Productos</li>
+                        @can(['view products'])
+                            <li class="menu-title">Productos</li>
+                            <li>
+                                <a href="{{ route('productos.index') }}" class="waves-effect">Listar</a>
+                            </li>
+                        @endcan
+                        @can(['add purchases', 'view purchases'])
+                            <li class="menu-title">Compras</li>
+                            @can('add purchases')
+                                <li>
+                                    <a href="{{ route('compras.create') }}" class="waves-effect">Registrar</a>
+                                </li>
+                            @endcan
+                            @can('view purchases')
+                                <li>
+                                    <a href="{{ route('compras.index') }}" class="waves-effect">Ver todas</a>
+                                </li>
+                            @endcan
+                        @endcan
+                        @can(['add sales', 'view sales'])
+                            <li class="menu-title">Ventas</li>
+                            @can('add sales')
+                                <li>
+                                    <a href="{{ route('ventas.create') }}" class="waves-effect">Registrar</a>
+                                </li>
+                            @endcan
+                            @can('view sales')
+                                <li>
+                                    <a href="{{ route('ventas.index') }}" class="waves-effect">Ver todas</a>
+                                </li>
+                            @endcan
+                        @endcan
+                        @can(['view branches', 'view branches'])
+                            <li class="menu-title">Administración</li>
+                            @can('view branches')
+                                <li>
+                                    <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
+                                </li>
+                            @endcan
+                            @can('view branches')
+                                <li>
+                                    <a href="{{ route('usuarios.index') }}" class="waves-effect">Usuarios</a>
+                                </li>
+                            @endcan
+                        @endcan
+                        @role('super-admin')
+                        <li class="menu-title">Cuentas</li>
                         <li>
-                            <a href="{{ route('productos.index') }}" class="waves-effect">Productos</a>
+                            <a href="{{ route('sucursales.index') }}" class="waves-effect">Registrados</a>
                         </li>
-                        <li class="menu-title">Compras</li>
-                        <li>
-                            <a href="{{ route('compras.create') }}" class="waves-effect">Registrar</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('compras.index') }}" class="waves-effect">Ver todas</a>
-                        </li>
-                        <li class="menu-title">Ventas</li>
-                        <li>
-                            <a href="{{ route('ventas.create') }}" class="waves-effect">Registrar</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('ventas.index') }}" class="waves-effect">Ver todas</a>
-                        </li>
-                        <li class="menu-title">Administración</li>
-                        <li>
-                            <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('usuarios.index') }}" class="waves-effect">Usuarios</a>
-                        </li>
+                        @endrole
                     </ul>
                 </div>
                 <div class="clearfix"></div>
