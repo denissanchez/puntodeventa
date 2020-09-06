@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Account\StoreAccountRequest;
 use App\Models\Account;
+use App\Models\Branch;
+use App\User;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -18,12 +21,31 @@ class AccountController extends Controller
 
     public function create()
     {
-        //
+        return view('admin.account.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreAccountRequest $request)
     {
-        //
+        $account = Account::create([
+            'name' => $request->post('name'),
+            'ruc' => $request->post('ruc'),
+            'address' => $request->post('address'),
+            'is_active' => true
+        ]);
+
+        $branch = Branch::create([
+            'account_id' => $account->id,
+            'name' => $request->post('name'),
+            'ruc' => $request->post('ruc'),
+            'address' => $request->post('address'),
+        ]);
+
+        $user = User::create([
+            'branch_id' => $branch->id,
+            'name' => $request->post('user_name'),
+            'email' => $request->post('user_email'),
+            'password' => \Hash::make($request->post('user_password')),
+        ]);
     }
 
     public function show($id)

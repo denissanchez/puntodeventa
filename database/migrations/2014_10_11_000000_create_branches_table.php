@@ -15,6 +15,7 @@ class CreateBranchesTable extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('account_id');
             $table->string('ruc', 11)->unique();
             $table->string('name')->unique();
             $table->string('address');

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     protected $fillable = [
-        'ruc', 'name', 'address', 'email', 'phone', 'website'
+        'account_id', 'ruc', 'name', 'address', 'email', 'phone', 'website'
     ];
 
     public function scopeCurrentBranch($query)
