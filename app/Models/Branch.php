@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Branch
@@ -19,6 +20,11 @@ class Branch extends Model
     protected $fillable = [
         'account_id', 'ruc', 'name', 'address', 'email', 'phone', 'website'
     ];
+
+    public function scopeCurrentAccount($query)
+    {
+        return $query->where('account_id', Auth::user()->branch->account_id);
+    }
 
     public function scopeCurrentBranch($query)
     {

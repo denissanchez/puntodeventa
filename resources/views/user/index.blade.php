@@ -11,18 +11,17 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card m-b-30">
-            @if(Auth::user()->role === 'ADMINISTRADOR')
+            @can('add users')
                 <div class="card-header">
                     <a href="{{ route('usuarios.create') }}" class="btn btn-primary">Registrar</a>
                 </div>
-            @endif
+            @endcan
             <div class="card-body">
-                <table id="dataTable" class="table table-striped table-bordered" width="100%">
+                <table id="dataTable" class="table table-striped table-bordered w-100">
                     <thead>
                     <tr>
                         <th>Email</th>
                         <th>Nombre</th>
-                        <th>Sucursal</th>
                         <th>Rol</th>
                         <th></th>
                     </tr>
@@ -32,7 +31,6 @@
                         <tr>
                             <td class="text-lowercase">{{ $user->email }}</td>
                             <td class="text-uppercase">{{ $user->name }}</td>
-                            <td class="text-uppercase">{{ $user->branch->name }}</td>
                             <td class="text-uppercase">{{ $user->role }}</td>
                             <td>
                                 <a href="{{ route('usuarios.show', [ 'usuario' => $user ]) }}" class="btn btn-link">Ver</a>

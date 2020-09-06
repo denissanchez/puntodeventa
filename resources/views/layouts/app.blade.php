@@ -76,23 +76,19 @@
                                 </li>
                             @endcan
                         @endcan
-                        @can(['view branches', 'view branches'])
+                        @role('account-administrator')
                             <li class="menu-title">Administración</li>
-                            @can('view branches')
-                                <li>
-                                    <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
-                                </li>
-                            @endcan
-                            @can('view branches')
-                                <li>
-                                    <a href="{{ route('usuarios.index') }}" class="waves-effect">Usuarios</a>
-                                </li>
-                            @endcan
-                        @endcan
+                            <li>
+                                <a href="{{ route('sucursales.index') }}" class="waves-effect">Sucursales</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('usuarios.index') }}" class="waves-effect">Usuarios</a>
+                            </li>
+                        @endrole
                         @role('super-admin')
                         <li class="menu-title">Cuentas</li>
                         <li>
-                            <a href="{{ route('sucursales.index') }}" class="waves-effect">Registrados</a>
+                            <a href="{{ route('admin.accounts.index') }}" class="waves-effect">Registrados</a>
                         </li>
                         @endrole
                     </ul>

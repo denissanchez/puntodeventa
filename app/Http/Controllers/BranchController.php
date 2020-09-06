@@ -15,7 +15,7 @@ class BranchController extends Controller
 
     public function index()
     {
-        $branches = Branch::orderBy('id', 'DESC')->paginate(20);
+        $branches = Branch::currentAccount()->orderBy('id', 'DESC')->paginate(20);
         return view('branch.index')->with(['branches' => $branches]);
     }
 
@@ -26,7 +26,12 @@ class BranchController extends Controller
 
     public function store(BranchStoreRequest $request)
     {
-        $branch = Branch::create($request->validated());
+        $data = $request->validated();
+
+        $branch = new Branch($data);
+        $branch->account_id = \Auth::user()->branch->account_id;
+        $branch->save();
+
         return redirect()->route('sucursales.show', ['sucursale' => $branch]);
     }
 

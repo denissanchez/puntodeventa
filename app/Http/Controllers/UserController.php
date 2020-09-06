@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::get();
+        $users = User::currentBranch()->get();
         return view('user.index', [ 'users' => $users ]);
     }
 

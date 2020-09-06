@@ -46,6 +46,8 @@ class AccountController extends Controller
             'email' => $request->post('user_email'),
             'password' => \Hash::make($request->post('user_password')),
         ]);
+
+        $user->assignRole('account-administrator');
     }
 
     public function show($id)
