@@ -15,6 +15,7 @@ class CreateLaboratoriesTable extends Migration
     {
         Schema::create('laboratories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('account_id');
             $table->string('name');
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Account;
 use App\Models\OwnerDocument;
 use App\Utils\Interfaces\Document;
 use Illuminate\Bus\Queueable;
@@ -15,6 +16,7 @@ class VerifyOwnerDocument implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $document;
+    private $account;
 
     /**
      * Create a new job instance.
@@ -24,6 +26,7 @@ class VerifyOwnerDocument implements ShouldQueue
     public function __construct(Document $document)
     {
         $this->document = $document;
+        $this->account = Account::find($document->branch->account_id);
     }
 
     /**
@@ -36,7 +39,9 @@ class VerifyOwnerDocument implements ShouldQueue
         $owner_document = unserialize($this->document->getOwnerDocument());
         $owner_document_bd = OwnerDocument::where('identity_document', $owner_document['identity_document'])->first();
         if (!$owner_document_bd) {
-            OwnerDocument::create($owner_document);
+            $owner = new OwnerDocument($owner_document);
+            $owner->account_id = $this->account->id;
+            $owner->save();
         } else {
             $owner_document_bd->update($owner_document);
         }

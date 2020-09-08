@@ -28,37 +28,37 @@ class ResponseDataBuilder
 
     public function categories()
     {
-        $this->add_collection('categories', Category::all());
+        $this->add_collection('categories', Category::currentAccount()->get());
         return $this;
     }
 
     public function brands()
     {
-        $this->add_collection('brands', Brand::all());
+        $this->add_collection('brands', Brand::currentAccount()->get());
         return $this;
     }
 
     public function laboratories()
     {
-        $this->add_collection('laboratories', Laboratory::all());
+        $this->add_collection('laboratories', Laboratory::currentAccount()->get());
         return $this;
     }
 
     public function measure_units()
     {
-        $this->add_collection('measure_units', MeasureUnit::all());
+        $this->add_collection('measure_units', MeasureUnit::currentAccount()->get());
         return $this;
     }
 
     public function providers()
     {
-        $this->add_collection('providers', OwnerDocument::onlyCompanies()->get());
+        $this->add_collection('providers', OwnerDocument::currentAccount()->onlyCompanies()->get());
         return $this;
     }
 
     public function clients()
     {
-        $this->add_collection('clients', OwnerDocument::all());
+        $this->add_collection('clients', OwnerDocument::currentAccount()->get());
         return $this;
     }
 
@@ -71,7 +71,7 @@ class ResponseDataBuilder
 
     public function onlyProductWithStock()
     {
-        $products = Product::all();
+        $products = Account::currentAccount()->products;
         $products = $products->filter(function ($product) {
             return $product->current_quantity > 0;
         });

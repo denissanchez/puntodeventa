@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Account;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Laboratory;
@@ -19,9 +20,13 @@ class VerifyProductData implements ShouldQueue
 
     private $product;
 
+    private $account;
+
     public function __construct(Product $product)
     {
         $this->product = $product;
+
+        $this->account = Account::find($product->branch->account_id);
     }
 
     public function handle()
@@ -35,6 +40,7 @@ class VerifyProductData implements ShouldQueue
     private function verifyCategory()
     {
         Category::firstOrCreate([
+            'account_id' => $this->account->id,
             'name' => $this->product->category
         ]);
     }
@@ -42,6 +48,7 @@ class VerifyProductData implements ShouldQueue
     private function verifyBrand()
     {
         Brand::firstOrCreate([
+            'account_id' => $this->account->id,
             'name' => $this->product->brand
         ]);
     }
@@ -49,6 +56,7 @@ class VerifyProductData implements ShouldQueue
     private function verifyLaboratory()
     {
         Laboratory::firstOrCreate([
+            'account_id' => $this->account->id,
             'name' => $this->product->laboratory
         ]);
     }
@@ -56,6 +64,7 @@ class VerifyProductData implements ShouldQueue
     private function verifyMeasureUnit()
     {
         MeasureUnit::firstOrCreate([
+            'account_id' => $this->account->id,
             'name' => $this->product->measure_unit
         ]);
     }

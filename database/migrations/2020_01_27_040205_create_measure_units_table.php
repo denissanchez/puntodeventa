@@ -15,6 +15,7 @@ class CreateMeasureUnitsTable extends Migration
     {
         Schema::create('measure_units', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('account_id');
             $table->string('name');
             $table->timestamps();
         });

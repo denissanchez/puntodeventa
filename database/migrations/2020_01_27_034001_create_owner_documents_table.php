@@ -15,6 +15,7 @@ class CreateOwnerDocumentsTable extends Migration
     {
         Schema::create('owner_documents', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('account_id');
             $table->string('identity_document');
             $table->string('name');
             $table->string('address')->default('-');

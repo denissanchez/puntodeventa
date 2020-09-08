@@ -14,8 +14,13 @@ use Illuminate\Database\Eloquent\Model;
 class OwnerDocument extends Model
 {
     protected $fillable = [
-        'identity_document', 'name', 'address', 'phone'
+        'account_id', 'identity_document', 'name', 'address', 'phone'
     ];
+
+    public function scopeCurrentAccount($query)
+    {
+        return $query->where('account_id', Auth::user()->branch->account_id);
+    }
 
     public function setNameAttribute($value)
     {
