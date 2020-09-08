@@ -4,6 +4,7 @@
 namespace App\Builders;
 
 
+use App\Models\Account;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Laboratory;
@@ -63,7 +64,8 @@ class ResponseDataBuilder
 
     public function products()
     {
-        $this->add_collection('products', Product::all());
+        $products = Account::currentAccount()->products;
+        $this->add_collection('products', $products);
         return $this;
     }
 

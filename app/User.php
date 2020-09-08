@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Account;
 use App\Models\Branch;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,5 +47,9 @@ class User extends Authenticatable
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function account() {
+        return $this->hasOneThrough(Account::class, Branch::class);
     }
 }

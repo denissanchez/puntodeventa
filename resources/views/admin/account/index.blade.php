@@ -31,10 +31,25 @@
                         @foreach($accounts as $account)
                             <tr>
                                 <td>{{ $account->name }}</td>
-                                <td>{{ $account->is_active }}</td>
+                                @if($account->is_active)
+                                    <td><span class="badge badge-pill badge-success">ACTIVO</span></td>
+                                @else
+                                    <td><span class="badge badge-pill badge-warning">INACTIVO</span></td>
+                                @endif
                                 <td>
                                     <a href="#" class="btn btn-info">Info</a>
-                                    <a href="#" class="btn btn-danger">Desactivar</a>
+                                    @if($account->is_active)
+                                        <form action="{{ route('admin.accounts.destroy', ['account' => $account]) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger">Desactivar</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('admin.accounts.enable', ['account' => $account]) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Activar</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

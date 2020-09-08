@@ -19,7 +19,7 @@
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>RUC: <sup class="text-danger">*</sup></label>
-                                    <input type="text" name="ruc" value="{{ old('ruc') }}" class="form-control @error('ruc') is-invalid @enderror" autocomplete="off">
+                                    <input type="text" name="ruc" value="{{ old('ruc', $account->ruc) }}" class="form-control @error('ruc') is-invalid @enderror">
                                     @error('ruc')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -30,7 +30,7 @@
                             <div class="col-sm-12 col-md-5">
                                 <div class="form-group">
                                     <label>Razón social: <sup class="text-danger">*</sup></label>
-                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control to-upper @error('name') is-invalid @enderror" autocomplete="off">
+                                    <input type="text" name="name" value="{{ old('phone', $account->name) }}"  class="form-control to-upper @error('name') is-invalid @enderror">
                                     @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -41,7 +41,7 @@
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Dirección: <sup class="text-danger">*</sup></label>
-                                    <input type="text" name="address" value="{{ old('address') }}" class="form-control to-upper @error('address') is-invalid @enderror" autocomplete="off">
+                                    <input type="text" name="address" value="{{ old('address', $account->address) }}" class="form-control to-upper @error('address') is-invalid @enderror">
                                     @error('address')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -54,7 +54,7 @@
                             <div class="col-sm-12 col-md-2">
                                 <div class="form-group">
                                     <label>Teléfono:</label>
-                                    <input type="number" name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror" autocomplete="off">
+                                    <input type="number" name="phone" value="{{ old('phone', $account->phone) }}" class="form-control @error('phone') is-invalid @enderror">
                                     @error('phone')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -65,7 +65,7 @@
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>E-mail:</label>
-                                    <input type="text" name="email" value="{{ old('email') }}" class="form-control to-lower @error('email') is-invalid @enderror" autocomplete="off">
+                                    <input type="text" name="email" value="{{ old('phone', $account->email) }}" class="form-control to-lower @error('email') is-invalid @enderror">
                                     @error('email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -74,50 +74,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h4>Datos de la cuenta de usuario</h4>
-                        <div class="form-row">
-                            <div class="col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label>Nombre <sup class="text-danger">*</sup></label>
-                                    <input type="text" name="user_name" value="{{ old('user_name') }}" class="form-control @error('user_name') is-invalid @enderror" autocomplete="off">
-                                    @error('user_name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label>Email <sup class="text-danger">*</sup></label>
-                                    <input type="email" name="user_email" value="{{ old('user_email') }}" class="form-control @error('user_email') is-invalid @enderror" autocomplete="off">
-                                    @error('user_email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label>Contraseña <sup class="text-danger">*</sup></label>
-                                    <input type="text" name="user_password" class="form-control @error('user_password') is-invalid @enderror" autocomplete="off">
-                                    @error('user_password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
-
-
-
                 </div>
             </div>
         </div>

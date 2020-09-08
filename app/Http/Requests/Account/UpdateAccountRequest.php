@@ -4,7 +4,7 @@ namespace App\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAccountRequest extends FormRequest
+class UpdateAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreAccountRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,12 +24,7 @@ class StoreAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
-            'ruc' => ['required', 'digits:11'],
-            'address' => ['required', 'string'],
-            'user_name' => ['required', 'string'],
-            'user_email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required']
+            //
         ];
     }
 }

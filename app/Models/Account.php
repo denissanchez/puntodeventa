@@ -25,8 +25,11 @@ class Account extends Model
         return $this->hasMany(Branch::class);
     }
 
-
     public function users() {
         return $this->hasManyThrough(User::class, Branch::class);
+    }
+
+    public function products() {
+        return $this->hasManyThrough(Product::class, Branch::class);
     }
 }

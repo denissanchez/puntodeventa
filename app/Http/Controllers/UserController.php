@@ -51,10 +51,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::currentBranch()->where('id', $id)->first();
+        $branches = Branch::currentAccount()->get();
         if (!$user) {
             return view('errors.404');
         }
-        return view('user.edit', ['user' => $user]);
+        return view('user.edit', ['user' => $user, 'branches' => $branches]);
     }
 
     public function update(Request $request, $id)

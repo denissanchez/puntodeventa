@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\StoreAccountRequest;
+use App\Http\Requests\Account\UpdateAccountRequest;
 use App\Models\Account;
 use App\Models\Branch;
 use App\User;
@@ -48,25 +49,36 @@ class AccountController extends Controller
         ]);
 
         $user->assignRole('account-administrator');
+
+        return redirect()->route('admin.accounts.index');
     }
 
-    public function show($id)
+    public function show(Account $account)
     {
-        //
+        return view('admin.account.show')->with([ 'account' => $account ]);
     }
 
-    public function edit($id)
+    public function edit(Account $account)
     {
-        //
+        return view('admin.account.edit')->with([ 'account' => $account ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateAccountRequest $request, $id)
     {
-        //
+
     }
 
-    public function destroy($id)
+    public function destroy(Account $account)
     {
-        //
+        $account->is_active = false;
+        $account->save();
+        return redirect()->route('admin.accounts.index');
+    }
+
+    public function enable(Account $account)
+    {
+        $account->is_active = true;
+        $account->save();
+        return redirect()->route('admin.accounts.index');
     }
 }

@@ -94,12 +94,12 @@
                         </div>
                     </div>
                     <div class="form-row mb-3">
-                        <div class="col-md-11">
+                        <div class="col-md">
                             <select id="select2-product" class="form-control select2">
                                 <option value="">SELECCIONAR</option>
                             </select>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-auto">
                             <button type="button"
                                     class="btn btn-primary btn-sm"
                                     onclick="openModalRegisterProduct()">
@@ -314,7 +314,7 @@
 
         console.log(product);
 
-        axios.post('/api/productos', product).then(
+        axios.post('/v1/productos', product).then(
             res => {
                 let data = res.data.data;
                 data.quantity = 0;
