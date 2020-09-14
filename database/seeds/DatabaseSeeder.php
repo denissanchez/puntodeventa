@@ -15,7 +15,21 @@ class DatabaseSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        \Spatie\Permission\Models\Role::create(['name' => 'super-admin']);
+
+
+        \Spatie\Permission\Models\Permission::create(['name' => 'view products']);
+        \Spatie\Permission\Models\Permission::create(['name' => 'add purchases']);
+        \Spatie\Permission\Models\Permission::create(['name' => 'view purchases']);
+        \Spatie\Permission\Models\Permission::create(['name' => 'add sales']);
+        \Spatie\Permission\Models\Permission::create(['name' => 'view sales']);
+
+        $super_admin = \Spatie\Permission\Models\Role::create(['name' => 'super-admin']);
+        \Spatie\Permission\Models\Role::create(['name' => 'account-administrator']);
+        \Spatie\Permission\Models\Role::create(['name' => 'seller'])->givePermissionTo([
+            'view products', 'add purchases', 'view purchases', 'add sales', 'view sales'
+        ]);
+
+
 
         $user = factory(User::class)->make();
         $user->save();

@@ -32,7 +32,8 @@ Route::middleware([CheckAccount::class])->group(function () {
 
     Route::get('registar-producto', 'API\ProductController@create')->name('partial.create.product');
     Route::get('modal-generar-reporte', 'API\ReportController@modal')->name('partial.modal.report');
-
-    Route::resource('v1/productos', 'API\ProductController');
+    Route::name('apiv1.')->group(function() {
+        Route::resource('v1/productos', 'API\ProductController');
+    });
 });
 

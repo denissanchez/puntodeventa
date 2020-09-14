@@ -19,7 +19,7 @@ class OwnerDocument extends Model
 
     public function scopeCurrentAccount($query)
     {
-        return $query->where('account_id', Auth::user()->branch->account_id);
+        return $query->where('account_id', \Auth::user()->branch->account_id);
     }
 
     public function setNameAttribute($value)

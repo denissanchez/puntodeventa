@@ -23,13 +23,14 @@ class StoreAccountRequest extends FormRequest
      */
     public function rules()
     {
+        return [];
         return [
             'name' => ['required', 'string'],
             'ruc' => ['required', 'digits:11'],
             'address' => ['required', 'string'],
             'user_name' => ['required', 'string'],
             'user_email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required']
+            'password' => ['required'],
         ];
     }
 }

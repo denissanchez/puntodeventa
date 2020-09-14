@@ -24,12 +24,12 @@ class Branch extends Model
 
     public function scopeCurrentAccount($query)
     {
-        return $query->where('account_id', Auth::user()->branch->account_id);
+        return $query->where('account_id', \Auth::user()->branch->account_id);
     }
 
     public function scopeCurrentBranch($query)
     {
-        return $query->where('id', '=', Auth::user()->branch_id);
+        return $query->where('id', '=', \Auth::user()->branch_id);
     }
 
     public function setNameAttribute($value)

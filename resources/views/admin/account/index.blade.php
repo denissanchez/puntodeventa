@@ -37,7 +37,6 @@
                                     <td><span class="badge badge-pill badge-warning">INACTIVO</span></td>
                                 @endif
                                 <td>
-                                    <a href="#" class="btn btn-info">Info</a>
                                     @if($account->is_active)
                                         <form action="{{ route('admin.accounts.destroy', ['account' => $account]) }}" method="post">
                                             @csrf
